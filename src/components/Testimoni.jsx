@@ -2,6 +2,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import React, { useState, useEffect } from "react";
+import { FaStar } from "react-icons/fa";
+import Link from "next/link";
 import axios from "axios";
 
 const Testimoni = () => {
@@ -41,7 +43,9 @@ const Testimoni = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://api.ngurusizin.online/api/testimoni");
+        const response = await axios.get(
+          "https://api.ngurusizin.online/api/testimoni"
+        );
         if (response.data && response.data.data.data) {
           setTestimoniData(response.data.data.data);
         } else {
@@ -58,8 +62,8 @@ const Testimoni = () => {
     fetchData();
   }, []);
 
-  console.log('testimoni', testimoniData);
-  console.log('testimoni coba', testimonialData);
+  console.log("testimoni", testimoniData);
+  console.log("testimoni coba", testimonialData);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -70,11 +74,36 @@ const Testimoni = () => {
   }
 
   return (
-    <div className="slider">
-      <h1 className="font-extrabold text-3xl lg:text-3xl text-center text-transparent bg-clip-text bg-gradient-to-br from-[#1B1B1B] from-20% via-[#1D1D1D] via-20% to-[#A8CF45]">
+    <div className="py-10">
+      <h1 className="font-semibold text-3xl lg:text-3xl text-center text-transparent bg-clip-text bg-gray-900">
         Testimoni
       </h1>
-      <Slider {...settings}>
+      <div class="grid grid-cols-2 justify-items-center gap-5 mt-5 lg:flex-row py-6">
+        {testimoniData.map((item, index) => (
+          <div class="max-w-lg p-6 bg-white border border-gray-400 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              {item.attributes.testimoni}
+            </p>
+            <div className="flex">
+              <img
+                src={item.attributes.urlGambar}
+                alt=""
+                className="rounded-full w-16 h-16"
+              />
+              <div className="grid grid-rows-2 justify-start">
+                <p className="font-semibold ms-4">{item.attributes.nama}</p>
+                <div className="flex px-2">
+                  <FaStar className="text-yellow-500 ml-1" />
+                  <FaStar className="text-yellow-500 ml-1" />
+                  <FaStar className="text-yellow-500 ml-1" />
+                  <FaStar className="text-yellow-500 ml-1" />
+                  <FaStar className="text-yellow-500 ml-1" />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+        {/* <Slider {...settings}>
         {testimoniData.map((item, index) => (
           <div key={index}>
             <section className="p-6">
@@ -99,7 +128,17 @@ const Testimoni = () => {
             </section>
           </div>
         ))}
-      </Slider>
+      </Slider> */}
+      </div>
+      <div className="flex justify-center">
+      <Link
+          href={"/layanan"}
+          type="submit"
+          className="block px-4 py-3 mt-6 font-semibold text-center text-white rounded-full w-52 bg-blue-400 hover:bg-blue-900"
+        >
+          Lihat Semua Testimoni
+        </Link>
+        </div>
     </div>
   );
 };

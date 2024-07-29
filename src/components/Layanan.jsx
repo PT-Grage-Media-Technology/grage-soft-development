@@ -66,46 +66,39 @@ export default function Layanan() {
             let deskripsi = partDeskripsi.filter((item) => item.trim() !== ""); // menghapus string yang kosong
 
             return (
-              <div className="flex flex-col" key={item.id}>
+              <div className="flex" key={item.id}>
                 <div className="p-4 bg-white shadow-md rounded-3xl">
-                  <div className="flex-none lg:flex">
-                    <div className="w-full h-full mb-3 lg:h-48 lg:w-48 lg:mb-0">
-                      <img
-                        src={item.attributes.urlGambar}
-                        alt="Just a flower"
-                        width={200}
-                        height={200}
-                        className="object-scale-down w-full rounded-2xl lg:object-cover lg:h-48"
-                      />
+                  <img
+                    src={item.attributes.urlGambar}
+                    alt=""
+                    className="w-80 h-56 rounded-2xl p-4"
+                  />
+                  <div className="flex justify-center font-semibold">
+                      <span>Rp.{item.attributes.harga}</span>
+                  </div>
+                  
+                  <div className="flex-auto text-center">  
+                    <div className="flex flex-wrap ">
+                      <h2 className="flex-auto text-lg font-medium">
+                        {item.attributes.nama}
+                      </h2>
                     </div>
-                    <div className="flex-auto py-2 ml-3 justify-evenly">
-                      <div className="flex flex-wrap ">
-                        <h2 className="flex-auto text-lg font-medium">
-                          {item.attributes.nama}
-                        </h2>
-                      </div>
 
-                      <p className="mb-5 text-gray-500 max-w-80">
-                        {deskripsi.map((data, index) => (
-                          <p key={index}>{data}</p>
-                        ))}
-                      </p>
+                    <p className="mb-5 text-gray-500 max-w-80">
+                      {deskripsi.map((data, index) => (
+                        <p key={index}>{data}</p>
+                      ))}
+                    </p>
 
-                      <div className="flex space-x-3 text-sm font-medium">
-                        <div className="flex flex-auto space-x-3">
-                          <button className="inline-flex items-center px-4 py-2 mb-2 space-x-2 tracking-wider text-gray-600 bg-white border rounded-full shadow-sm md:mb-0 hover:bg-gray-100 ">
-                            <span>Rp.{item.attributes.harga}</span>
-                          </button>
-                        </div>
-                        <Link
-                          href={`/layanan/form/?id=${item.id}`}
-                          className="px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm md:mb-0 bg-blue-400 hover:bg-blue-900"
-                          type="button"
-                          aria-label="like"
-                        >
-                          Dapatkan
-                        </Link>
-                      </div>
+                    <div className="flex justify-center text-sm font-medium">
+                      <Link
+                        href={`/layanan/form/?id=${item.id}`}
+                        className="px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm md:mb-0 bg-blue-400 hover:bg-blue-900"
+                        type="button"
+                        aria-label="like"
+                      >
+                        Dapatkan
+                      </Link>
                     </div>
                   </div>
                 </div>

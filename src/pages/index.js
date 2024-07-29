@@ -4,6 +4,7 @@ import Layanan from "@/components/Layanan";
 import Rating from "@/components/Klien";
 import Testimoni from "@/components/Testimoni";
 import Head from "next/head";
+import Kontak_Kami from "@/components/Kontak_Kami";
 
 export default function Home() {
     return ( <
@@ -16,6 +17,8 @@ export default function Home() {
         Rating / >
         <
         Testimoni / >
+        <
+        Kontak_Kami / >
         <
         />
     );

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Rating() {
   return (
-    <section className="py-5  bg-white rounded lg:px-28">
+    <section className="py-12  bg-white rounded lg:px-28">
       <div className="flex flex-col items-center gap-5 mt-5 lg:flex-row">
           <h3 className="text-start text-gray-800 text-xl font-bold">Klien Kami</h3>
           <div className="flex flex-col items-center gap-5">
