@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { FaWhatsapp } from "react-icons/fa";
 import LoadingLayanan from "@/components/elements/LoadingLayanan";
+import { IoCallOutline } from "react-icons/io5";
+
 
 export default function Layanan() {
   const [layanan, setLayanan] = useState([]);
@@ -60,61 +63,26 @@ export default function Layanan() {
       <div className="flex flex-col w-full mx-auto sm:px-10 md:px-12 lg:px-28 lg:flex-row lg:gap-12 bg-blue-500 py-24 lg:py-32">
         <div className="relative text-white flex flex-col max-w-3xl mx-auto lg:text-left xl:py-8 lg:items-center lg:max-w-none lg:mx-0 lg:flex-1 lg:w-1/ lg:px-48">
           <h1 className="text-3xl text-center font-bold leading-tight lg:text-5xl">
-            Harga Website
-          </h1>
-          <h1 className="flex justify-center  text-center mx-auto lg:px-24 mt-8 mb-4 text-lg leading-tight">
-            Harga web bisa dicek di bawah
+            Cara Pesan Web
           </h1>
         </div>
       </div>
-
-      <div className="relative flex flex-col items-center justify-center lg:px-28">
-        <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
-          {layanan.map((item) => {
-            let partDeskripsi = item.attributes.deskripsi.split("\r\n");
-            let deskripsi = partDeskripsi.filter((item) => item.trim() !== ""); // menghapus string yang kosong
-
-            return (
-              <div className="flex" key={item.id}>
-                <div className="p-4 bg-white shadow-md rounded-3xl">
-                  <img
-                    src={item.attributes.urlGambar}
-                    alt=""
-                    className="w-80 h-56 rounded-2xl p-4"
-                  />
-                  <div className="flex justify-center font-semibold">
-                      <span>Rp.{item.attributes.harga}</span>
-                  </div>
-                  
-                  <div className="flex-auto text-center">  
-                    <div className="flex flex-wrap ">
-                      <h2 className="flex-auto text-lg font-medium">
-                        {item.attributes.nama}
-                      </h2>
-                    </div>
-
-                    <p className="mb-5 text-gray-500 max-w-80">
-                      {deskripsi.map((data, index) => (
-                        <p key={index}>{data}</p>
-                      ))}
-                    </p>
-
-                    <div className="flex justify-center text-sm font-medium">
-                      <Link
-                        href={`/layanan/form/?id=${item.id}`}
-                        className="px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm md:mb-0 bg-blue-400 hover:bg-blue-900"
-                        type="button"
-                        aria-label="like"
-                      >
-                        Beli
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>  
-            );
-          })}
-        </div>
+    
+      <p className="text-center font-semibold text-4xl pt-16">Whatsapp</p>
+      <p className="text-center pt-4">Klik Untuk WA:</p>
+      <div className="flex justify-center py-5">
+        <button href="https://wa.me/6288182182812" className="bg-green-500 py-3 px-5 flex justufy-center rounded-lg text-white">
+          <FaWhatsapp className="me-3 mt-0" size={22}/>
+          <p className="me-2">088182182812</p>
+        </button>
+      </div>
+      <p className="text-center font-semibold text-4xl pt-16">Telepon</p>
+      <p className="text-center pt-4">Klik Untuk Telpon:</p>
+      <div className="flex justify-center py-5">
+        <button href="" className="bg-green-500 py-3 px-5 flex justufy-center rounded-lg text-white">
+          <IoCallOutline className="me-3 mt-0" size={22}/>
+          <p className="me-2">088182182812</p>
+        </button>
       </div>
     </section>
   );

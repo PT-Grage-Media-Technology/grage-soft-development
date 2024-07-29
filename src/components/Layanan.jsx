@@ -97,7 +97,7 @@ export default function Layanan() {
                         type="button"
                         aria-label="like"
                       >
-                        Dapatkan
+                        Beli
                       </Link>
                     </div>
                   </div>

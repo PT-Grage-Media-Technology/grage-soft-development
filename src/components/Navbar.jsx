@@ -80,7 +80,7 @@ export default function Navbar() {
                 HARGA WEB
               </Link>
               <Link
-                href={"/tentang"}
+                href={"/pesan_web"}
                 className={`nav-link ${
                   router.pathname === "/tentang"
                     ? "font-bold text-white"
