@@ -5,7 +5,6 @@ import { FaWhatsapp } from "react-icons/fa";
 import LoadingLayanan from "@/components/elements/LoadingLayanan";
 import { IoCallOutline } from "react-icons/io5";
 
-
 export default function Layanan() {
   const [layanan, setLayanan] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,6 +57,12 @@ export default function Layanan() {
   // Menghitung angka pertama yang akan ditampilkan dalam navigasi paginasi
   const firstPage = Math.max(1, currentPage - 4);
 
+  const phoneNumber = "6285731579908";
+
+  const handleSubmit = () => {
+    window.location.href = `https://wa.me/${phoneNumber}`;
+  };
+
   return (
     <section className="relative -mt-5 bg-transparent">
       <div className="flex flex-col w-full mx-auto sm:px-10 md:px-12 lg:px-28 lg:flex-row lg:gap-12 bg-blue-500 py-24 lg:py-32">
@@ -67,20 +72,26 @@ export default function Layanan() {
           </h1>
         </div>
       </div>
-    
+
       <p className="text-center font-semibold text-4xl pt-16">Whatsapp</p>
       <p className="text-center pt-4">Klik Untuk WA:</p>
       <div className="flex justify-center py-5">
-        <button href="https://wa.me/6288182182812" className="bg-green-500 py-3 px-5 flex justufy-center rounded-lg text-white">
-          <FaWhatsapp className="me-3 mt-0" size={22}/>
-          <p className="me-2">088182182812</p>
+        <button
+          onClick={handleSubmit}
+          className="bg-green-500 py-3 px-5 flex justufy-center rounded-lg text-white"
+        >
+          <FaWhatsapp className="me-3 mt-0" size={22} />
+          <p className="me-2">085731579908</p>
         </button>
       </div>
       <p className="text-center font-semibold text-4xl pt-16">Telepon</p>
       <p className="text-center pt-4">Klik Untuk Telpon:</p>
       <div className="flex justify-center py-5">
-        <button href="" className="bg-green-500 py-3 px-5 flex justufy-center rounded-lg text-white">
-          <IoCallOutline className="me-3 mt-0" size={22}/>
+        <button
+          href=""
+          className="bg-green-500 py-3 px-5 flex justufy-center rounded-lg text-white"
+        >
+          <IoCallOutline className="me-3 mt-0" size={22} />
           <p className="me-2">088182182812</p>
         </button>
       </div>
