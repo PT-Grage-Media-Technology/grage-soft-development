@@ -17,14 +17,14 @@ export default function Pengurusan() {
   ];
   return (
     <>
-      <div className="-mt-28 ">
-        <h1 className="font-extrabold lg:text-3xl text:xl text-center text-transparent bg-clip-text bg-gradient-to-br from-[#1B1B1B] from-20% via-[#1D1D1D] via-20% to-[#A8CF45]">
+      <div>
+        <h1 className="font-extrabold lg:text-3xl text:xl text-center bg-clip-text text-gray-800">
           Cara Izinaja.id Membantu Pengurusan
           <span className="block"> Pendirian CV atau PT Anda</span>
         </h1>
       </div>
 
-      <div className="flex flex-col lg:px-28">
+      <div className="flex flex-col lg:px-28 lg:mt-10">
         <div className="grid grid-cols-1 gap-4 mx-auto mt-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {PengurusanList.map((item) => (
             <div

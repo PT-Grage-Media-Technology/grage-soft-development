@@ -12,12 +12,12 @@ export default function Navbar() {
   };
 
   return (
-    <div className="lg:px-28">
-      <div className="antialiased bg-gray-100 dark-mode:bg-gray-900">
-        <div className="w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800">
+   
+      <div className="antialiased bg-gray-100 dark-mode:bg-gray-900 mb-5">
+        <div className="w-full text-slate-200 bg-blue-500 dark-mode:text-gray-200 dark-mode:bg-gray-800">
           <div className="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
             <div className="flex flex-row items-center justify-between p-4">
-              <h1 className="text-2xl font-bold">Ngurus Izin</h1>
+              <h1 className="text-2xl text-white font-bold">Ngurus Izin</h1>
               {/* <Link
                 href={"/"}
                 className="text-lg font-semibold tracking-widest text-white uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
@@ -63,9 +63,9 @@ export default function Navbar() {
                 href={"/"}
                 className={`nav-link ${
                   router.pathname === "/"
-                    ? "font-bold text-black bg-lime-400"
+                    ? "font-bold text-white"
                     : ""
-                } px-4 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-white focus:text-white hover:bg-lime-400 focus:bg-lime-400 focus:outline-none focus:shadow-outline`}
+                } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
               >
                 HOME
               </Link>
@@ -73,29 +73,69 @@ export default function Navbar() {
                 href={"/layanan"}
                 className={`nav-link ${
                   router.pathname === "/layanan"
-                    ? "font-bold text-black bg-lime-400"
+                    ? "font-bold text-white"
                     : ""
-                } px-4 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-white focus:text-white hover:bg-lime-400 focus:bg-lime-400 focus:outline-none focus:shadow-outline`}
+                } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
               >
-                LAYANAN
+                HARGA WEB
               </Link>
               <Link
                 href={"/tentang"}
                 className={`nav-link ${
                   router.pathname === "/tentang"
-                    ? "font-bold text-black bg-lime-400"
+                    ? "font-bold text-white"
                     : ""
-                } px-4 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-white focus:text-white hover:bg-lime-400 focus:bg-lime-400 focus:outline-none focus:shadow-outline`}
+                } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
               >
-                TENTANG KAMI
+                CARA PESAN WEB
+              </Link>
+              <Link
+                href={"/tentang"}
+                className={`nav-link ${
+                  router.pathname === "/tentang"
+                    ? "font-bold text-white"
+                    : ""
+                } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
+              >
+                KLIEN KAMI
+              </Link>
+              <Link
+                href={"/tentang"}
+                className={`nav-link ${
+                  router.pathname === "/tentang"
+                    ? "font-bold text-white"
+                    : ""
+                } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
+              >
+                PEMBAYARAN
+              </Link>
+              <Link
+                href={"/tentang"}
+                className={`nav-link ${
+                  router.pathname === "/tentang"
+                    ? "font-bold text-white"
+                    : ""
+                } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
+              >
+                TESTIMONI KLIEN
+              </Link>
+              <Link
+                href={"/tentang"}
+                className={`nav-link ${
+                  router.pathname === "/tentang"
+                    ? "font-bold text-white"
+                    : ""
+                } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
+              >
+                KONTAK KAMI
               </Link>
               {/* <Link
                 href={"/kontak"}
                 className={`nav-link ${
                   router.pathname === "/kontak"
-                    ? "font-bold text-black bg-lime-400"
+                    ? "font-bold text-black"
                     : ""
-                } px-4 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-white focus:text-white hover:bg-lime-400 focus:bg-lime-400 focus:outline-none focus:shadow-outline`}
+                } px-4 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-white focus:text-white hover focus focus:outline-none focus:shadow-outline`}
               >
                 KONTAK
               </Link> */}
@@ -135,6 +175,5 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-    </div>
   );
 }

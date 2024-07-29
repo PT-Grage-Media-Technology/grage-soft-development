@@ -12,7 +12,7 @@ function ButtonWa() {
       <button
         onClick={handleSubmit}
         id="my-button"
-        className="fixed bottom-5 right-5 w-12 h-12 rounded-full bg-[#A8CF45] text-white flex items-center justify-center sm:bottom-10 sm:right-20 sm:w-16 sm:h-16"
+        className="fixed bottom-5 right-5 w-12 h-12 rounded-full bg-[#f97316] text-white flex items-center justify-center sm:bottom-10 sm:right-20 sm:w-16 sm:h-16"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

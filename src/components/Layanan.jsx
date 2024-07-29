@@ -10,7 +10,9 @@ export default function Layanan() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://api.ngurusizin.online/api/layanan");
+        const response = await axios.get(
+          "https://api.ngurusizin.online/api/layanan"
+        );
         setLayanan(response.data.data.data);
       } catch (error) {
         console.error("Error fetching data layanan:", error);
@@ -46,15 +48,21 @@ export default function Layanan() {
 
   return (
     <>
-      <div className="mt-8">
-        <h1 className="font-extrabold text:3xl  lg:text-3xl text-center text-transparent bg-clip-text bg-gradient-to-br from-[#1B1B1B] from-20% via-[#1D1D1D] via-20% to-[#A8CF45]">
+      <div className="mt-10">
+        <h1 className="font-extrabold text:3xl  lg:text-3xl text-center bg-clip-text text-gray-800">
           Layanan dan Harga
         </h1>
       </div>
-      <div className="relative flex flex-col items-center justify-center lg:px-28">
+      <div className="relative flex flex-col items-center justify-center lg:px-28 mt-4">
+        <span className="flex text-center text-gray-500">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Error magnam
+          beatae assumenda consequuntur numquam iure ad cumque, ut non hic porro
+          dignissimos quod obcaecati debitis culpa eligendi explicabo magni!
+          Perferendis!
+        </span>
         <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
           {Layanan.slice(0, 4).map((item) => {
-            let partDeskripsi = item.attributes.deskripsi.split('\r\n');
+            let partDeskripsi = item.attributes.deskripsi.split("\r\n");
             let deskripsi = partDeskripsi.filter((item) => item.trim() !== ""); // menghapus string yang kosong
 
             return (
@@ -91,7 +99,7 @@ export default function Layanan() {
                         </div>
                         <Link
                           href={`/layanan/form/?id=${item.id}`}
-                          className="px-5 py-2 mb-2 tracking-wider text-white bg-[#A8CF45] rounded-full shadow-sm md:mb-0 hover:bg-gray-800"
+                          className="px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm md:mb-0 bg-blue-400 hover:bg-blue-900"
                           type="button"
                           aria-label="like"
                         >
@@ -110,7 +118,7 @@ export default function Layanan() {
         <Link
           href={"/layanan"}
           type="submit"
-          className="block px-4 py-3 mt-6 font-semibold text-center text-white rounded-lg w-52 bg-gradient-to-r from-lime-400 to-lime-600 hover:bg-indigo-400 focus:bg-indigo-400"
+          className="block px-4 py-3 mt-6 font-semibold text-center text-white rounded-lg w-52 bg-blue-400 hover:bg-blue-900"
         >
           Lihat Semua Layanan
         </Link>
