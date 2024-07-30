@@ -54,47 +54,25 @@ export default function Layanan() {
     );
   }
 
-  const nomorWA = "6285731579908";
-  const nomorTelepon = "085731579908";
-
-  const buttonWA = () => {
-    window.location.href = `https://wa.me/${nomorWA}`;
-  };
-  const buttonTelepon = () => {
-    window.location.href = `tel:${nomorTelepon}`;
-  };
+  // Menghitung angka pertama yang akan ditampilkan dalam navigasi paginasi
+  const firstPage = Math.max(1, currentPage - 4);
 
   return (
     <section className="relative -mt-5 bg-transparent">
       <div className="flex flex-col w-full mx-auto sm:px-10 md:px-12 lg:px-28 lg:flex-row lg:gap-12 bg-blue-500 py-24 lg:py-32">
         <div className="relative text-white flex flex-col max-w-3xl mx-auto lg:text-left xl:py-8 lg:items-center lg:max-w-none lg:mx-0 lg:flex-1 lg:w-1/ lg:px-48">
-          <h1 className="text-3xl text-center font-bold leading-tight lg:text-5xl">
-            Cara Pesan Web
+          <h1 className="text-3xl text-center font-semibold leading-tight lg:text-4xl">
+            Testimoni Klien
           </h1>
         </div>
       </div>
 
-      <p className="text-center font-semibold text-4xl pt-16">Whatsapp</p>
-      <p className="text-center pt-4">Klik Untuk WA:</p>
-      <div className="flex justify-center py-5">
-        <button
-          onClick={buttonWA}
-          className="bg-green-500 py-3 px-5 flex justufy-center rounded-lg text-white"
-        >
-          <FaWhatsapp className="me-3 mt-0" size={22} />
-          <p className="me-2">085731579908</p>
-        </button>
-      </div>
-      <p className="text-center font-semibold text-4xl pt-16">Telepon</p>
-      <p className="text-center pt-4">Klik Untuk Telpon:</p>
-      <div className="flex justify-center py-5">
-        <button
-          onClick={buttonTelepon}
-          className="bg-green-500 py-3 px-5 flex justufy-center rounded-lg text-white"
-        >
-          <IoCallOutline className="me-3 mt-0" size={22} />
-          <p className="me-2">088182182812</p>
-        </button>
+      <p className="font-bold text-center text-lg pt-6 text-gray-600">
+        TESTIMONI LEWAT WHATSAPP
+      </p>
+
+      <div>
+        
       </div>
     </section>
   );

@@ -90,7 +90,7 @@ export default function Navbar() {
                 CARA PESAN WEB
               </Link>
               <Link
-                href={"/tentang"}
+                href={"/klien"}
                 className={`nav-link ${
                   router.pathname === "/tentang"
                     ? "font-bold text-white"
@@ -100,7 +100,7 @@ export default function Navbar() {
                 KLIEN KAMI
               </Link>
               <Link
-                href={"/tentang"}
+                href={"/pembayaran"}
                 className={`nav-link ${
                   router.pathname === "/tentang"
                     ? "font-bold text-white"
@@ -110,7 +110,7 @@ export default function Navbar() {
                 PEMBAYARAN
               </Link>
               <Link
-                href={"/tentang"}
+                href={"/testimoni_klien"}
                 className={`nav-link ${
                   router.pathname === "/tentang"
                     ? "font-bold text-white"
@@ -120,7 +120,7 @@ export default function Navbar() {
                 TESTIMONI KLIEN
               </Link>
               <Link
-                href={"/tentang"}
+                href={"/kontak_kami"}
                 className={`nav-link ${
                   router.pathname === "/tentang"
                     ? "font-bold text-white"
