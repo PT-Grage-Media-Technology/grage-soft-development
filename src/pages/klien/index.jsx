@@ -6,7 +6,8 @@ import LoadingLayanan from "@/components/elements/LoadingLayanan";
 import { IoCallOutline } from "react-icons/io5";
 
 export default function Layanan() {
-  const [layanan, setLayanan] = useState([]);
+  const [klien, setKlien] = useState([]);
+  // const [included, setIncluded] = useState([]); // Tambahkan state untuk included
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,9 +18,12 @@ export default function Layanan() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
+          // `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
+          "http://localhost:5000/api/klien/"
         );
-        setLayanan(response.data.data.data);
+        setKlien(response.data.data);
+        // console.log('klien', response.data.data);
+        // setIncluded(response.data.included); // Set included dari response
         setTotalPages(response.data.totalPages);
       } catch (error) {
         console.error("Error fetching data layanan:", error);
@@ -29,9 +33,11 @@ export default function Layanan() {
       }
     };
 
+    
     fetchData();
   }, [currentPage]);
-  console.log(layanan);
+
+  console.log('klien', klien);
 
   if (error) {
     return (
@@ -57,7 +63,6 @@ export default function Layanan() {
   // Menghitung angka pertama yang akan ditampilkan dalam navigasi paginasi
   const firstPage = Math.max(1, currentPage - 4);
 
-
   return (
     <section className="relative -mt-5 bg-transparent">
       <div className="flex flex-col w-full mx-auto sm:px-10 md:px-12 lg:px-28 lg:flex-row lg:gap-12 bg-blue-500 py-24 lg:py-32">
@@ -75,6 +80,35 @@ export default function Layanan() {
       Total : 3.569 Klien Aktif
       </p>
 
+    <div className="relative flex flex-col items-center justify-center lg:px-28">
+      <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
+        {/* {klien.map((item, index) => {
+          const kategori = included && item.relationships && item.relationships["kategori-klien"] && item.relationships["kategori-klien"].data
+            ? included.find(
+                (inc) => inc.type === "kategori_kliens" && inc.id === item.relationships["kategori-klien"].data.id
+              )
+            : null;
+          return (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-lg">
+              <h2 className="text-xl font-semibold mb-2">{kategori ? kategori.attributes["nama-kategori-klien"] : "Kategori tidak ditemukan"}</h2>
+              <img src={item.attributes["url-klien"]} alt={item.attributes["logo-klien"]} className="mb-4" />
+              <p className="text-gray-500">Paket ID: {item.attributes["paket-id"]}</p>
+            </div>
+          );
+        })} */}
+
+        {klien.map((item, index) => {
+          console.log('masuk', item.kategori_klien.data);
+          return (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-lg">
+              <h2 className="text-xl font-semibold mb-2">{item.kategori_klien ? item.kategori_klien.nama_kategori_klien : "Kategori tidak ditemukan"}</h2>
+              <img src={item["url_klien"]} alt={item["logo-klien"]} className="mb-4" />
+              <p className="text-gray-500">Paket ID: {item["paket-id"]}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
       
     </section>
   );
