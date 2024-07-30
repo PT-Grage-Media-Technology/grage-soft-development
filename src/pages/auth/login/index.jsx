@@ -22,7 +22,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        "https://api.ngurusizin.online/api/auth/login",
+        "http://localhost:5000/api/auth/login",
         {
           email,
           password,

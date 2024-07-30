@@ -9,29 +9,7 @@ export default function Layanan() {
   const [layanan, setLayanan] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const pageSize = 10; // Jumlah item per halaman
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
-        );
-        setLayanan(response.data.data.data);
-        setTotalPages(response.data.totalPages);
-      } catch (error) {
-        console.error("Error fetching data layanan:", error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [currentPage]);
-  console.log(layanan);
 
   if (error) {
     return (

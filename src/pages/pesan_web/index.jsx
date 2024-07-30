@@ -54,9 +54,11 @@ export default function Layanan() {
     );
   }
 
+  // Nomor 
   const nomorWA = "6285731579908";
   const nomorTelepon = "085731579908";
 
+  // Untuk Link Ke WA & Telepon
   const buttonWA = () => {
     window.location.href = `https://wa.me/${nomorWA}`;
   };

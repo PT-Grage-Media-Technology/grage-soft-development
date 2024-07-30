@@ -7,9 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
-const Layanan = ({ isLoggedIn }) => {
+const Paket = ({ isLoggedIn }) => {
   const router = useRouter();
-  const [layanan, setLayanan] = useState([]);
+  const [paket, setPaket] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -22,15 +22,15 @@ const Layanan = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://api.ngurusizin.online/api/layanan?page=${currentPage}`
+        `http://localhost:5000/api/paket?page=${currentPage}`
       );
-      setLayanan(response.data.data.data);
+      setPaket(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
     } catch (error) {
-      console.error("Error fetching data layanan:", error);
-      setError(error);
+      console.error("Error fetching data paket:", error);
+      setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
     }
@@ -39,15 +39,15 @@ const Layanan = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `https://api.ngurusizin.online/api/layanan?keyword=${keyword}`
+        `http://localhost:5000/api/paket?keyword=${keyword}`
       );
-      setLayanan(response.data.data.data);
+      setPaket(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
     } catch (error) {
-      console.error("Error fetching data layanan:", error);
-      setError(error);
+      console.error("Error fetching data paket:", error);
+      setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
     }
@@ -72,7 +72,7 @@ const Layanan = ({ isLoggedIn }) => {
       return;
     }
     try {
-      const response = await fetch(`https://api.ngurusizin.online/api/layanan/${id}`, {
+      const response = await fetch(`http://localhost:5000/api/paket/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -83,7 +83,7 @@ const Layanan = ({ isLoggedIn }) => {
         throw new Error("Gagal menghapus data");
       }
 
-      setLayanan(layanan.filter((item) => item.id !== id));
+      setPaket(paket.filter((item) => item.id !== id));
       showToastMessage();
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
@@ -100,7 +100,9 @@ const Layanan = ({ isLoggedIn }) => {
 
   if (error) {
     return (
-      <div className="text-center text-red-500">Error: {error.message}</div>
+      <div className="text-center text-red-500">
+        Error: {error.message || "Terjadi kesalahan pada server"}
+      </div>
     );
   }
 
@@ -116,18 +118,18 @@ const Layanan = ({ isLoggedIn }) => {
   return (
     <>
       <Head>
-        <title>Data Layanan</title>
+        <title>Data Paket</title>
       </Head>
       <AdminLayout>
         <ToastContainer />
 
         <div className="flex items-center justify-end mb-4 lg:-mt-48 md:-mt-48">
           <Link
-            href={"/admin/layanan/add"}
+            href={"/admin/paket/add"}
             className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 text-end hover:bg-green-700 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-green-500"
           >
             <i className="fa-solid fa-plus"></i>
-            Layanan
+            Paket
           </Link>
         </div>
         <div className="flex flex-col overflow-x-auto bg-white ">
@@ -136,7 +138,7 @@ const Layanan = ({ isLoggedIn }) => {
               <div className="overflow-x-auto">
                 <input
                   type="text"
-                  placeholder="Cari layanan..."
+                  placeholder="Cari paket..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-48 md:w-56 lg:w-72 rounded-l-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -145,16 +147,16 @@ const Layanan = ({ isLoggedIn }) => {
                   <thead className="font-medium border-b dark:border-neutral-500">
                     <tr>
                       <th scope="col" className="px-6 py-4">
-                        Nama
-                      </th>
-                      <th scope="col" className="px-6 py-4">
                         Harga
                       </th>
                       <th scope="col" className="px-6 py-4">
-                        Gambar
+                        Jumlah Pilihan Desain
                       </th>
                       <th scope="col" className="px-6 py-4">
-                        Deskripsi
+                        Status Website
+                      </th>
+                      <th scope="col" className="px-6 py-4">
+                        Id Kategori Website 
                       </th>
                       <th scope="col" className="px-6 py-4">
                         Action
@@ -162,29 +164,25 @@ const Layanan = ({ isLoggedIn }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {layanan.map((item) => (
+                    {paket.map((item) => (
                       <tr
                         className="border-b dark:border-neutral-500"
                         key={item.id}
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.nama}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
                           {item.attributes.harga}
                         </td>
-                        <td className="py-4 whitespace-nowrap">
-                          <img
-                            src={item.attributes.urlGambar}
-                            alt={item.attributes.nama}
-                            className="object-scale-down w-24 h-24 rounded-2xl"
-                          />
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {item.attributes.jumlah_pilihan_desain}
+                        </td>     
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {item.attributes.status_website}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.deskripsi}
+                          {item.attributes.kategori_Website_Id}
                         </td>
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
-                          <Link href={"/admin/layanan/edit?id=" + item.id}>
+                          <Link href={"/admin/paket/edit?id=" + item.id}>
                             <div
                               className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
                               aria-label="edit"
@@ -210,7 +208,7 @@ const Layanan = ({ isLoggedIn }) => {
                     ))}
                   </tbody>
                 </table>
-             
+
                 {/* pagination */}
                 <div className="flex justify-center gap-5 my-4">
                   <button
@@ -231,10 +229,11 @@ const Layanan = ({ isLoggedIn }) => {
                           onClick={
                             () => setCurrentPage(firstPage + index) // Memperbarui halaman berdasarkan indeks dan halaman pertama yang ditampilkan
                           }
-                          className={`mx-1 px-3 py-1 rounded-md ${currentPage === firstPage + index
+                          className={`mx-1 px-3 py-1 rounded-md ${
+                            currentPage === firstPage + index
                               ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white"
                               : "bg-gray-200 hover:bg-gray-400"
-                            }`}
+                          }`}
                         >
                           {firstPage + index}{" "}
                           {/* Menggunakan halaman pertama yang ditampilkan */}
@@ -276,4 +275,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default Layanan;
+export default Paket;
