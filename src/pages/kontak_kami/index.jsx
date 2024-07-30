@@ -13,26 +13,6 @@ export default function Layanan() {
   const [totalPages, setTotalPages] = useState(1);
   const pageSize = 10; // Jumlah item per halaman
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
-        );
-        setLayanan(response.data.data.data);
-        setTotalPages(response.data.totalPages);
-      } catch (error) {
-        console.error("Error fetching data layanan:", error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [currentPage]);
-  console.log(layanan);
-
   if (error) {
     return (
       <div className="text-center text-red-500">Error: {error.message}</div>
@@ -53,9 +33,6 @@ export default function Layanan() {
       </>
     );
   }
-
-  // Menghitung angka pertama yang akan ditampilkan dalam navigasi paginasi
-  const firstPage = Math.max(1, currentPage - 4);
 
   return (
     <section className="relative -mt-5 bg-transparent">

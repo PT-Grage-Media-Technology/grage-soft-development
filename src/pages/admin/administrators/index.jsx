@@ -46,7 +46,7 @@ const Administrators = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://api.ngurusizin.online/api/administrators?page=${currentPage}`
+        `http://localhost:5000/api/administrators?page=${currentPage}`
       );
       setAdministrators(response.data.data.data);
       setTotalPages(response.data.totalPages);
@@ -63,7 +63,7 @@ const Administrators = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `https://api.ngurusizin.online/api/administrators?keyword=${keyword}`
+        `http://localhost:5000/api/administrators?keyword=${keyword}`
       );
       setAdministrators(response.data.data.data);
       setTotalPages(response.data.totalPages);
@@ -106,7 +106,7 @@ const Administrators = ({ isLoggedIn }) => {
     const id = itemIdToDelete;
     try {
       const response = await fetch(
-        `https://api.ngurusizin.online/api/administrators/${id}`,
+        `http://localhost:5000/api/administrators/${id}`,
         {
           method: "DELETE",
           headers: {

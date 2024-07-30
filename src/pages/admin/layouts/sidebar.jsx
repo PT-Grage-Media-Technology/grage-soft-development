@@ -33,7 +33,7 @@ export default function Sidebar() {
       };
 
       // Kirim permintaan logout dengan token JWT yang disertakan dalam header
-      await axios.post("https://api.ngurusizin.online/api/auth/logout", null, config);
+      await axios.post("http://localhost:5000/auth/logout", null, config);
 
       // Hapus token JWT dari cookies setelah berhasil logout
       // setCookie("token", "", { path: "/" });
@@ -63,7 +63,7 @@ export default function Sidebar() {
             href={"/"}
             className="inline-block p-4 px-0 mr-0 text-sm font-bold text-left uppercase md:block md:pb-2 text-blueGray-600 whitespace-nowrap"
           >
-            Ngurus Izin
+            GMT SOFTWARE DEVELOPMENT
           </Link>
           {/* User */}
           {/* <ul className="flex flex-wrap items-center list-none md:hidden">
@@ -89,7 +89,7 @@ export default function Sidebar() {
                     href="/"
                     className="inline-block p-4 px-0 mr-0 text-sm font-bold text-left uppercase md:block md:pb-2 text-blueGray-600 whitespace-nowrap"
                   >
-                    Ngurus Izin
+                    GMT SOFTWARE DEVELOPMENT
                   </Link>
                 </div>
                 <div className="flex justify-end w-6/12">
@@ -130,7 +130,7 @@ export default function Sidebar() {
                     className={
                       "text-xs uppercase py-3 font-bold block " +
                       (router.pathname.indexOf("/admin/dashboard") !== -1
-                        ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white rounded-lg px-4 py-2"
+                        ? "bg-orange-300 text-white rounded-lg px-4 py-2"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
                   >
@@ -147,30 +147,29 @@ export default function Sidebar() {
                 </li>
               )} */}
 
-              {/* SECTION LAYANAN */}
-              {role == "affiliate" && (
+             
                 <li className="items-center">
                   <Link
-                    href={"/admin/layanan"}
+                    href={"/admin/paket"}
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/admin/layanan") !== -1
-                        ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white rounded-lg px-4 py-2"
+                      (router.pathname.indexOf("/admin/paket") !== -1
+                        ? "bg-orange-300 text-black rounded-lg px-4 py-2"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
                   >
                     <i
                       className={
                         "fas fa-tools mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/layanan") !== -1
+                        (router.pathname.indexOf("/admin/paket") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
                       }
                     ></i>{" "}
-                    Layanan
+                    PAKET
                   </Link>
                 </li>
-              )}
+       
 
               {/* SECTION ORDER */}
               <li className="items-center">
@@ -179,7 +178,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (router.pathname.indexOf("/admin/order") !== -1
-                      ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white rounded-lg px-4 py-2"
+                      ? "bg-orange-300 text-black rounded-lg px-4 py-2"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                 >
@@ -195,15 +194,13 @@ export default function Sidebar() {
                 </Link>
               </li>
 
-              {/* SECTION BAR TENTANG */}
-              {role == "affiliate" && (
                 <li className="items-center">
                   <Link
                     href={"/admin/tentang"}
                     className={
                       "text-xs uppercase py-3 font-bold block " +
                       (router.pathname.indexOf("/admin/tentang") !== -1
-                        ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white rounded-lg px-4 py-2"
+                        ? "bg-orange-300 text-black rounded-lg px-4 py-2"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
                   >
@@ -218,16 +215,15 @@ export default function Sidebar() {
                     Tentang
                   </Link>
                 </li>
-              )}
-              {/* TESTIMONI */}
-              {role == "affiliate" && (
+            
+          
                 <li className="items-center">
                   <Link
                     href={"/admin/testimoni"}
                     className={
                       "text-xs uppercase py-3 font-bold block " +
                       (router.pathname.indexOf("/admin/testimoni") !== -1
-                        ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white rounded-lg px-4 py-2"
+                        ? "bg-orange-300 text-black rounded-lg px-4 py-2"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
                   >
@@ -242,16 +238,15 @@ export default function Sidebar() {
                     Testimoni
                   </Link>
                 </li>
-              )}
-              {/* SECTION ADMINISTRATORS */}
-              {role == "affiliate" && (
+           
+            
                 <li className="items-center">
                   <Link
                     href={"/admin/administrators"}
                     className={
                       "text-xs uppercase py-3 font-bold block " +
                       (router.pathname.indexOf("/admin/administrators") !== -1
-                        ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white rounded-lg px-4 py-2"
+                        ? "bg-orange-300 text-black rounded-lg px-4 py-2"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
                   >
@@ -266,7 +261,7 @@ export default function Sidebar() {
                     administrators
                   </Link>
                 </li>
-              )}
+        
 
               <li className="items-center">
                 <button

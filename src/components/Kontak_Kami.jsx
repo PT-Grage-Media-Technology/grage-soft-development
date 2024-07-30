@@ -3,16 +3,16 @@ import React from 'react'
 function Kontak_Kami() {
   return (
     <div className='grid text-start px-10 py-28'>
-        <h3 className='text-lg font-semibold'>Jasa Pembuatan Website Murah Berkualitas</h3>
         <div className='grid grid-rows-5 px-10 py-8'>
+        <h3 className='text-lg font-semibold'>Jasa Pembuatan Website Murah Berkualitas</h3>
             <div>
-                <p>Testing</p>
+                <p className='pt-4'>Testing</p>
             </div>
         </div>
-        <h3 className='text-lg font-semibold'>MENGAPA KAMI?</h3>
         <div className='grid grid-rows-7 px-10 py-8'>
+        <h3 className='text-lg font-semibold'>MENGAPA KAMI?</h3>
             <div>
-                <p>1. dsadaddddddddddddddddddsfdsfdsfsdfskmfmsdfmsdkf</p>
+                <p className='pt-4'>1. dsadaddddddddddddddddddsfdsfdsfsdfskmfmsdfmsdkf</p>
             </div>
         </div>
         <div className='grid px-10 py-8'>

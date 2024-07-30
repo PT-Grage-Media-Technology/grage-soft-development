@@ -9,12 +9,10 @@ export default function Add() {
   const router = useRouter();
   const { id } = router.query;
   const [formData, setFormData] = useState({
-    deskripsi: "",
     harga: "",
-    nama: "",
-    gambar: null,
-    gambarUrl: null,
-    status: "",
+    jumlah_pilihan_desain: "",
+    status_website: "",
+    kategori_Website_Id: "",
   });
 
   const handleSubmit = async (e) => {
@@ -22,10 +20,10 @@ export default function Add() {
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("deskripsi", formData.deskripsi);
       formDataToSend.append("harga", formData.harga);
-      formDataToSend.append("gambar", formData.gambar); // Mengganti 'file' menjadi 'gambar'
-      formDataToSend.append("nama", formData.nama);
+      formDataToSend.append("jumlah_pilihan_desain", formData.gambar); // Mengganti 'file' menjadi 'gambar'
+      formDataToSend.append("status_website", formData.nama);
+      formDataToSend.append("kategori_Website_Id", formData.nama);
       // formDataToSend.append("status", formData.status);
       const response = await axios.post(
         "https://api.ngurusizin.online/api/layanan",
