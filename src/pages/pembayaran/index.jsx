@@ -5,8 +5,8 @@ import { FaWhatsapp } from "react-icons/fa";
 import LoadingLayanan from "@/components/elements/LoadingLayanan";
 import { IoCallOutline } from "react-icons/io5";
 
-export default function Layanan() {
-  const [layanan, setLayanan] = useState([]);
+export default function Pembayaran() {
+  const [pembayaran, setPembayaran] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,10 +17,16 @@ export default function Layanan() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
+          // `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
+          "http://localhost:5000/api/bank/"
         );
-        setLayanan(response.data.data.data);
-        setTotalPages(response.data.totalPages);
+        //console.log("Response data:", response.data); // Tambahkan log ini
+        if (response.data && Array.isArray(response.data.data)) {
+          setPembayaran(response.data.data);
+        } else {
+          console.error("Unexpected data format:", response.data);
+        }
+        setTotalPages(response.data.totalPages || 1);
       } catch (error) {
         console.error("Error fetching data layanan:", error);
         setError(error);
@@ -31,7 +37,7 @@ export default function Layanan() {
 
     fetchData();
   }, [currentPage]);
-  console.log(layanan);
+  console.log(pembayaran);
 
   if (error) {
     return (
@@ -71,7 +77,30 @@ export default function Layanan() {
         Pembayaran bisa dilakukan ke bank berikut ini :
       </p>
       <div>
-        
+        {pembayaran && pembayaran.length > 0 ? (
+          pembayaran.map((item, index) => (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-lg mb-4">
+              <img
+                src={item.attributes["url-image-bank"]}
+                alt={item.attributes["image-bank"]}
+                className="mb-4 w-32 h-32 object-contain mx-auto"
+              />
+              <h2 className="text-xl font-semibold mb-2 text-center">
+                {item.attributes["nama-rek"]}
+              </h2>
+              <p className="text-gray-500 text-center">
+                No. Rekening: {item.attributes["no-rek"]}
+              </p>
+              <p className="text-gray-500 text-center">
+                Atas Nama: {item.attributes["atas-nama"]}
+              </p>
+            </div>
+          ))
+        ) : (
+          <div className="text-center text-gray-500">
+            Tidak ada data pembayaran tersedia.
+          </div>
+        )}
       </div>
     </section>
   );
