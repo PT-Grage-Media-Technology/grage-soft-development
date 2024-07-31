@@ -363,7 +363,7 @@ const Administrators = ({ isLoggedIn }) => {
                           }
                           className={`mx-1 px-3 py-1 rounded-md ${
                             currentPage === firstPage + index
-                              ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white"
+                              ? "bg-orange-400 hover:bg-orange-600 text-white"
                               : "bg-gray-200 hover:bg-gray-400"
                           }`}
                         >
