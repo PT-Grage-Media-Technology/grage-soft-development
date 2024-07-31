@@ -5,7 +5,7 @@ import Link from "next/link";
 import Head from "next/head";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
-const Tentang = ({ isLoggedIn }) => {
+const Pembayaran = ({ isLoggedIn }) => {
   const router = useRouter();
   const [tentang, setTentang] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -82,7 +82,7 @@ const Tentang = ({ isLoggedIn }) => {
   return (
     <>
       <Head>
-        <title>Data Tentang</title>
+        <title>Data Pembayaran</title>
       </Head>
       <AdminLayout>
         <div className="flex items-center justify-end mb-4 lg:-mt-48 md:-mt-48">
@@ -261,4 +261,4 @@ export async function getServerSideProps(context) {
     props: { isLoggedIn },
   };
 }
-export default Tentang;
+export default Pembayaran;

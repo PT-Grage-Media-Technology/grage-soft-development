@@ -196,7 +196,7 @@ export default function Sidebar() {
 
                 <li className="items-center">
                   <Link
-                    href={"/admin/tentang"}
+                    href={"/admin/pembayaran"}
                     className={
                       "text-xs uppercase py-3 font-bold block " +
                       (router.pathname.indexOf("/admin/tentang") !== -1
@@ -206,13 +206,13 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fas fa-address-card mr-2 text-sm " +
+                        "fa-regular fa-credit-card mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/tentang") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
                       }
                     ></i>{" "}
-                    Tentang
+                    Pembayaran
                   </Link>
                 </li>
             
