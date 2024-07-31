@@ -7,9 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
-const Paket = ({ isLoggedIn }) => {
+
+const Wcu = ({ isLoggedIn }) => {
   const router = useRouter();
-  const [paket, setPaket] = useState([]);
+  const [wcu, setWcu] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -22,10 +23,11 @@ const Paket = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/paket?page=${currentPage}`
+        `http://localhost:5000/api/wcu?page=${currentPage}`
       );
-      console.log(response)
-      setPaket(response.data.data);
+      console.log('rendi ganteng',response.data.data);
+      setWcu(response.data.data);
+      // setPaket(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
@@ -148,45 +150,39 @@ const Paket = ({ isLoggedIn }) => {
                   <thead className="font-medium border-b dark:border-neutral-500">
                     <tr>
                       <th scope="col" className="px-6 py-4">
-                        Nama Peket
+                        Isi
                       </th>
-                      <th scope="col" className="px-6 py-4">
-                        Harga
-                      </th>
-                      <th scope="col" className="px-6 py-4">
+                      {/* <th scope="col" className="px-6 py-4">
                         Jumlah Pilihan Desain
                       </th>
                       <th scope="col" className="px-6 py-4">
                         Status Website
                       </th>
                       <th scope="col" className="px-6 py-4">
-                        Kategori Website
+                        Id Kategori Website 
                       </th>
                       <th scope="col" className="px-6 py-4">
                         Action
-                      </th>
+                      </th> */}
                     </tr>
                   </thead>
                   <tbody>
-                    {paket.map((item) => (
+                    {wcu.map((item) => (
                       <tr
                         className="border-b dark:border-neutral-500"
                         key={item.id}
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item['nama_paket']}
+                          {item.attributes.isi}
+                        </td>
+                        {/* <td className="px-6 py-4 whitespace-nowrap">
+                          {item.attributes.jumlah_pilihan_desain}
+                        </td>     
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {item.attributes.status_website}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item['harga']}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {item['jumlah_pilihan_desain']}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {item['status_website']}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {item['kategoriWebsite']['nama_kategori']}
+                          {item.attributes.kategori_Website_Id}
                         </td>
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
                           <Link href={"/admin/paket/edit?id=" + item.id}>
@@ -210,7 +206,7 @@ const Paket = ({ isLoggedIn }) => {
                               <i className="fa-solid fa-trash"></i>
                             )}
                           </button>
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
                   </tbody>
@@ -282,4 +278,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default Paket;
+export default Wcu;
