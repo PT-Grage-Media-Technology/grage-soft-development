@@ -186,7 +186,7 @@ const Paket = ({ isLoggedIn }) => {
                           {item['status_website']}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item['kategoriWebsite']['nama_kategori']}
+                          {/* {item['kategoriWebsite']['nama_kategori']} */}
                         </td>
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
                           <Link href={"/admin/paket/edit?id=" + item.id}>
