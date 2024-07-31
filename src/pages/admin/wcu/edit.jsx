@@ -69,12 +69,12 @@ export default function Edit() {
       const formDataToSend = new FormData();
       formDataToSend.append("isi", formData.isi); // Pastikan key ini sesuai dengan yang diharapkan oleh backend
 
-      const response = await axios.put(
-        `https://api.ngurusizin.online/api/wcu/${id}`,
+      const response = await axios.patch(
+        `http://localhost:5000/api/wcu/${id}`,
         formDataToSend,
         {
           headers: {
-            "Content-Type": "aplication/json",
+            "Content-Type": "application/json",
           },
         }
       );
