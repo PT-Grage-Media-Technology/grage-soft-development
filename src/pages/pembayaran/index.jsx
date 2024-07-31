@@ -45,7 +45,7 @@ export default function Pembayaran() {
     );
   }
 
-  // Menampilkan Skeleton saat loading atau error fetching data
+  // Menampilkan Skeleton saat loading atau error fetching dataa
   if (loading) {
     return (
       <>
