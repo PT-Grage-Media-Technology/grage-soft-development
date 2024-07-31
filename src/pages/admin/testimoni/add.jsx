@@ -8,11 +8,11 @@ export default function Add() {
   const router = useRouter();
   const { id } = router.query;
   const [formData, setFormData] = useState({
-    testimoni: "",
-    nama: "",
-    gambar: null, // Set default value to null
-    urlGambar: null,
-    jabatan: "",
+    jenis_testimoni: "",
+    judul_testimoni: "",
+    deskripsi_testimoni: "",
+    gambar_testimoni: null,
+    url_gambar: null,
   });
 
   const handleSubmit = async (e) => {
@@ -20,16 +20,27 @@ export default function Add() {
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("testimoni", formData.testimoni);
-      formDataToSend.append("gambar", formData.gambar); // Mengganti 'file' menjadi 'gambar'
-      formDataToSend.append("nama", formData.nama);
-      formDataToSend.append("jabatan", formData.jabatan);
-      const response = await fetch("https://api.ngurusizin.online/api/testimoni", {
-        method: "POST",
-        body: formDataToSend,
-      });
+      formDataToSend.append("jenis_testimoni", formData.jenis_testimoni);
+      formDataToSend.append("judul_testimoni", formData.judul_testimoni);
 
-      if (response.ok) {
+      formDataToSend.append(
+        "deskripsi_testimoni",
+        formData.deskripsi_testimoni
+      );
+
+      formDataToSend.append("gambar_testimoni", formData.gambar_testimoni);
+
+      const response = await axios.post(
+        "http://localhost:5000/api/testimoni/",
+          formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.status == 201) {
         // console.log("Data berhasil di tambahkan!");
         // tambahkan logika lainnya sesuai kebutuhan, seperti mereset form atau menampilkan pesan sukses
         router.push("/admin/testimoni");
@@ -43,13 +54,13 @@ export default function Add() {
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "gambar") {
+    if (name === "gambar_testimoni") {
       // Mengganti 'file' menjadi 'gambar'
       setFormData((prevData) => ({
         ...prevData,
         [name]: files[0],
         // mengambil file pertama dari daftar file yang dipilih
-        gambarUrl: URL.createObjectURL(files[0]),
+        url_gambar: URL.createObjectURL(files[0]),
       }));
     } else {
       setFormData((prevData) => ({
@@ -71,34 +82,37 @@ export default function Add() {
           <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
             <div className="mt-4 mb-5">
               <label
-                htmlFor="nama"
+                htmlFor="jenis_testimoni"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Nama
+                Jenis Testimoni
               </label>
-              <input
-                type="text"
-                name="nama"
-                id="nama"
+              <select
+                name="jenis_testimoni"
+                id="jenis_testimoni"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.nama}
+                value={formData.jenis_testimoni}
                 onChange={handleInputChange}
                 required
-              />
+              >
+                <option value="">Pilih Jenis Testimoni</option>
+                <option value="Wa">Wa</option>
+                <option value="Email">Email</option>
+              </select>
             </div>
 
             <div className="mb-6 ">
               {" "}
               <label className="mb-5 block text-base font-semibold text-[#07074D]">
-                Gambar
+                Gambar Testimoni
               </label>
               <div className="mb-8">
                 <input
                   type="file"
-                  name="gambar"
-                  id="gambar"
-                  htmlFor="gambar"
-                  className="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  name="gambar_testimoni"
+                  id="gambar_testimoni"
+                  htmlFor="gambar_testimoni"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   onChange={handleInputChange}
                   required
                 />
@@ -107,17 +121,17 @@ export default function Add() {
 
             <div className="mb-5">
               <label
-                htmlFor="jabatan"
+                htmlFor="judul_testimoni"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Jabatan
+                Judul Testimoni
               </label>
               <input
                 type="text"
-                name="jabatan"
-                id="jabatan"
+                name="judul_testimoni"
+                id="judul_testimoni"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.jabatan}
+                value={formData.judul_testimoni}
                 onChange={handleInputChange}
                 required
               />
@@ -125,17 +139,17 @@ export default function Add() {
 
             <div className="mb-5">
               <label
-                htmlFor="testimoni"
+                htmlFor="deskripsi_testimoni"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Testimoni
+                Deskripsi Testimoni
               </label>
               <textarea
                 type="text"
-                name="testimoni"
-                id="testimoni"
+                name="deskripsi_testimoni"
+                id="deskripsi_testimoni"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.testimoni}
+                value={formData.deskripsi_testimoni}
                 onChange={handleInputChange}
                 required
               ></textarea>
