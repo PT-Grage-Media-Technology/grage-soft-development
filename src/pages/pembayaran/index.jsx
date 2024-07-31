@@ -77,30 +77,24 @@ export default function Pembayaran() {
         Pembayaran bisa dilakukan ke bank berikut ini :
       </p>
       <div>
-        {pembayaran && pembayaran.length > 0 ? (
-          pembayaran.map((item, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-lg mb-4">
-              <img
-                src={item.attributes["url-image-bank"]}
-                alt={item.attributes["image-bank"]}
-                className="mb-4 w-32 h-32 object-contain mx-auto"
-              />
-              <h2 className="text-xl font-semibold mb-2 text-center">
-                {item.attributes["nama-rek"]}
-              </h2>
-              <p className="text-gray-500 text-center">
-                No. Rekening: {item.attributes["no-rek"]}
-              </p>
-              <p className="text-gray-500 text-center">
-                Atas Nama: {item.attributes["atas-nama"]}
-              </p>
-            </div>
-          ))
-        ) : (
-          <div className="text-center text-gray-500">
-            Tidak ada data pembayaran tersedia.
+        {pembayaran.map((item, index) => (
+          <div key={index} className="bg-white p-6 rounded-lg shadow-lg mb-4">
+            <img
+              src={item.url_image_bank}
+              alt={item.image_bank}
+              className="mb-4 w-32 h-32 object-contain mx-auto aspect-square"
+            />
+            <h2 className="text-xl font-semibold mb-2 text-center">
+              {item.nama_rek}
+            </h2>
+            <p className="text-gray-500 text-center">
+              No. Rekening: {item.no_rek}
+            </p>
+            <p className="text-gray-500 text-center">
+              Atas Nama: {item.atas_nama}
+            </p>
           </div>
-        )}
+        ))}
       </div>
     </section>
   );

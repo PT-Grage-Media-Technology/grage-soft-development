@@ -94,7 +94,7 @@ export default function Edit() {
       );
 
       if (response.status == 200) {
-        router.push("/admin/layanan");
+        router.push("/admin/paket");
       } else {
         console.error("Gagal mengirim data.");
       }

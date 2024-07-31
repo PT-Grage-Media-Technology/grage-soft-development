@@ -5,9 +5,9 @@ import Link from "next/link";
 import Head from "next/head";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
-const Tentang = ({ isLoggedIn }) => {
+const Pembayaran = ({ isLoggedIn }) => {
   const router = useRouter();
-  const [tentang, setTentang] = useState([]);
+  const [bank, setBank] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -16,6 +16,7 @@ const Tentang = ({ isLoggedIn }) => {
   const [pageSize, setPageSize] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   useEffect(() => {
     fetchData();
   }, [currentPage]); // Fetch data when currentPage changes
@@ -23,46 +24,47 @@ const Tentang = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://api.ngurusizin.online/api/tentang?page=${currentPage}&search=${searchTerm}`
+        //`https://api.ngurusizin.online/api/tentang?page=${currentPage}&search=${searchTerm}`
+        "http://localhost:5000/api/bank/"
       );
-      setTentang(response.data.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
+      //console.log(response.data)
+      setBank(response.data.data);
+      setTotalPages(response.data.data.totalPages);
+      setPageSize(response.data.data.pageSize);
+      setTotalCount(response.data.data.totalCount);
     } catch (error) {
-      console.error("Error fetching data tentang:", error);
+      console.error("Error fetching data bank:", error);
       setError(error);
     } finally {
       setLoading(false);
     }
   };
-
-  const handleDelete = async (id) => {
-    setIsDeleting(true);
-    const confirmDelete = window.confirm(
-      "Apakah Anda yakin ingin menghapus item ini?"
-    );
-    if (!confirmDelete) {
-      setIsDeleting(false);
-      return;
-    }
+  const toggleModalDelete = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
+  const handleDelete = async () => {
+    const id = isDeleting;
     try {
-      const response = await fetch(`https://api.ngurusizin.online/api/tentang/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/bank/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Gagal menghapus data");
       }
 
-      setTentang(tentang.filter((item) => item.id !== id));
+      setBank(bank.filter((item) => item.id !== id));
+      showToastMessage("Data berhasil dihapus!");
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
     } finally {
-      setIsDeleting(false);
+      setShowDeleteModal(false);
     }
   };
 
@@ -82,7 +84,7 @@ const Tentang = ({ isLoggedIn }) => {
   return (
     <>
       <Head>
-        <title>Data Tentang</title>
+        <title>Data Pembayaran</title>
       </Head>
       <AdminLayout>
         <div className="flex items-center justify-end mb-4 lg:-mt-48 md:-mt-48">
@@ -90,11 +92,11 @@ const Tentang = ({ isLoggedIn }) => {
             <p></p>
           ) : (
             <Link
-              href={"/admin/tentang/add"}
+              href={"/admin/pembayaran/add"}
               className="z-10 flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 i tems-center text-end hover:bg-green-700 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-green-500"
             >
               <i className="fa-solid fa-plus"></i>
-              Tentang
+              Bank
             </Link>
           )}
         </div>
@@ -105,7 +107,7 @@ const Tentang = ({ isLoggedIn }) => {
                 {/* search */}
                 {/* <input
                   type="text"
-                  placeholder="Cari tentang..."
+                  placeholder="Cari bank..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-48 md:w-56 lg:w-72   rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -117,23 +119,20 @@ const Tentang = ({ isLoggedIn }) => {
                         #
                       </th> */}
                       <th scope="col" className="px-6 py-4">
-                        Nama
+                        Nama Rekening
                       </th>
 
                       <th scope="col" className="px-6 py-4">
-                        Gambar
+                        No Rekening
                       </th>
                       <th scope="col" className="px-6 py-4">
-                        Phone
+                        Image Bank
                       </th>
                       <th scope="col" className="px-6 py-4">
-                        Lokasi
+                        Url Image Bank
                       </th>
                       <th scope="col" className="px-6 py-4">
-                        Email
-                      </th>
-                      <th scope="col" className="px-6 py-4">
-                        Tentang
+                        Atas Nama
                       </th>
 
                       <th scope="col" className="px-6 py-4">
@@ -142,7 +141,7 @@ const Tentang = ({ isLoggedIn }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {tentang.map((item) => (
+                    {bank.map((item) => (
                       <tr
                         className="border-b dark:border-neutral-500"
                         key={item.id}
@@ -151,31 +150,29 @@ const Tentang = ({ isLoggedIn }) => {
                           {item.id}
                         </td> */}
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.nama}
+                          {item.nama_rek}
+                        </td>
+
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {item.no_rek}
                         </td>
 
                         <td className="py-4 whitespace-nowrap">
                           <img
-                            src={item.attributes.urlGambar}
-                            alt={item.attributes.nama}
+                            src={item.url_image_bank}
+                            alt={item.image_bank}
                             className="object-scale-down w-24 h-24 rounded-2xl"
                           />
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.phone}
+                          {item.atas_nama}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.lokasi}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.email}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.tentang}
-                        </td>
+                        {/* <td className="px-6 py-4 whitespace-nowrap">
+                            {item.attributes['url-image-bank']}
+                          </td> */}
 
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
-                          <Link href={"/admin/tentang/edit?id=" + item.id}>
+                          <Link href={"/admin/pembayaran/edit?id=" + item.id}>
                             <div
                               className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
                               aria-label="edit"
@@ -185,16 +182,19 @@ const Tentang = ({ isLoggedIn }) => {
                           </Link>
 
                           <button
-                            onClick={() => handleDelete(item.id)}
-                            disabled={isDeleting}
+                            onClick={() => {
+                              toggleModalDelete();
+                              setIsDeleting(item.id);
+                              // Simpan ID item yang akan dihapus
+                            }}
                             className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
                             aria-label="delete"
                           >
-                            {isDeleting ? (
+                            {/* {isDeleting ? (
                               "Menghapus..."
-                            ) : (
+                            ) : ( */}
                               <i className="fa-solid fa-trash"></i>
-                            )}
+                            {/* )} */}
                           </button>
                         </td>
                       </tr>
@@ -243,6 +243,42 @@ const Tentang = ({ isLoggedIn }) => {
             </div>
           </div>
         </div>
+          {/* Modal delete */}
+          {showDeleteModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="fixed inset-0 transition-opacity">
+              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <div className="relative w-full max-w-md transition transform bg-white rounded-lg shadow-xl">
+              <div className="px-4 py-5 sm:px-6">
+                <div className="px-4 py-5 sm:px-6">
+                  <h3 className="text-lg font-medium leading-6 text-gray-900">
+                    Delete Administrators
+                  </h3>
+                  <p className="max-w-2xl mt-1 text-sm text-gray-500">
+                    Apakah Anda yakin ingin menghapus data ini?
+                  </p>
+                </div>
+              </div>
+              <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Delete
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowDeleteModal(false)}
+                  className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </AdminLayout>
     </>
   );
@@ -261,4 +297,4 @@ export async function getServerSideProps(context) {
     props: { isLoggedIn },
   };
 }
-export default Tentang;
+export default Pembayaran;
