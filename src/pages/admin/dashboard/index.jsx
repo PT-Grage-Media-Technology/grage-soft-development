@@ -10,13 +10,13 @@ export default function Dashboard({ isLoggedIn }) {
   const router = useRouter();
 
   // Jika pengguna belum login, arahkan kembali ke halaman login
-  if (!isLoggedIn) {
-    if (typeof window !== "undefined") {
-      // Cek apakah kode sedang berjalan di sisi klien
-      router.push("/auth/login"); // Mengarahkan pengguna kembali ke halaman login
-    }
-    return <p>Loading...</p>; // or display loading indicator
-  }
+  // if (!isLoggedIn) {
+  //   if (typeof window !== "undefined") {
+  //     // Cek apakah kode sedang berjalan di sisi klien
+  //     router.push("/auth/login"); // Mengarahkan pengguna kembali ke halaman login
+  //   }
+  //   return <p>Loading...</p>; // or display loading indicator
+  // }
   const CardList = [
     {
       title: "Order",

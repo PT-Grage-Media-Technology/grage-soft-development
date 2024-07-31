@@ -94,7 +94,7 @@ export default function Edit() {
       );
 
       if (response.status == 200) {
-        router.push("/admin/layanan");
+        router.push("/admin/paket");
       } else {
         console.error("Gagal mengirim data.");
       }
@@ -107,7 +107,7 @@ export default function Edit() {
     <AdminLayout>
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link href={"/admin/layanan"} className="relative ml-32 lg:ml-60">
+          <Link href={"/admin/paket"} className="relative ml-32 lg:ml-60">
             <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
               <i className="fas fa-arrow-left"></i>
               <span>Kembali</span>
@@ -120,7 +120,7 @@ export default function Edit() {
                 htmlFor="nama"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Nama
+                Nama Paket
               </label>
               <input
                 type="text"
@@ -134,6 +134,22 @@ export default function Edit() {
             <div className="mb-5">
               <label
                 htmlFor="harga"
+                className="mb-3 block text-base font-medium text-[#07074D]"
+              >
+                Harga
+              </label>
+              <input
+                type="number"
+                name="harga"
+                id="harga"
+                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                value={formData.harga} // Gunakan nilai awal jika value kosong
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="mb-5">
+              <label
+                htmlFor="jumlah_pilihan_desain"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
                 Harga

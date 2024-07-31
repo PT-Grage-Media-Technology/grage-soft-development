@@ -83,7 +83,7 @@ export default function Pembayaran() {
               <img
                 src={item.attributes["url-image-bank"]}
                 alt={item.attributes["image-bank"]}
-                className="mb-4 w-32 h-32 object-contain mx-auto"
+                className="mb-4 w-32 h-32 object-contain mx-auto aspect-square"
               />
               <h2 className="text-xl font-semibold mb-2 text-center">
                 {item.attributes["nama-rek"]}
