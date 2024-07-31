@@ -26,15 +26,12 @@ export default function Edit() {
         const response = await axios.get(
           `http://localhost:5000/api/bank/${id}`
         );
-        console.log("API response:", response.data); // Log the entire API response
-        if (!response.data.data || !response.data.data.attributes) {
-          throw new Error("Data tidak lengkap.");
-        }
-        const data = response.data.data;
-        console.log("Data:", data);
+       // console.log("API response:", response.data); // Log the entire API response
+        const data = response.data;
+      //  console.log("Data:", data);
         // Log the data object
         // Access attributes directly
-        const { nama_rek, no_rek, atas_nama, image_bank } = data.attributes;
+        const { nama_rek, no_rek, atas_nama, image_bank } = data;
         // Update formData state with data from the API response
         setFormData((prevData) => ({
           ...prevData,
@@ -93,7 +90,7 @@ export default function Edit() {
       );
 
       if (response.status == 200) {
-        router.push("/admin/tentang");
+        router.push("/admin/pembayaran");
       } else {
         console.error("Gagal mengirim data.", response);
       }
@@ -106,7 +103,7 @@ export default function Edit() {
     <AdminLayout>
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link href={"/admin/tentang"} className="relative ml-32 lg:ml-60">
+          <Link href={"/admin/pembayaran"} className="relative ml-32 lg:ml-60">
             <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
               <i className="fas fa-arrow-left"></i>
               <span>Kembali</span>
@@ -116,15 +113,15 @@ export default function Edit() {
           <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
             <div className="mt-4 mb-5">
               <label
-                htmlFor="nama"
+                htmlFor="nama_rek"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Nama
+                Nama Rekening
               </label>
               <input
                 type="text"
-                name="nama"
-                id="nama"
+                name="nama_rek"
+                id="nama_rek"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 value={formData.nama_rek}
                 onChange={handleInputChange}
@@ -138,9 +135,9 @@ export default function Edit() {
               <div className="mb-8">
                 <input
                   type="file"
-                  name="gambar"
-                  id="gambar"
-                  htmlFor="gambar"
+                  name="image_bank"
+                  id="image_bank"
+                  htmlFor="image_bank"
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   onChange={handleInputChange}
                 />
@@ -148,7 +145,7 @@ export default function Edit() {
             </div>
             <div className="mb-5">
               <label
-                htmlFor="phone"
+                htmlFor="no_rek"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
                 No Rekening
