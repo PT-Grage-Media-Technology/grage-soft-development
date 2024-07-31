@@ -14,40 +14,34 @@ export default function Edit() {
   // Initialize formData state with empty strings for text inputs and null for file input
   // Inisialisasi state formData dengan nilai default jika tidak ada data sebelumnya
   const [formData, setFormData] = useState({
-    tentang: "", // Set default value to empty string
-    phone: "", // Set default value to empty string
-    nama: "", // Set default value to empty string
-    gambar: null, // Set default value to null
-    lokasi: "", // Set default value to empty string
-    email: "",
+    nama_rek: "",
+    no_rek: "",
+    atas_nama: "",
+    image_bank: null,
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api.ngurusizin.online/api/tentang/${id}`
+          `http://localhost:5000/api/bank/${id}`
         );
-        // console.log("API response:", response); // Log the entire API response
-        if (!response.data.data || !response.data.data.attributes) {
-          throw new Error("Data tidak lengkap.");
-        }
-        const data = response.data.data;
-        console.log("Data:", data);
+       // console.log("API response:", response.data); // Log the entire API response
+        const data = response.data;
+      //  console.log("Data:", data);
         // Log the data object
         // Access attributes directly
-        const { nama, tentang, phone, lokasi, email } = data.attributes;
+        const { nama_rek, no_rek, atas_nama, image_bank } = data;
         // Update formData state with data from the API response
         setFormData((prevData) => ({
           ...prevData,
-          nama: nama || "",
-          tentang: tentang || "",
-          phone: phone || "",
-          lokasi: lokasi || "",
-          email: email || "",
+          nama_rek: nama_rek || "",
+          no_rek: no_rek || "",
+          atas_nama: atas_nama || "",
+          image_bank: image_bank || "",
         }));
       } catch (error) {
-        console.error("Error fetching data tentang:", error);
+        console.error("Error fetching data:", error); // Perbaiki pesan error
         setError(error);
       } finally {
         setLoading(false);
@@ -66,7 +60,7 @@ export default function Edit() {
     // Update formData state based on input name
     setFormData((prevData) => ({
       ...prevData,
-      [name]: name === "gambar" ? files[0] : value,
+      [name]: name === "image_bank" ? files[0] : value,
     }));
   };
 
@@ -75,25 +69,28 @@ export default function Edit() {
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("tentang", formData.tentang);
-      formDataToSend.append("phone", formData.phone);
-      formDataToSend.append("nama", formData.nama);
-      formDataToSend.append("lokasi", formData.lokasi);
-      formDataToSend.append("email", formData.email);
+      formDataToSend.append("nama_rek", formData.nama_rek);
+      formDataToSend.append("no_rek", formData.no_rek);
+      formDataToSend.append("atas_nama", formData.atas_nama);
+      formDataToSend.append("image_bank", formData.image_bank);
 
       // Jika ada gambar baru, tambahkan ke formDataToSend
-      if (formData.gambar) {
-        formDataToSend.append("gambar", formData.gambar);
+      if (formData.image_bank) {
+        formDataToSend.append("image_bank", formData.image_bank);
       }
 
-      const response = await axios.put(`https://api.ngurusizin.online/api/tentang/${id}`, formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      const response = await axios.patch(
+        `http://localhost:5000/api/bank/${id}`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
+      );
 
       if (response.status == 200) {
-        router.push("/admin/tentang");
+        router.push("/admin/pembayaran");
       } else {
         console.error("Gagal mengirim data.", response);
       }
@@ -106,7 +103,7 @@ export default function Edit() {
     <AdminLayout>
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link href={"/admin/tentang"} className="relative ml-32 lg:ml-60">
+          <Link href={"/admin/pembayaran"} className="relative ml-32 lg:ml-60">
             <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
               <i className="fas fa-arrow-left"></i>
               <span>Kembali</span>
@@ -116,17 +113,17 @@ export default function Edit() {
           <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
             <div className="mt-4 mb-5">
               <label
-                htmlFor="nama"
+                htmlFor="nama_rek"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Nama
+                Nama Rekening
               </label>
               <input
                 type="text"
-                name="nama"
-                id="nama"
+                name="nama_rek"
+                id="nama_rek"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.nama} // Gunakan nilai awal jika value kosong
+                value={formData.nama_rek}
                 onChange={handleInputChange}
               />
             </div>
@@ -138,9 +135,9 @@ export default function Edit() {
               <div className="mb-8">
                 <input
                   type="file"
-                  name="gambar"
-                  id="gambar"
-                  htmlFor="gambar"
+                  name="image_bank"
+                  id="image_bank"
+                  htmlFor="image_bank"
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   onChange={handleInputChange}
                 />
@@ -148,17 +145,17 @@ export default function Edit() {
             </div>
             <div className="mb-5">
               <label
-                htmlFor="phone"
+                htmlFor="no_rek"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Phone
+                No Rekening
               </label>
               <input
                 type="text"
-                name="phone"
-                id="phone"
+                name="no_rek"
+                id="no_rek"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.phone} // Gunakan nilai awal jika value kosong
+                value={formData.no_rek}
                 onChange={handleInputChange}
               />
             </div>
@@ -167,49 +164,16 @@ export default function Edit() {
                 htmlFor="lokasi"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Lokasi
+                Atas Nama
               </label>
               <input
                 type="text"
-                name="lokasi"
-                id="lokasi"
+                name="atas_nama"
+                id="atas_nama"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.lokasi} // Gunakan nilai awal jika value kosong
+                value={formData.atas_nama}
                 onChange={handleInputChange}
               />
-            </div>
-            <div className="mb-5">
-              <label
-                htmlFor="email"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                email
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.email} // Gunakan nilai awal jika value kosong
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className="mb-5">
-              <label
-                htmlFor="tentang"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Tentang
-              </label>
-              <textarea
-                name="tentang"
-                id="tentang"
-                rows="5"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.tentang} // Gunakan nilai awal jika value kosong
-                onChange={handleInputChange}
-              ></textarea>
             </div>
 
             <div>
