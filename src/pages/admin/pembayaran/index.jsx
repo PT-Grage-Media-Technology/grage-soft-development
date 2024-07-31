@@ -117,23 +117,20 @@ const Pembayaran = ({ isLoggedIn }) => {
                         #
                       </th> */}
                       <th scope="col" className="px-6 py-4">
-                        Nama
+                        Nama Rekening
                       </th>
 
                       <th scope="col" className="px-6 py-4">
-                        Gambar
+                        No Rekening
                       </th>
                       <th scope="col" className="px-6 py-4">
-                        Phone
+                        Image Bank
                       </th>
                       <th scope="col" className="px-6 py-4">
-                        Lokasi
+                        Url Image Bank
                       </th>
                       <th scope="col" className="px-6 py-4">
-                        Email
-                      </th>
-                      <th scope="col" className="px-6 py-4">
-                        Tentang
+                        Atas Nama
                       </th>
 
                       <th scope="col" className="px-6 py-4">
@@ -154,6 +151,10 @@ const Pembayaran = ({ isLoggedIn }) => {
                           {item.attributes.nama}
                         </td>
 
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {item.attributes.phone}
+                        </td>
+
                         <td className="py-4 whitespace-nowrap">
                           <img
                             src={item.attributes.urlGambar}
@@ -162,16 +163,10 @@ const Pembayaran = ({ isLoggedIn }) => {
                           />
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.phone}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
                           {item.attributes.lokasi}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {item.attributes.email}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.tentang}
                         </td>
 
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
