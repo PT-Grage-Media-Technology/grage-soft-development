@@ -27,12 +27,12 @@ const Wcu = ({ isLoggedIn }) => {
       );
       console.log('rendi ganteng',response.data.data);
       setWcu(response.data.data);
-      // setPaket(response.data.data);
+      // setWcu(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
     } catch (error) {
-      console.error("Error fetching data paket:", error);
+      console.error("Error fetching data wcu:", error);
       setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
@@ -42,14 +42,14 @@ const Wcu = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/paket?keyword=${keyword}`
+        `http://localhost:5000/api/wcu?keyword=${keyword}`
       );
-      setPaket(response.data.data);
+      setWcu(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
     } catch (error) {
-      console.error("Error fetching data paket:", error);
+      console.error("Error fetching data wcu:", error);
       setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
@@ -75,7 +75,7 @@ const Wcu = ({ isLoggedIn }) => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5000/api/paket/${id}`, {
+      const response = await fetch(`http://localhost:5000/api/wcu/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const Wcu = ({ isLoggedIn }) => {
         throw new Error("Gagal menghapus data");
       }
 
-      setPaket(paket.filter((item) => item.id !== id));
+      setWcu(wcu.filter((item) => item.id !== id));
       showToastMessage();
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
@@ -121,18 +121,18 @@ const Wcu = ({ isLoggedIn }) => {
   return (
     <>
       <Head>
-        <title>Data Paket</title>
+        <title>Data wcu</title>
       </Head>
       <AdminLayout>
         <ToastContainer />
 
         <div className="flex items-center justify-end mb-4 lg:-mt-48 md:-mt-48">
           <Link
-            href={"/admin/paket/add"}
+            href={"/admin/wcu/add"}
             className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 text-end hover:bg-green-700 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-green-500"
           >
             <i className="fa-solid fa-plus"></i>
-            Paket
+            Wcu
           </Link>
         </div>
         <div className="flex flex-col overflow-x-auto bg-white ">
@@ -141,7 +141,7 @@ const Wcu = ({ isLoggedIn }) => {
               <div className="overflow-x-auto">
                 <input
                   type="text"
-                  placeholder="Cari paket..."
+                  placeholder="Cari wcu..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-48 md:w-56 lg:w-72 rounded-l-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -149,8 +149,11 @@ const Wcu = ({ isLoggedIn }) => {
                 <table className="min-w-full text-sm font-light text-left">
                   <thead className="font-medium border-b dark:border-neutral-500">
                     <tr>
-                      <th scope="col" className="px-6 py-4">
+                      <th scope="col" className="px-32 py-4">
                         Isi
+                      </th>
+                      <th scope="col" className="px-14 py-4">
+                        Action
                       </th>
                       {/* <th scope="col" className="px-6 py-4">
                         Jumlah Pilihan Desain
@@ -169,10 +172,10 @@ const Wcu = ({ isLoggedIn }) => {
                   <tbody>
                     {wcu.map((item) => (
                       <tr
-                        className="border-b dark:border-neutral-500"
+                        className="border-b dark:border-neutral-500 "
                         key={item.id}
                       >
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-24 py-4 whitespace-nowrap">
                           {item.attributes.isi}
                         </td>
                         {/* <td className="px-6 py-4 whitespace-nowrap">
@@ -207,6 +210,29 @@ const Wcu = ({ isLoggedIn }) => {
                             )}
                           </button>
                         </td> */}
+                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
+                          <Link href={"/admin/wcu/edit?id=" + item.id}>
+                            <div
+                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                              aria-label="edit"
+                            >
+                              <i className="fa-solid fa-pen"></i>
+                            </div>
+                          </Link>
+
+                          <button
+                            onClick={() => handleDelete(item.id)}
+                            disabled={isDeleting}
+                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                            aria-label="delete"
+                          >
+                            {isDeleting ? (
+                              "Menghapus..."
+                            ) : (
+                              <i className="fa-solid fa-trash"></i>
+                            )}
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
