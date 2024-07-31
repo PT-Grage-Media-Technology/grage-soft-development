@@ -28,10 +28,10 @@ const Pembayaran = ({ isLoggedIn }) => {
         "http://localhost:5000/api/bank/"
       );
       //console.log(response.data)
-      setBank(response.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
+      setBank(response.data.data);
+      setTotalPages(response.data.data.totalPages);
+      setPageSize(response.data.data.pageSize);
+      setTotalCount(response.data.data.totalCount);
     } catch (error) {
       console.error("Error fetching data bank:", error);
       setError(error);
@@ -190,11 +190,11 @@ const Pembayaran = ({ isLoggedIn }) => {
                             className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
                             aria-label="delete"
                           >
-                            {isDeleting ? (
+                            {/* {isDeleting ? (
                               "Menghapus..."
-                            ) : (
+                            ) : ( */}
                               <i className="fa-solid fa-trash"></i>
-                            )}
+                            {/* )} */}
                           </button>
                         </td>
                       </tr>
