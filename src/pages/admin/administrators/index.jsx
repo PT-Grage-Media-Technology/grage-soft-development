@@ -157,7 +157,7 @@ const Administrators = ({ isLoggedIn }) => {
       };
 
       const response = await fetch(
-        "https://api.ngurusizin.online/api/administrators",
+        "http://localhost:5000/api/administrators",
         {
           method: "POST",
           headers: {
@@ -208,7 +208,7 @@ const Administrators = ({ isLoggedIn }) => {
 
     try {
       const response = await fetch(
-        `https://api.ngurusizin.online/api/administrators/${updateData.id}`,
+        `http://localhost:5000/api/administrators/${updateData.id}`,
         {
           method: "PUT",
           headers: {
@@ -250,7 +250,7 @@ const Administrators = ({ isLoggedIn }) => {
         <div className="flex items-center justify-end mb-4 lg:-mt-48 md:-mt-48">
           <button
             onClick={toggleModal}
-            className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 text-end hover:bg-green-700 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-green-500"
+            className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400 hover:bg-orange-600"
           >
             <i className="fa-solid fa-plus"></i>
             Administrators
@@ -312,7 +312,7 @@ const Administrators = ({ isLoggedIn }) => {
                           {/* button update */}
                           <button onClick={() => handleEdit(item)}>
                             <div
-                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                               aria-label="edit"
                             >
                               <i className="fa-solid fa-pen"></i>
@@ -326,7 +326,7 @@ const Administrators = ({ isLoggedIn }) => {
                               setItemIdToDelete(item.id);
                               // Simpan ID item yang akan dihapus
                             }}
-                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                             aria-label="delete"
                           >
                             {isDeleting ? (
@@ -363,7 +363,7 @@ const Administrators = ({ isLoggedIn }) => {
                           }
                           className={`mx-1 px-3 py-1 rounded-md ${
                             currentPage === firstPage + index
-                              ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white"
+                              ? "bg-orange-400 hover:bg-orange-600 text-white"
                               : "bg-gray-200 hover:bg-gray-400"
                           }`}
                         >

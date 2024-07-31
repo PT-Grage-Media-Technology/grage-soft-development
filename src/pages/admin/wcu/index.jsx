@@ -129,7 +129,7 @@ const Wcu = ({ isLoggedIn }) => {
         <div className="flex items-center justify-end mb-4 lg:-mt-48 md:-mt-48">
           <Link
             href={"/admin/wcu/add"}
-            className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 text-end hover:bg-green-700 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-green-500"
+            className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400 hover:bg-orange-600"
           >
             <i className="fa-solid fa-plus"></i>
             Wcu
@@ -213,7 +213,7 @@ const Wcu = ({ isLoggedIn }) => {
                          <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
                           <Link href={"/admin/wcu/edit?id=" + item.id}>
                             <div
-                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                               aria-label="edit"
                             >
                               <i className="fa-solid fa-pen"></i>
@@ -223,7 +223,7 @@ const Wcu = ({ isLoggedIn }) => {
                           <button
                             onClick={() => handleDelete(item.id)}
                             disabled={isDeleting}
-                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                             aria-label="delete"
                           >
                             {isDeleting ? (

@@ -75,7 +75,7 @@ export default function Edit() {
         formDataToSend.append("gambar", formData.gambar);
       }
 
-      const response = await axios.put(`http://localhost:5000/api/kategoriWebsite/${id}`, formDataToSend, {
+      const response = await axios.patch(`http://localhost:5000/api/kategoriWebsite/${id}`, formDataToSend, {
         headers: {
           'Content-Type': 'application/json'
         }
