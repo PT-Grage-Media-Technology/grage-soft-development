@@ -21,12 +21,13 @@ export default function Add() {
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("harga", formData.harga);
-      formDataToSend.append("jumlah_pilihan_desain", formData.gambar); // Mengganti 'file' menjadi 'gambar'
-      formDataToSend.append("status_website", formData.nama);
-      formDataToSend.append("kategori_Website_Id", formData.nama);
+      formDataToSend.append("jumlah_pilihan_desain", formData.jumlah_pilihan_desain); 
+      formDataToSend.append("status_website", formData.status_website);
+      formDataToSend.append("kategori_Website_Id", formData.kategori_Website_Id);
       // formDataToSend.append("status", formData.status);
+
       const response = await axios.post(
-        "https://api.ngurusizin.online/api/layanan",
+        "http://localhost:5000/api/paket",
         formDataToSend,
         {
           headers: {
@@ -39,7 +40,7 @@ export default function Add() {
         // console.log("Data berhasil di tambahkan.");
         showToastMessage();
         // tambahkan logika lainnya sesuai kebutuhan, seperti mereset form atau menampilkan pesan sukses
-        router.push("/admin/layanan");
+        router.push("/admin/paket");
       } else {
         console.error("Gagal mengirim data", response);
       }
@@ -77,39 +78,22 @@ export default function Add() {
       <ToastContainer />
       <div className="flex items-center justify-center p-12 ">
         <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg  lg:-mt-48">
-          <Link href={"/admin/layanan"} className="relative ml-32 lg:ml-60 ">
+          <Link href={"/admin/paket"} className="relative ml-32 lg:ml-60 ">
             <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer m text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
               <i className="fas fa-arrow-left"></i>
               <span>Kembali</span>
             </div>
           </Link>
           <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
-            <div className="mt-4 mb-5">
-              <label
-                htmlFor="nama"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Nama
-              </label>
-              <input
-                type="text"
-                name="nama"
-                id="nama"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.nama}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
             <div className="mb-5">
               <label
                 htmlFor="harga"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                harga
+                Harga
               </label>
               <input
-                type="number"
+                type="text"
                 name="harga"
                 id="harga"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -119,17 +103,16 @@ export default function Add() {
               />
             </div>
             <div className="mb-6 ">
-              {" "}
               <label className="mb-5 block text-base font-semibold text-[#07074D]">
-                Gambar
+                Jumlah Pilihan Desain
               </label>
               <div className="mb-8">
                 <input
-                  type="file"
-                  name="gambar"
-                  id="gambar"
-                  htmlFor="gambar"
-                  className="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  type="number"
+                  name="jumlah_pilihan_desain"
+                  id="jumlah_pilihan_desain"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  value={formData.jumlah_pilihan_desain}
                   onChange={handleInputChange}
                   required
                 />
@@ -140,17 +123,35 @@ export default function Add() {
                 htmlFor="deskripsi"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Deskripsi
+                Status Website
               </label>
-              <textarea
+              <input
                 type="text"
-                name="deskripsi"
-                id="deskripsi"
+                name="status_website"
+                id="status_website"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.deskripsi}
+                value={formData.status_website}
                 onChange={handleInputChange}
                 required
-              ></textarea>
+              />
+            </div>
+
+            <div className="mb-5">
+              <label
+                htmlFor="deskripsi"
+                className="mb-3 block text-base font-medium text-[#07074D]"
+              >
+                ID Kategori Website
+              </label>
+              <input
+                type="number"
+                name="kategori_Website_Id"
+                id="kategori_Website_Id"
+                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                value={formData.kategori_Website_Id}
+                onChange={handleInputChange}
+                required
+              />
             </div>
 
             <div>
