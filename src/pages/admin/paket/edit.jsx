@@ -14,18 +14,21 @@ export default function Edit() {
   // Initialize formData state with empty strings for text inputs and null for file input
   // Inisialisasi state formData dengan nilai default jika tidak ada data sebelumnya
   const [formData, setFormData] = useState({
-    deskripsi: "", // Set default value to empty string
-    harga: "", // Set default value to empty string
-    nama: "", // Set default value to empty string
-    gambar: null, // Set default value to null
-    status: "", // Set default value to empty string
+    nama_paket: "", 
+    harga: "", 
+    jumlah_pilihan_desain: "", 
+    status_website: "", 
+    kategori_website: "", 
   });
+
+  const [kategoriWebsite, setKategoriWebsite] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+
         const response = await axios.get(
-          `https://api.ngurusizin.online/api/layanan/${id}`
+          `http://localhost:5000/api/paket/${id}`
         );
         // console.log("API response:", response); // Log the entire API response
         if (!response.data.data || !response.data.data.attributes) {
@@ -35,20 +38,31 @@ export default function Edit() {
         console.log("Data:", data);
         // Log the data object
         // Access attributes directly
-        const { nama, deskripsi, harga, status } = data.attributes;
+        const { nama_paket, harga, jumlah_pilihan_desain, status_website, kategori_website } = data.attributes;
         // Update formData state with data from the API response
         setFormData((prevData) => ({
           ...prevData,
-          nama: nama || "",
-          deskripsi: deskripsi || "",
+          nama_paket: nama_paket || "",
           harga: harga || "",
-          status: status || "",
+          jumlah_pilihan_desain: jumlah_pilihan_desain || "",
+          status_website: status_website || "",
+          kategori_website: kategori_website || "",
         }));
       } catch (error) {
         console.error("Error fetching data layanan:", error);
         setError(error);
       } finally {
         setLoading(false);
+      }
+
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/kategoriWebsite`
+        );
+        console.log(response);
+        setKategoriWebsite(response.data.data);
+      } catch (error) {
+        console.error("Error fetching data paket:", error);
       }
     };
 
@@ -73,22 +87,23 @@ export default function Edit() {
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("deskripsi", formData.deskripsi);
+      formDataToSend.append("nama_paket", formData.nama_paket);
       formDataToSend.append("harga", formData.harga);
-      formDataToSend.append("nama", formData.nama);
-      // formDataToSend.append("status", formData.status);
+      formDataToSend.append("jumlah_pilihan_desain", formData.jumlah_pilihan_desain);
+      formDataToSend.append("status_website", formData.status_website);
+      formDataToSend.append("kategori_website_id", formData.kategori_website_id);
 
-      // Jika ada gambar baru, tambahkan ke formDataToSend
-      if (formData.gambar) {
-        formDataToSend.append("gambar", formData.gambar);
-      }
+      // // Jika ada gambar baru, tambahkan ke formDataToSend
+      // if (formData.gambar) {
+      //   formDataToSend.append("gambar", formData.gambar);
+      // }
 
       const response = await axios.put(
-        `https://api.ngurusizin.online/api/layanan/${id}`,
+        `http://localhost:5000/api/paket/${id}`,
         formDataToSend,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
         }
       );
@@ -96,7 +111,7 @@ export default function Edit() {
       if (response.status == 200) {
         router.push("/admin/paket");
       } else {
-        console.error("Gagal mengirim data.");
+        console.error("Gagal mengirim data.", response);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -124,10 +139,10 @@ export default function Edit() {
               </label>
               <input
                 type="text"
-                name="nama"
-                id="nama"
+                name="nama_paket"
+                id="nama_paket"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.nama} // Gunakan nilai awal jika value kosong
+                value={formData.nama_paket} // Gunakan nilai awal jika value kosong
                 onChange={handleInputChange}
               />
             </div>
@@ -152,18 +167,18 @@ export default function Edit() {
                 htmlFor="jumlah_pilihan_desain"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Harga
+                Jumlah Pilihan Desain
               </label>
               <input
                 type="number"
-                name="harga"
-                id="harga"
+                name="jumlah_pilihan_desain"
+                id="jumlah_pilihan_desain"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.harga} // Gunakan nilai awal jika value kosong
+                value={formData.jumlah_pilihan_desain} // Gunakan nilai awal jika value kosong
                 onChange={handleInputChange}
               />
             </div>
-            <div className="mb-6 ">
+            {/* <div className="mb-6 ">
               <label className="mb-5 block text-base font-semibold text-[#07074D]">
                 Gambar
               </label>
@@ -177,23 +192,57 @@ export default function Edit() {
                   onChange={handleInputChange}
                 />
               </div>
-            </div>
+            </div> */}
 
             <div className="mb-5">
               <label
-                htmlFor="deskripsi"
+                htmlFor="status_website"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Deskripsi
+                Status Website
               </label>
-              <textarea
-                type="text"
-                name="deskripsi"
-                id="deskripsi"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.deskripsi} // Gunakan nilai awal jika value kosong
-                onChange={handleInputChange}
-              ></textarea>
+              <select
+                  name="status_website"
+                  id="status_website"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  value={formData.status_website}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="" disabled hidden>
+                    Pilih Status Website
+                  </option>
+                  <option value="Siap Di Pakai">Siap Di Pakai</option>
+                  <option value="Tersedia">Tersedia</option>
+                  <option value="Tidak Tersedia">Tidak Tersedia</option>
+                </select>
+            </div>
+
+
+            <div className="mb-5">
+              <label
+                htmlFor="kategori_website"
+                className="mb-3 block text-base font-medium text-[#07074D]"
+              >
+                Kategori Website
+              </label>
+              <select
+                  name="kategori_website_id"
+                  id="kategori_website_id"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  value={formData.kategori_website_id}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="" disabled hidden>
+                    Pilih Kategori Website
+                  </option>
+                  {kategoriWebsite.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.attributes['nama-kategori']}
+                    </option>
+                  ))}
+                </select>
             </div>
 
             <div>
