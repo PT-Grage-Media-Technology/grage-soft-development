@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
-import LoadingLayanan from "@/components/elements/LoadingLayanan";
 import { IoCallOutline } from "react-icons/io5";
+import LoadingLayanan from "@/components/elements/LoadingLayanan";
 
 export default function Layanan() {
   const [layanan, setLayanan] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const pageSize = 10; // Jumlah item per halaman
+  const [setting, setSetting] = useState(""); // State untuk menyimpan nomor WA
+
+  const pageSize = 10;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
+          `http://localhost:5000/api/setting`
         );
-        setLayanan(response.data.data.data);
-        setTotalPages(response.data.totalPages);
+        setSetting(response.data.data.data[0]);
+        console.log(response.data.data.data[0]);
       } catch (error) {
         console.error("Error fetching data layanan:", error);
         setError(error);
@@ -30,8 +29,21 @@ export default function Layanan() {
     };
 
     fetchData();
-  }, [currentPage]);
-  console.log(layanan);
+  },)
+
+  console.log(setting);
+
+  if (loading) {
+    return (
+      <div className="relative flex flex-col items-center justify-center lg:px-28">
+        <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
+          {Array.from({ length: pageSize }).map((_, index) => (
+            <LoadingLayanan key={index} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -39,31 +51,11 @@ export default function Layanan() {
     );
   }
 
-  // Menampilkan Skeleton saat loading atau error fetching data
-  if (loading) {
-    return (
-      <>
-        <div className="relative flex flex-col items-center justify-center lg:px-28">
-          <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
-            {Array.from({ length: pageSize }).map((_, index) => (
-              <LoadingLayanan key={index} />
-            ))}
-          </div>
-        </div>
-      </>
-    );
-  }
-
-  // Nomor 
-  const nomorWA = "6285731579908";
-  const nomorTelepon = "085731579908";
-
-  // Untuk Link Ke WA & Telepon
   const buttonWA = () => {
-    window.location.href = `https://wa.me/${nomorWA}`;
+    window.location.href = `https://wa.me/62${ setting.attributes.wa }`;
   };
   const buttonTelepon = () => {
-    window.location.href = `tel:${nomorTelepon}`;
+    window.location.href = `tel:0${ setting.attributes.wa }`;
   };
 
   return (
@@ -76,15 +68,17 @@ export default function Layanan() {
         </div>
       </div>
 
+    
+
       <p className="text-center font-semibold text-4xl pt-16">Whatsapp</p>
       <p className="text-center pt-4">Klik Untuk WA:</p>
       <div className="flex justify-center py-5">
         <button
           onClick={buttonWA}
-          className="bg-green-500 py-3 px-5 flex justufy-center rounded-lg text-white"
+          className="bg-green-500 py-3 px-5 flex justify-center rounded-lg text-white"
         >
           <FaWhatsapp className="me-3 mt-0" size={22} />
-          <p className="me-2">085731579908</p>
+          <p className="me-2">0{ setting.attributes.wa }</p>
         </button>
       </div>
       <p className="text-center font-semibold text-4xl pt-16">Telepon</p>
@@ -92,10 +86,10 @@ export default function Layanan() {
       <div className="flex justify-center py-5">
         <button
           onClick={buttonTelepon}
-          className="bg-green-500 py-3 px-5 flex justufy-center rounded-lg text-white"
+          className="bg-green-500 py-3 px-5 flex justify-center rounded-lg text-white"
         >
           <IoCallOutline className="me-3 mt-0" size={22} />
-          <p className="me-2">088182182812</p>
+          <p className="me-2">0{ setting.attributes.wa }</p>
         </button>
       </div>
     </section>
