@@ -14,34 +14,39 @@ export default function Edit() {
   // Initialize formData state with empty strings for text inputs and null for file input
   // Inisialisasi state formData dengan nilai default jika tidak ada data sebelumnya
   const [formData, setFormData] = useState({
-    testimoni: "", // Set default value to empty string
-    nama: "", // Set default value to empty string
-    gambar: null, // Set default value to null
-    jabatan: "", // Set default value to empty string
+    jenis_testimoni: "", // Set default value to empty string
+    gambar_testimoni: null, // Set default value to null
+    judul_testimoni: "", // Set default value to empty string
+    deskripsi_testimoni: "", // Set default value to empty string
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api.ngurusizin.online/api/testimoni/${id}`
+          `http://localhost:5000/api/testimoni/${id}`
         );
         // console.log("API response:", response); // Log the entire API response
-        if (!response.data.data || !response.data.data.attributes) {
+        if (!response.data) {
           throw new Error("Data tidak lengkap.");
         }
-        const data = response.data.data;
+        const data = response.data;
         console.log("Data:", data);
         // Log the data object
         // Access attributes directly
-        const { nama, testimoni, jabatan } = data.attributes;
+        const {
+          jenis_testimoni,
+          gambar_testimoni,
+          judul_testimoni,
+          deskripsi_testimoni,
+        } = data;
         // Update formData state with data from the API response
         setFormData((prevData) => ({
           ...prevData,
-          nama: nama || "",
-          testimoni: testimoni || "",
-
-          jabatan: jabatan || "",
+          jenis_testimoni: jenis_testimoni || "",
+          gambar_testimoni: gambar_testimoni || "",
+          judul_testimoni: judul_testimoni || "",
+          deskripsi_testimoni: deskripsi_testimoni || "",
         }));
       } catch (error) {
         console.error("Error fetching data testimoni:", error);
@@ -63,7 +68,7 @@ export default function Edit() {
     // Update formData state based on input name
     setFormData((prevData) => ({
       ...prevData,
-      [name]: name === "gambar" ? files[0] : value,
+      [name]: name === "gambar_testimoni" ? files[0] : value,
     }));
   };
 
@@ -72,21 +77,27 @@ export default function Edit() {
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("testimoni", formData.testimoni);
-
-      formDataToSend.append("nama", formData.nama);
-      formDataToSend.append("jabatan", formData.jabatan);
+      formDataToSend.append("jenis_testimoni", formData.jenis_testimoni);
+      formDataToSend.append("judul_testimoni", formData.judul_testimoni);
+      formDataToSend.append(
+        "deskripsi_testimoni",
+        formData.deskripsi_testimoni
+      );
 
       // Jika ada gambar baru, tambahkan ke formDataToSend
-      if (formData.gambar) {
-        formDataToSend.append("gambar", formData.gambar);
+      if (formData.gambar_testimoni) {
+        formDataToSend.append("gambar_testimoni", formData.gambar_testimoni);
       }
 
-      const response = await axios.put(`https://api.ngurusizin.online/api/testimoni/${id}`, formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const response = await axios.patch(
+        `http://localhost:5000/api/testimoni/${id}`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
+      );
 
       if (response.status == 200) {
         router.push("/admin/testimoni");
@@ -112,31 +123,31 @@ export default function Edit() {
           <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
             <div className="mt-4 mb-5">
               <label
-                htmlFor="nama"
+                htmlFor="jenis_testimoni"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Nama
+                Jenis Testimoni
               </label>
               <input
                 type="text"
-                name="nama"
-                id="nama"
+                name="jenis_testimoni"
+                id="jenis_testimoni"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.nama} // Gunakan nilai awal jika value kosong
+                value={formData.jenis_testimoni} // Gunakan nilai awal jika value kosong
                 onChange={handleInputChange}
               />
             </div>
 
             <div className="mb-6 ">
               <label className="mb-5 block text-base font-semibold text-[#07074D]">
-                Gambar
+                Gambar Testimoni
               </label>
               <div className="mb-8">
                 <input
                   type="file"
-                  name="gambar"
-                  id="gambar"
-                  htmlFor="gambar"
+                  name="gambar_testimoni"
+                  id="gambar_testimoni"
+                  htmlFor="gambar_testimoni"
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   onChange={handleInputChange}
                 />
@@ -148,14 +159,14 @@ export default function Edit() {
                 htmlFor="jabatan"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Jabatan
+                Judul Testimoni
               </label>
               <input
                 type="text"
-                name="jabatan"
-                id="jabatan"
+                name="judul_testimoni"
+                id="judul_testimoni"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.jabatan} // Gunakan nilai awal jika value kosong
+                value={formData.judul_testimoni} // Gunakan nilai awal jika value kosong
                 onChange={handleInputChange}
               />
             </div>
@@ -165,14 +176,14 @@ export default function Edit() {
                 htmlFor="testimoni"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Testimoni
+                Deskripsi Testimoni
               </label>
               <textarea
-                name="testimoni"
-                id="testimoni"
+                name="deskripsi_testimoni"
+                id="deskripsi_testimoni"
                 rows="5"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.testimoni} // Gunakan nilai awal jika value kosong
+                value={formData.deskripsi_testimoni} // Gunakan nilai awal jika value kosong
                 onChange={handleInputChange}
               ></textarea>
             </div>
