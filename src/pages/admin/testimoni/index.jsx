@@ -47,13 +47,14 @@ const Testimoni = () => {
     setIsDeleting(true);
     const id = isDeleting;
 
-    const confirmDelete = window.confirm(
-      "Apakah Anda yakin ingin menghapus item ini?"
-    );
-    if (!confirmDelete) {
-      setIsDeleting(false);
-      return;
-    }
+    // const confirmDelete = window.confirm(
+    //   "Apakah Anda yakin ingin menghapus item ini?"
+    // );
+    // if (!confirmDelete) {
+    //   setIsDeleting(false);
+    //   return;
+    // }
+    
     try {
       const response = await axios.delete(
         `http://localhost:5000/api/testimoni/${id}`,
