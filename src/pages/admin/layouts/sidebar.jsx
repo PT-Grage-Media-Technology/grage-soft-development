@@ -171,29 +171,6 @@ export default function Sidebar() {
                 </li>
        
 
-              {/* SECTION ORDER */}
-              <li className="items-center">
-                <Link
-                  href={"/admin/order"}
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (router.pathname.indexOf("/admin/order") !== -1
-                      ? "bg-orange-300 text-black rounded-lg px-4 py-2"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                >
-                  <i
-                    className={
-                      "fas fa-clipboard-list mr-2 text-sm " +
-                      (router.pathname.indexOf("/admin/order") !== -1
-                        ? "opacity-75"
-                        : "text-blueGray-300")
-                    }
-                  ></i>{" "}
-                  Order
-                </Link>
-              </li>
-
                 <li className="items-center">
                   <Link
                     href={"/admin/pembayaran"}
@@ -326,6 +303,29 @@ export default function Sidebar() {
                       }
                     ></i>{" "}
                     administrators
+                  </Link>
+                </li>
+
+
+                <li className="items-center">
+                  <Link
+                    href={"/admin/keterangan"}
+                    className={
+                      "text-xs uppercase py-3 font-bold block " +
+                      (router.pathname.indexOf("/admin/keterangan") !== -1
+                        ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                        : "text-blueGray-700 hover:text-blueGray-500")
+                    }
+                  >
+                    <i
+                      className={
+                        "fas fa-users mr-2 text-sm " +
+                        (router.pathname.indexOf("/admin/keterangan") !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    keterangan
                   </Link>
                 </li>
         

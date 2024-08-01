@@ -21,7 +21,7 @@ export default function Edit() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/wcu/${id}`
+          `http://localhost:5000/api/keterangan/${id}`
         );
         // console.log("API response:", response); // Log the entire API response
         if (!response.data.data || !response.data.data.attributes) {
@@ -39,7 +39,7 @@ export default function Edit() {
           isi: isi || "",
         }));
       } catch (error) {
-        console.error("Error fetching data wcu:", error);
+        console.error("Error fetching data keterangan:", error);
         setError(error);
       } finally {
         setLoading(false);
@@ -70,7 +70,7 @@ export default function Edit() {
       formDataToSend.append("isi", formData.isi); // Pastikan key ini sesuai dengan yang diharapkan oleh backend
 
       const response = await axios.patch(
-        `http://localhost:5000/api/wcu/${id}`,
+        `http://localhost:5000/api/keterangan/${id}`,
         formDataToSend,
         {
           headers: {
@@ -80,7 +80,7 @@ export default function Edit() {
       );
 
       if (response.status === 200) {
-        router.push("/admin/wcu");
+        router.push("/admin/keterangan");
       } else {
         console.error("Gagal mengirim data.");
       }
@@ -93,7 +93,7 @@ export default function Edit() {
     <AdminLayout>
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link href={"/admin/wcu"} className="relative ml-32 lg:ml-60">
+          <Link href={"/admin/keterangan"} className="relative ml-32 lg:ml-60">
             <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
               <i className="fas fa-arrow-left"></i>
               <span>Kembali</span>
@@ -103,7 +103,7 @@ export default function Edit() {
           <form className="py-6 pt-16 bg-white px-9" onSubmit={handleSubmit}>
             <div className="mb-5">
               <label
-                htmlFor="wcu"
+                htmlFor="keteragan"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
                 Isi

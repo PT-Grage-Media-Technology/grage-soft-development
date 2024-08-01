@@ -8,9 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 
-const Wcu = ({ isLoggedIn }) => {
+const Keterangan = ({ isLoggedIn }) => {
   const router = useRouter();
-  const [wcu, setWcu] = useState([]);
+  const [keterangan, setKeterangan] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -23,16 +23,16 @@ const Wcu = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/wcu?page=${currentPage}`
+        `http://localhost:5000/api/keterangan?page=${currentPage}`
       );
       console.log('rendi ganteng',response.data.data);
-      setWcu(response.data.data);
-      // setWcu(response.data.data);
+      setKeterangan(response.data.data);
+      // setKeterangan(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
     } catch (error) {
-      console.error("Error fetching data wcu:", error);
+      console.error("Error fetching data keterangan:", error);
       setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
@@ -42,14 +42,14 @@ const Wcu = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/wcu?keyword=${keyword}`
+        `http://localhost:5000/api/keterangan?keyword=${keyword}`
       );
-      setWcu(response.data.data);
+      setKeterangan(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
     } catch (error) {
-      console.error("Error fetching data wcu:", error);
+      console.error("Error fetching data keterangan:", error);
       setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
@@ -75,7 +75,7 @@ const Wcu = ({ isLoggedIn }) => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5000/api/wcu/${id}`, {
+      const response = await fetch(`http://localhost:5000/api/keterangan/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const Wcu = ({ isLoggedIn }) => {
         throw new Error("Gagal menghapus data");
       }
 
-      setWcu(wcu.filter((item) => item.id !== id));
+      setKeterangan(keterangan.filter((item) => item.id !== id));
       showToastMessage();
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
@@ -121,18 +121,18 @@ const Wcu = ({ isLoggedIn }) => {
   return (
     <>
       <Head>
-        <title>Data wcu</title>
+        <title>Data Keterangan</title>
       </Head>
       <AdminLayout>
         <ToastContainer />
 
         <div className="flex items-center justify-end mb-4 lg:-mt-48 md:-mt-48">
           <Link
-            href={"/admin/wcu/add"}
-            className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400 hover:bg-orange-600"
+            href={"/admin/keterangan/add"}
+            className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 text-end hover:bg-green-700 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-green-500"
           >
             <i className="fa-solid fa-plus"></i>
-            Wcu
+            Keterangan
           </Link>
         </div>
         <div className="flex flex-col overflow-x-auto bg-white ">
@@ -141,7 +141,7 @@ const Wcu = ({ isLoggedIn }) => {
               <div className="overflow-x-auto">
                 <input
                   type="text"
-                  placeholder="Cari wcu..."
+                  placeholder="Cari keterangan..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-48 md:w-56 lg:w-72 rounded-l-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -170,7 +170,7 @@ const Wcu = ({ isLoggedIn }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {wcu.map((item) => (
+                    {keterangan.map((item) => (
                       <tr
                         className="border-b dark:border-neutral-500 "
                         key={item.id}
@@ -211,9 +211,9 @@ const Wcu = ({ isLoggedIn }) => {
                           </button>
                         </td> */}
                          <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
-                          <Link href={"/admin/wcu/edit?id=" + item.id}>
+                          <Link href={"/admin/keterangan/edit?id=" + item.id}>
                             <div
-                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
+                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
                               aria-label="edit"
                             >
                               <i className="fa-solid fa-pen"></i>
@@ -223,7 +223,7 @@ const Wcu = ({ isLoggedIn }) => {
                           <button
                             onClick={() => handleDelete(item.id)}
                             disabled={isDeleting}
-                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
+                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
                             aria-label="delete"
                           >
                             {isDeleting ? (
@@ -304,4 +304,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default Wcu;
+export default Keterangan;

@@ -52,8 +52,8 @@ export default function Add() {
         formData.kategori_website_id
       );
 
-      console.log('id',formData.kategori_website_id);
-      console.log('id',formData.status_website);
+      console.log("id", formData.kategori_website_id);
+      console.log("id", formData.status_website);
 
       const response = await axios.post(
         "http://localhost:5000/api/paket",
@@ -162,7 +162,7 @@ export default function Add() {
               </label>
 
               <div className="mb-5">
-                <select
+              <select
                   name="status_website"
                   id="status_website"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -170,9 +170,12 @@ export default function Add() {
                   onChange={handleInputChange}
                   required
                 >
-                  <option>Siap Di Pakai</option>
-                  <option>Tersedia</option>
-                  <option>Tidak Tersedia</option>
+                  <option value="" disabled hidden>
+                    Pilih Status Website
+                  </option>
+                  <option value="Siap Di Pakai">Siap Di Pakai</option>
+                  <option value="Tersedia">Tersedia</option>
+                  <option value="Tidak Tersedia">Tidak Tersedia</option>
                 </select>
               </div>
             </div>
@@ -194,9 +197,12 @@ export default function Add() {
                   onChange={handleInputChange}
                   required
                 >
+                  <option value="" disabled hidden>
+                    Pilih Kategori Website
+                  </option>
                   {kategoriWebsite.map((item) => (
-                    <option key={item['id']} value={item['id']}>
-                      {item['attributes']['nama-kategori']}
+                    <option key={item.id} value={item.id}>
+                      {item.attributes['nama-kategori']}
                     </option>
                   ))}
                 </select>
@@ -212,5 +218,5 @@ export default function Add() {
         </div>
       </div>
     </AdminLayout>
-  );
+  );  
 }

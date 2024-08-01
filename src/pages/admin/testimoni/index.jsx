@@ -8,12 +8,14 @@ const Testimoni = () => {
   const [testimoni, setTestimoni] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   useEffect(() => {
     fetchData();
   }, [currentPage]); // Fetch data when currentPage changes
@@ -21,9 +23,11 @@ const Testimoni = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://api.ngurusizin.online/api/testimoni?page=${currentPage}&search=${searchTerm}`
+        //`https://api.ngurusizin.online/api/testimoni?page=${currentPage}&search=${searchTerm}`
+        "http://localhost:5000/api/testimoni/"
       );
-      setTestimoni(response.data.data.data);
+      console.log("data testimoni", response.data.data);
+      setTestimoni(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
@@ -35,35 +39,42 @@ const Testimoni = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const toggleModalDelete = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
+
+  const handleDelete = async () => {
     setIsDeleting(true);
-    const confirmDelete = window.confirm(
-      "Apakah Anda yakin ingin menghapus item ini?"
-    );
-    if (!confirmDelete) {
-      setIsDeleting(false);
-      return;
-    }
+    const id = isDeleting;
+
+    // const confirmDelete = window.confirm(
+    //   "Apakah Anda yakin ingin menghapus item ini?"
+    // );
+    // if (!confirmDelete) {
+    //   setIsDeleting(false);
+    //   return;
+    // }
+    
     try {
-      const response = await fetch(
-        `https://api.ngurusizin.online/api/testimoni/${id}`,
+      const response = await axios.delete(
+        `http://localhost:5000/api/testimoni/${id}`,
         {
-          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
 
-      if (!response.ok) {
+      if (!response.status === 200) {
         throw new Error("Gagal menghapus data");
       }
 
       setTestimoni(testimoni.filter((item) => item.id !== id));
+      showToastMessage("Data berhasil dihapus!");
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
     } finally {
-      setIsDeleting(false);
+      setShowDeleteModal(false);
     }
   };
 
@@ -107,7 +118,7 @@ const Testimoni = () => {
                         #
                       </th> */}
                       <th scope="col" className="px-6 py-4">
-                        Nama
+                        Jenis Testimoni
                       </th>
 
                       <th scope="col" className="px-6 py-4">
@@ -115,11 +126,11 @@ const Testimoni = () => {
                       </th>
 
                       <th scope="col" className="px-6 py-4">
-                        Jabatan
+                        Judul Testimoni
                       </th>
 
                       <th scope="col" className="px-6 py-4">
-                        Testimoni
+                        Deskripsi Testimoni
                       </th>
 
                       <th scope="col" className="px-6 py-4">
@@ -137,23 +148,23 @@ const Testimoni = () => {
                           {item.id}
                         </td> */}
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.nama}
+                          {item.jenis_testimoni}
                         </td>
 
                         <td className="py-4 whitespace-nowrap">
                           <img
-                            src={item.attributes.urlGambar}
-                            alt={item.attributes.nama}
+                            src={item.url_gambar}
+                            alt={item.gambar_testimoni}
                             className="object-scale-down w-24 h-24 rounded-2xl"
                           />
                         </td>
 
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.jabatan}
+                          {item.judul_testimoni}
                         </td>
 
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.testimoni}
+                          {item.deskripsi_testimoni}
                         </td>
 
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
@@ -167,16 +178,19 @@ const Testimoni = () => {
                           </Link>
 
                           <button
-                            onClick={() => handleDelete(item.id)}
-                            disabled={isDeleting}
+                             onClick={() => {
+                              toggleModalDelete();
+                              setIsDeleting(item.id);
+                              // Simpan ID item yang akan dihapus
+                            }}
                             className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
                             aria-label="delete"
                           >
-                            {isDeleting ? (
+                            {/* {isDeleting ? (
                               "Menghapus..."
-                            ) : (
+                            ) : ( */}
                               <i className="fa-solid fa-trash"></i>
-                            )}
+                            {/* )} */}
                           </button>
                         </td>
                       </tr>
@@ -225,6 +239,42 @@ const Testimoni = () => {
             </div>
           </div>
         </div>
+        {/* Modal delete */}
+          {showDeleteModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="fixed inset-0 transition-opacity">
+              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <div className="relative w-full max-w-md transition transform bg-white rounded-lg shadow-xl">
+              <div className="px-4 py-5 sm:px-6">
+                <div className="px-4 py-5 sm:px-6">
+                  <h3 className="text-lg font-medium leading-6 text-gray-900">
+                    Delete Administrators
+                  </h3>
+                  <p className="max-w-2xl mt-1 text-sm text-gray-500">
+                    Apakah Anda yakin ingin menghapus data ini?
+                  </p>
+                </div>
+              </div>
+              <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Delete
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowDeleteModal(false)}
+                  className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </AdminLayout>
     </>
   );
