@@ -14,32 +14,32 @@ export default function Edit() {
   // Initialize formData state with empty strings for text inputs and null for file input
   // Inisialisasi state formData dengan nilai default jika tidak ada data sebelumnya
   const [formData, setFormData] = useState({
-    nama_kategori: "", // Set default value to empty string
-    deskripsi_kategori: "", // Set default value to empty string
+    isi: "", // Set default value to empty string
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/kategoriWebsite/${id}`
+          `http://localhost:5000/api/keterangan/${id}`
         );
         // console.log("API response:", response); // Log the entire API response
         if (!response.data.data || !response.data.data.attributes) {
           throw new Error("Data tidak lengkap.");
         }
         const data = response.data.data;
-
-        console.log('coba', data);
-
+        console.log("Data:", data);
+        // Log the data object
+        // Access attributes directly
+        const { isi } = data.attributes;
+        console.log("Isi:", isi); // Tambahkan ini untuk melihat data
+        // Update formData state with data from the API response
         setFormData((prevData) => ({
           ...prevData,
-          nama_kategori: data.attributes['nama-kategori'] || "",
-          deskripsi_kategori: data.attributes['deskripsi-kategori'] || "",
+          isi: isi || "",
         }));
-
       } catch (error) {
-        console.error("Error fetching data kategori website:", error);
+        console.error("Error fetching data keterangan:", error);
         setError(error);
       } finally {
         setLoading(false);
@@ -58,7 +58,7 @@ export default function Edit() {
     // Update formData state based on input name
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: name === "gambar" ? files[0] : value,
     }));
   };
 
@@ -66,23 +66,21 @@ export default function Edit() {
     e.preventDefault();
 
     try {
-      const formDataToSend = new FormData;
-      formDataToSend.append("nama_kategori", formData.nama_kategori);
-      formDataToSend.append("deskripsi_kategori", formData.deskripsi_kategori);
+      const formDataToSend = new FormData();
+      formDataToSend.append("isi", formData.isi); // Pastikan key ini sesuai dengan yang diharapkan oleh backend
 
-      // Jika ada gambar baru, tambahkan ke formDataToSend
-      if (formData.gambar) {
-        formDataToSend.append("gambar", formData.gambar);
-      }
-
-      const response = await axios.patch(`http://localhost:5000/api/kategoriWebsite/${id}`, formDataToSend, {
-        headers: {
-          'Content-Type': 'application/json'
+      const response = await axios.patch(
+        `http://localhost:5000/api/keterangan/${id}`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
-      if (response.status == 200) {
-        router.push("/admin/kategoriWebsite");
+      if (response.status === 200) {
+        router.push("/admin/keterangan");
       } else {
         console.error("Gagal mengirim data.");
       }
@@ -95,45 +93,27 @@ export default function Edit() {
     <AdminLayout>
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link href={"/admin/kategoriWebsite"} className="relative ml-32 lg:ml-60">
+          <Link href={"/admin/keterangan"} className="relative ml-32 lg:ml-60">
             <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
               <i className="fas fa-arrow-left"></i>
               <span>Kembali</span>
             </div>
           </Link>
 
-          <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
-
+          <form className="py-6 pt-16 bg-white px-9" onSubmit={handleSubmit}>
             <div className="mb-5">
               <label
-                htmlFor="nama_kategori"
+                htmlFor="keteragan"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Nama Kategori
-              </label>
-              <input
-                type="text"
-                name="nama_kategori"
-                id="nama_kategori"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.nama_kategori}
-                onChange={handleInputChange}
-              />
-            </div>
-            
-            <div className="mb-5">
-              <label
-                htmlFor="deskripsi_kategori"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Deskripsi Kategori
+                Isi
               </label>
               <textarea
-                name="deskripsi_kategori"
-                id="deskripsi_kategori"
-                rows="3"
+                name="isi"
+                id="isi"
+                rows="5"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.deskripsi_kategori} // Gunakan nilai awal jika value kosong
+                value={formData.isi} // Gunakan nilai awal jika value kosong
                 onChange={handleInputChange}
               ></textarea>
             </div>
