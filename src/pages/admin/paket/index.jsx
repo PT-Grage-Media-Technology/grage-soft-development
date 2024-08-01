@@ -148,7 +148,7 @@ const Paket = ({ isLoggedIn }) => {
                   <thead className="font-medium border-b dark:border-neutral-500">
                     <tr>
                       <th scope="col" className="px-6 py-4">
-                        Nama Peket
+                        Nama Paket
                       </th>
                       <th scope="col" className="px-6 py-4">
                         Harga
