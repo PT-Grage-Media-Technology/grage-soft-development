@@ -6,12 +6,28 @@ import LoadingLayanan from "@/components/elements/LoadingLayanan";
 import { IoCallOutline } from "react-icons/io5";
 
 export default function Layanan() {
-  const [layanan, setLayanan] = useState([]);
+  const [setting, setSetting] = useState([]);
+  // const [included, setIncluded] = useState([]); // Tambahkan state untuk included
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const pageSize = 10; // Jumlah item per halaman
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/setting`);
+        setSetting(response.data.data.data[0]);
+        console.log(response.data.data.data[0]);
+      } catch (error) {
+        console.error("Error fetching data kontak:", error);
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  });
 
   if (error) {
     return (
@@ -44,8 +60,33 @@ export default function Layanan() {
         </div>
       </div>
 
-      <div>
-        
+      <img src={setting.attributes.gambar_setting} alt="" />
+
+      <div className="grid grid-5 justify-start pt-9">
+        <div className="flex ps-8">
+          <span className=" text-center  text-lg font-semibold">
+            Alamat :
+          </span>
+          <span className="ps-2 text-center  text-lg">
+            {setting.attributes.alamat}
+          </span>
+        </div>
+
+        <div className="flex ps-8">
+          <span className=" text-center text-lg font-semibold">
+            WA/Telpon :
+          </span>
+          <span className="ps-2 text-center text-lg">
+            0{setting.attributes.wa}
+          </span>
+        </div>
+
+        <div className="flex ps-8">
+          <span className=" text-center text-lg font-semibold">Email :</span>
+          <span className="ps-2 text-center text-lg">
+            {setting.attributes.email}
+          </span>
+        </div>
       </div>
     </section>
   );

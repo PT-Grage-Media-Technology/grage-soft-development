@@ -1,6 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import axios from "axios"; // Tambahkan impor axios
+
 
 function Kontak_Kami() {
+    const [wcu, setWcu] = useState([]);
+    const [error, setError] = useState(null);
+
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get("http://localhost:5000/api/wcu");
+          setWcu(response.data.data);
+        } catch (error) {
+          console.error("Error fetching data wcu:", error);
+          setError(error);
+        };
+      };
+  
+      fetchData();
+    }, []);
+
+    if (error) {
+        return (
+          <div className="text-center text-red-500">Error: {error.message}</div>
+        );
+      }
+    
   return (
     <div className='grid text-start px-10 py-28'>
         <div className='grid grid-rows-5 px-10 py-8'>
@@ -11,9 +37,11 @@ function Kontak_Kami() {
         </div>
         <div className='grid grid-rows-7 px-10 py-8'>
         <h3 className='text-lg font-semibold'>MENGAPA KAMI?</h3>
-            <div>
-                <p className='pt-4'>1. dsadaddddddddddddddddddsfdsfdsfsdfskmfmsdfmsdkf</p>
-            </div>
+                  {wcu.map((item, index) => (
+                     <p className='pt-4'>
+                         {index + 1}. {item.attributes.isi}
+                    </p>
+                  ))}
         </div>
         <div className='grid px-10 py-8'>
         <h3 className='text-lg font-semibold'>PROFIL KAMI</h3>

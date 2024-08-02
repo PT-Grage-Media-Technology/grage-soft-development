@@ -20,9 +20,7 @@ export default function Layanan() {
           "http://localhost:5000/api/klien/"
         );
         setKlien(response.data.data);
-        // console.log('klien', response.data.data);
-        // setIncluded(response.data.included); // Set included dari response
-        setTotalPages(response.data.totalPages);
+      
       } catch (error) {
         console.error("Error fetching data layanan:", error);
         setError(error);
@@ -33,7 +31,7 @@ export default function Layanan() {
 
     
     fetchData();
-  }, [currentPage]);
+  });
 
   console.log('klien', klien);
 
@@ -58,8 +56,6 @@ export default function Layanan() {
     );
   }
 
-  // Menghitung angka pertama yang akan ditampilkan dalam navigasi paginasi
-  const firstPage = Math.max(1, currentPage - 4);
 
   return (
     <section className="relative -mt-5 bg-transparent">
