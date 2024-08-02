@@ -206,7 +206,7 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fas fa-comments mr-2 text-sm " +
+                        "fa-solid fa-star mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/testimoni") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
@@ -229,7 +229,7 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fas fa-comments mr-2 text-sm " +
+                        "fa-solid fa-question mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/wcu") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
@@ -251,7 +251,7 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fas fa-comments mr-2 text-sm " +
+                        "fa-solid fa-list mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/kategoriWebsite") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
@@ -273,7 +273,7 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fas fa-comments mr-2 text-sm " +
+                        "fa-solid fa-gear mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/setting") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
@@ -296,7 +296,7 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fas fa-users mr-2 text-sm " +
+                        "fa-solid fa-user-tie mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/administrators") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
@@ -319,7 +319,7 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fas fa-users mr-2 text-sm " +
+                        "fa-solid fa-info mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/keterangan") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
@@ -341,7 +341,7 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fas fa-users mr-2 text-sm " +
+                        "fa-solid fa-coins mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/benefit_paket") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
