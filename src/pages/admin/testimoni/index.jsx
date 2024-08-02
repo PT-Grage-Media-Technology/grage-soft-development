@@ -47,14 +47,6 @@ const Testimoni = () => {
     setIsDeleting(true);
     const id = isDeleting;
 
-    // const confirmDelete = window.confirm(
-    //   "Apakah Anda yakin ingin menghapus item ini?"
-    // );
-    // if (!confirmDelete) {
-    //   setIsDeleting(false);
-    //   return;
-    // }
-    
     try {
       const response = await axios.delete(
         `http://localhost:5000/api/testimoni/${id}`,
@@ -65,7 +57,7 @@ const Testimoni = () => {
         }
       );
 
-      if (!response.status === 200) {
+      if (response.status !== 200) {
         throw new Error("Gagal menghapus data");
       }
 

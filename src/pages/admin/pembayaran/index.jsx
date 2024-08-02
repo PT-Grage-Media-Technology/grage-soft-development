@@ -129,9 +129,6 @@ const Pembayaran = ({ isLoggedIn }) => {
                         Image Bank
                       </th>
                       <th scope="col" className="px-6 py-4">
-                        Url Image Bank
-                      </th>
-                      <th scope="col" className="px-6 py-4">
                         Atas Nama
                       </th>
 
