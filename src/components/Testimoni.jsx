@@ -20,7 +20,7 @@ const Testimoni = () => {
         );
 
         console.log(response.data); // Log seluruh data yang diterima
-        setTestimoni(response.data.data.data);
+        setTestimoni(response.data.data);
 
       } catch (error) {
         console.error("Error fetching data testimoni:", error);
@@ -47,14 +47,14 @@ const Testimoni = () => {
         Testimoni
       </h1>
       <div className="grid grid-cols-2 justify-items-center gap-5 mt-5 lg:flex-row py-6">
-        {testimoni.map((item, index) => (
-          <div key={index} className="max-w-lg p-6 bg-white border border-gray-400 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        {testimoni.map((item) => (
+          <div className="max-w-lg p-6 bg-white border border-gray-400 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
               { item.deskripsi_testimoni }
             </p>
             <div className="flex">
               <img
-                src={ item.gambar_testimoni}
+                src={ item.url_gambar}
                 alt=""
                 className="rounded-full w-16 h-16"
               />
