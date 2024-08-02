@@ -89,7 +89,7 @@ export default function Add() {
                 htmlFor="benefit_paket"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Benefit Paket
+                Benefit
               </label>
               <input
                 type="text"

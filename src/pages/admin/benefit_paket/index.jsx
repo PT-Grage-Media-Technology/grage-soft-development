@@ -150,7 +150,7 @@ const BenefitPaket = ({ isLoggedIn }) => {
                   <thead className="font-medium border-b dark:border-neutral-500">
                     <tr>
                       <th scope="col" className="px-32 py-4">
-                        Isi
+                        Benefit
                       </th>
                       <th scope="col" className="px-14 py-4">
                         Action
@@ -211,7 +211,7 @@ const BenefitPaket = ({ isLoggedIn }) => {
                           </button>
                         </td> */}
                          <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
-                          <Link href={"/admin/benefitPaket/edit?id=" + item.id}>
+                          <Link href={"/admin/benefit_paket/edit?id=" + item.id}>
                             <div
                               className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                               aria-label="edit"
