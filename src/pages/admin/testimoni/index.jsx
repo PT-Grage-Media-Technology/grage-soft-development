@@ -170,7 +170,7 @@ const Testimoni = () => {
                           </Link>
 
                           <button
-                             onClick={() => {
+                            onClick={() => {
                               toggleModalDelete();
                               setIsDeleting(item.id);
                               // Simpan ID item yang akan dihapus
@@ -181,7 +181,7 @@ const Testimoni = () => {
                             {/* {isDeleting ? (
                               "Menghapus..."
                             ) : ( */}
-                              <i className="fa-solid fa-trash"></i>
+                            <i className="fa-solid fa-trash"></i>
                             {/* )} */}
                           </button>
                         </td>
@@ -232,7 +232,7 @@ const Testimoni = () => {
           </div>
         </div>
         {/* Modal delete */}
-          {showDeleteModal && (
+        {showDeleteModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center">
             <div className="fixed inset-0 transition-opacity">
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>

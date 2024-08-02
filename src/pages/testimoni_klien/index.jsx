@@ -6,7 +6,7 @@ import LoadingLayanan from "@/components/elements/LoadingLayanan";
 import { IoCallOutline } from "react-icons/io5";
 
 export default function Layanan() {
-  const [layanan, setLayanan] = useState([]);
+  const [testimoni, setTestimoni] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,9 +17,10 @@ export default function Layanan() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
+          // `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
+          "http://localhost:5000/api/testimoni/"
         );
-        setLayanan(response.data.data.data);
+        setTestimoni(response.data.data);
         setTotalPages(response.data.totalPages);
       } catch (error) {
         console.error("Error fetching data layanan:", error);
@@ -31,7 +32,6 @@ export default function Layanan() {
 
     fetchData();
   }, [currentPage]);
-  console.log(layanan);
 
   if (error) {
     return (
@@ -71,8 +71,40 @@ export default function Layanan() {
         TESTIMONI LEWAT WHATSAPP
       </p>
 
-      <div>
-        
+      <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
+        {testimoni.map((item) =>
+          item.jenis_testimoni === "wa" ? (
+            <div key={item.id} className="p-4 bg-white rounded-lg shadow-md">
+              <p className="text-lg font-semibold">{item.judul_testimoni}</p>
+              <p className="text-gray-600">{item.deskripsi_testimoni}</p>
+              <img
+                src={item.url_gambar}
+                alt={item.gambar_testimoni}
+                className="object-scale-down w-24 h-24 rounded-2xl mt-2"
+              />
+            </div>
+          ) : null
+        )}
+      </div>
+
+      <p className="font-bold text-center text-lg pt-6 text-gray-600">
+        TESTIMONI LEWAT EMAIL
+      </p>
+
+      <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
+        {testimoni.map((item) =>
+          item.jenis_testimoni === "email" ? (
+            <div key={item.id} className="p-4 bg-white rounded-lg shadow-md">
+              <p className="text-lg font-semibold">{item.judul_testimoni}</p>
+              <p className="text-gray-600">{item.deskripsi_testimoni}</p>
+              <img
+                src={item.url_gambar}
+                alt={item.gambar_testimoni}
+                className="object-scale-down w-24 h-24 rounded-2xl mt-2"
+              />
+            </div>
+          ) : null
+        )}
       </div>
     </section>
   );
