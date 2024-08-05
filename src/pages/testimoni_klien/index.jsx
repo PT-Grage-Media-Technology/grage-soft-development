@@ -74,13 +74,13 @@ export default function Layanan() {
       <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
         {testimoni.map((item) =>
           item.jenis_testimoni === "wa" ? (
-            <div key={item.id} className="p-4 bg-white rounded-lg shadow-md">
+            <div key={item.id} className="p-4 bg-white rounded-lg shadow-md text-center">
               <p className="text-lg font-semibold">{item.judul_testimoni}</p>
               <p className="text-gray-600">{item.deskripsi_testimoni}</p>
               <img
                 src={item.url_gambar}
                 alt={item.gambar_testimoni}
-                className="object-scale-down w-24 h-24 rounded-2xl mt-2"
+                className="object-scale-down w-24 h-24 rounded-2xl mt-2 mx-auto"
               />
             </div>
           ) : null
@@ -94,13 +94,13 @@ export default function Layanan() {
       <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
         {testimoni.map((item) =>
           item.jenis_testimoni === "email" ? (
-            <div key={item.id} className="p-4 bg-white rounded-lg shadow-md">
+            <div key={item.id} className="p-4 bg-white rounded-lg shadow-md text-center">
               <p className="text-lg font-semibold">{item.judul_testimoni}</p>
               <p className="text-gray-600">{item.deskripsi_testimoni}</p>
               <img
                 src={item.url_gambar}
                 alt={item.gambar_testimoni}
-                className="object-scale-down w-24 h-24 rounded-2xl mt-2"
+                className="object-scale-down w-24 h-24 rounded-2xl mt-2 mx-auto"
               />
             </div>
           ) : null

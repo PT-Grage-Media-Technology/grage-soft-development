@@ -24,10 +24,11 @@ export default function Edit() {
         const response = await axios.get(
           `http://localhost:5000/api/benefitpaket/${id}`
         );
-        if (!response.data.data || !response.data.data.attributes) {
+        if (!response.data.data || !response.data) {
           throw new Error("Data tidak lengkap.");
         }
-        const data = response.data.data.attributes;
+        console.log("response.data", response.data);
+        const data = response.data.data;
         setFormData({
           nama_benefit: data.nama_benefit || "",
           paket_id: data.paket_id || "",
