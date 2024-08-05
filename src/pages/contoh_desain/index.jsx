@@ -31,7 +31,7 @@ export default function Layanan() {
       <div className="flex flex-col w-full mx-auto sm:px-10 md:px-12 lg:px-28 lg:flex-row lg:gap-12 bg-blue-500 py-24 lg:py-32">
         <div className="relative text-white flex flex-col max-w-3xl mx-auto lg:text-left xl:py-8 lg:items-center lg:max-w-none lg:mx-0 lg:flex-1 lg:w-1/ lg:px-48">
           <h1 className="text-3xl text-center font-semibold leading-tight lg:text-4xl">
-            Paket G Desain
+            Paket Sultan Desain
           </h1>
         </div>
       </div>
@@ -40,12 +40,29 @@ export default function Layanan() {
         Contoh Desain
       </p>
 
-      <div className="relative flex flex-col items-center justify-center pt-5">
-        {contohDesain.map((item) => (
-        <div className="grid grid-cols-1  gap-x-28 gap-y-8 mt-8 lg:grid-cols-3">
-          <li className="items-start"><a href={item.link_contoh_desain} className="text-blue-500">{item.link_contoh_desain}</a> ( {item.deskripsi} )</li>
+      <div className="relative flex flex-col pt-5">
+        <div className="grid grid-cols-1 gap-x-32 mt-8 lg:grid-cols-3">
+          {contohDesain.map((item) => (
+            <li className="ps-8 pt-10"><a href={item.link_contoh_desain} className="text-blue-500">{item.link_contoh_desain}</a> ( {item.deskripsi} )</li>
+          ))}
         </div>
-        ))}
+      </div>
+      
+      <div className="relative flex flex-col pt-5">
+        <div className="grid ms-20 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-12">
+          <img src="/images/testing.jpg" alt="" className="w-52 h-58"/>  
+          <img src="/images/testing.jpg" alt="" className="w-52 h-58"/>  
+          <img src="/images/testing.jpg" alt="" className="w-52 h-58"/>  
+          <img src="/images/testing.jpg" alt="" className="w-52 h-58"/>  
+          <img src="/images/testing.jpg" alt="" className="w-52 h-58"/>  
+          <img src="/images/testing.jpg" alt="" className="w-52 h-58"/>  
+          <img src="/images/testing.jpg" alt="" className="w-52 h-58"/>  
+          <img src="/images/testing.jpg" alt="" className="w-52 h-58"/>  
+          <img src="/images/testing.jpg" alt="" className="w-52 h-58"/>  
+          <img src="/images/testing.jpg" alt="" className="w-52 h-58"/>  
+          <img src="/images/testing.jpg" alt="" className="w-52 h-58"/>  
+          <img src="/images/testing.jpg" alt="" className="w-52 h-58"/>  
+        </div>
       </div>
     </section>
   );
