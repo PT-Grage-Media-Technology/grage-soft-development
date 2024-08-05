@@ -31,7 +31,7 @@ export default function Layanan() {
 
     
     fetchData();
-  });
+  }, []);
 
   console.log('klien', klien);
 

@@ -10,8 +10,6 @@ export default function Layanan() {
   const [error, setError] = useState(null);
   const [setting, setSetting] = useState(""); // State untuk menyimpan nomor WA
 
-  const pageSize = 10;
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,18 +27,13 @@ export default function Layanan() {
     };
 
     fetchData();
-  },)
+  }, []);
 
-  console.log(setting);
 
   if (loading) {
     return (
       <div className="relative flex flex-col items-center justify-center lg:px-28">
-        <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
-          {Array.from({ length: pageSize }).map((_, index) => (
-            <LoadingLayanan key={index} />
-          ))}
-        </div>
+        <LoadingLayanan />
       </div>
     );
   }
@@ -68,8 +61,6 @@ export default function Layanan() {
         </div>
       </div>
 
-    
-
       <p className="text-center font-semibold text-4xl pt-16">Whatsapp</p>
       <p className="text-center pt-4">Klik Untuk WA:</p>
       <div className="flex justify-center py-5">
@@ -89,7 +80,7 @@ export default function Layanan() {
           className="bg-green-500 py-3 px-5 flex justify-center rounded-lg text-white"
         >
           <IoCallOutline className="me-3 mt-0" size={22} />
-          <p className="me-2">0{ setting.attributes.wa }</p>
+          <p className="me-2">0{ setting.attributes.telp }</p>
         </button>
       </div>
     </section>
