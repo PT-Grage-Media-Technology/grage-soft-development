@@ -46,17 +46,16 @@ const KategoriWebsite = () => {
       return;
     }
     try {
-      const response = await fetch(
+      const response = await axios.delete(
         `http://localhost:5000/api/kategoriWebsite/${id}`,
         {
-          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Gagal menghapus data");
       }
 
