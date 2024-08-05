@@ -59,7 +59,7 @@ export default function Layanan() {
           Perferendis!
         </span>
       </div>
-      <div className="relative flex flex-col items-center px-8 justify-center lg:px-28">
+      <div className="relative flex flex-col items-center px-6 py-2 justify-center lg:px-28">
         <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
           {paket.map((item) => {
             return (
@@ -79,22 +79,22 @@ export default function Layanan() {
                   {item["status_website"]}
                 </span>
 
-                <span className="bg-white text-center h-16 pt-4 font-semibold px-20 text-lg">
+                <span className="bg-white text-center h-16 pt-4 font-semibold px-2 lg:px-18 text-lg">
                   {item["jumlah_pilihan_desain"]} Pilihan Desain.{" "}
-                  <a href="" className="text-blue-500">
+                  <a href="contoh_desain" className="text-blue-500">
                     Lihat klik disini
                   </a>
                 </span>
 
-                <span className="bg-gray-100 text-center h-16 pt-4 px-20 text-lg">
+                <span className="bg-gray-100 text-center h-16 pt-4 px-2 lg:px-20 text-lg">
                   100 Domain
                 </span>
 
-                <span className="bg-white text-center h-16 pt-4 px-20 text-lg">
+                <span className="bg-white text-center h-16 pt-4 px-2 lg:px-20 text-lg">
                   Hosting 1GB
                 </span>
 
-                <span className="bg-gray-100 text-center h-16 pt-4 px-20 text-lg">
+                <span className="bg-gray-100 text-center h-16 pt-4 px-2 lg:px-20 text-lg">
                   Bandwidth 100 GB/ bulan
                 </span>
 
@@ -102,15 +102,15 @@ export default function Layanan() {
                   Panduan edit web
                 </span>
 
-                <span className="bg-gray-100 text-center h-16 pt-4 px-20 text-lg font-semibold">
+                <span className="bg-gray-100 text-center h-16 pt-4 px-2 lg:px-20 text-lg font-semibold">
                   Gratis Tanya Jawab & Pemanduan
                 </span>
 
-                <span className="bg-white text-center h-16 pt-4 px-20 font-semibold text-lg">
+                <span className="bg-white text-center h-16 pt-4 px-2 lg:px-20 font-semibold text-lg">
                   Garansi dari hacker dan virus
                 </span>
 
-                <span className="bg-gray-100 text-center h-16 pt-4 px-20 text-lg font-semibold">
+                <span className="bg-gray-100 text-center h-16 pt-4 px-2 lg:px-20 text-lg font-semibold">
                   Perpanjangan: Rp. 500.000/ tahun
                 </span>
 

@@ -7,7 +7,6 @@ import Link from "next/link";
 import axios from "axios";
 
 const Testimoni = () => {
-
   const [testimoni, setTestimoni] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,13 +14,10 @@ const Testimoni = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/testimoni"
-        );
+        const response = await axios.get("http://localhost:5000/api/testimoni");
 
         console.log(response.data); // Log seluruh data yang diterima
         setTestimoni(response.data.data);
-
       } catch (error) {
         console.error("Error fetching data testimoni:", error);
         setError(error);
@@ -46,21 +42,26 @@ const Testimoni = () => {
       <h1 className="font-semibold text-3xl lg:text-3xl text-center text-transparent bg-clip-text bg-gray-900">
         Testimoni
       </h1>
-      <div className="grid grid-cols-2 justify-items-center gap-5 mt-5 lg:flex-row py-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-5 mt-5 px-5 lg:flex-row lg:px-10 py-6 ">
         {testimoni.map((item) => (
-          <div className="max-w-lg p-6 bg-white border border-gray-400 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              { item.deskripsi_testimoni }
-            </p>
-            <div className="flex">
+          <div
+            key={item.id}
+            className="w-full h-40 max-w-sm p-6 bg-white border border-gray-400 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+          >
+            <div className="flex justify-start">
+              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 overflow-hidden text-ellipsis">
+                {item.deskripsi_testimoni}
+              </p>
+            </div>
+            <div className="flex items-center">
               <img
-                src={ item.url_gambar}
+                src={item.url_gambar}
                 alt=""
                 className="rounded-full w-16 h-16"
               />
-              <div className="grid grid-rows-2 justify-start">
-                <p className="font-semibold ms-4"> { item.judul_testimoni }</p>
-                <div className="flex px-2">
+              <div className="ml-4">
+                <p className="font-semibold">{item.judul_testimoni}</p>
+                <div className="flex">
                   <FaStar className="text-yellow-500 ml-1" />
                   <FaStar className="text-yellow-500 ml-1" />
                   <FaStar className="text-yellow-500 ml-1" />
