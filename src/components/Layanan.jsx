@@ -51,7 +51,7 @@ export default function Layanan() {
           Layanan dan Harga
         </h1>
       </div>
-      <div className="relative flex flex-col items-center justify-center lg:px-28 mt-4">
+      <div className="relative flex flex-col items-center px-6 justify-center lg:px-28 mt-4">
         <span className="flex text-center text-gray-500">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Error magnam
           beatae assumenda consequuntur numquam iure ad cumque, ut non hic porro
@@ -59,7 +59,7 @@ export default function Layanan() {
           Perferendis!
         </span>
       </div>
-      <div className="relative flex flex-col items-center justify-center lg:px-28">
+      <div className="relative flex flex-col items-center px-8 justify-center lg:px-28">
         <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
           {paket.map((item) => {
             return (
