@@ -4,18 +4,19 @@ import Link from "next/link";
 import LoadingLayanan from "@/components/elements/LoadingLayanan";
 
 export default function Layanan() {
-  const [klien, setKlien] = useState([]);
+  const [contohDesain, setcontohDesain] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const pageSize = 10;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/klien/");
-        setKlien(response.data.data);
+        const response = await axios.get("http://localhost:5000/api/contohDesain");
+
+        console.log(response.data); // Log seluruh data yang diterima
+        setcontohDesain(response.data);
       } catch (error) {
-        console.error("Error fetching data layanan:", error);
+        console.error("Error fetching data contoh desain:", error);
         setError(error);
       } finally {
         setLoading(false);
@@ -24,22 +25,6 @@ export default function Layanan() {
 
     fetchData();
   }, []);
-
-  if (error) {
-    return <div className="text-center text-red-500">Error: {error.message}</div>;
-  }
-
-  if (loading) {
-    return (
-      <div className="relative flex flex-col items-center justify-center lg:px-28">
-        <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
-          {Array.from({ length: pageSize }).map((_, index) => (
-            <LoadingLayanan key={index} />
-          ))}
-        </div>
-      </div>
-    );
-  }
 
   return (
     <section className="relative -mt-5 bg-transparent">
@@ -56,23 +41,11 @@ export default function Layanan() {
       </p>
 
       <div className="relative flex flex-col items-center justify-center pt-5">
-        <div className="grid grid-cols-1 gap-x-96 gap-y-8 mt-8 lg:grid-cols-3">
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
-          <li>Testing 1</li>
+        {contohDesain.map((item) => (
+        <div className="grid grid-cols-1  gap-x-28 gap-y-8 mt-8 lg:grid-cols-3">
+          <li className="items-start"><a href={item.link_contoh_desain} className="text-blue-500">{item.link_contoh_desain}</a> ( {item.deskripsi} )</li>
         </div>
+        ))}
       </div>
     </section>
   );
