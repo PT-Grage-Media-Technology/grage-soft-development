@@ -13,9 +13,10 @@ export default function Hero() {
             Gratis pemanduan, Garansi hacker, Dan mempunyai 3.000 klien aktif
             diseluruh dunia. Berdiri sejak 2008
           </h1>
-          <div className="px-36 mt-4 lg:px-60">
+          <div className="px-36 mt-4 lg:px-60 lg:ps-60">
             <button
               type="button"
+              href="/paket"
               class="flex text-white bg-orange-400 hover:bg-orange-500 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
             >
               HARGA WEB

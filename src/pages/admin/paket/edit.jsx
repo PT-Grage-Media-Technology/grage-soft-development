@@ -120,19 +120,18 @@ export default function Edit() {
 
   return (
     <AdminLayout>
-      <div className="flex items-center justify-center p-12">
-        <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link href={"/admin/paket"} className="relative ml-32 lg:ml-60">
-            <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
+      <div className="flex items-center justify-center p-12 ">
+        <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg  lg:-mt-48">
+          <Link href={"/admin/paket"} className="relative ml-32 lg:ml-60 ">
+            <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer m text-end bg-orange-400 hover:bg-orange-500 lg:left-24 left-4 top-10 text-md">
               <i className="fas fa-arrow-left"></i>
               <span>Kembali</span>
             </div>
           </Link>
-
-          <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
-            <div className="mt-4 mb-5">
+          <form className="py-20 bg-white px-9" onSubmit={handleSubmit}>
+            <div className="mb-5">
               <label
-                htmlFor="nama"
+                htmlFor="nama_paket"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
                 Nama Paket
@@ -142,8 +141,9 @@ export default function Edit() {
                 name="nama_paket"
                 id="nama_paket"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.nama_paket} // Gunakan nilai awal jika value kosong
+                value={formData.nama_paket}
                 onChange={handleInputChange}
+                required
               />
             </div>
             <div className="mb-5">
@@ -154,45 +154,31 @@ export default function Edit() {
                 Harga
               </label>
               <input
-                type="number"
+                type="text"
                 name="harga"
                 id="harga"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.harga} // Gunakan nilai awal jika value kosong
+                value={formData.harga}
                 onChange={handleInputChange}
+                required
               />
             </div>
-            <div className="mb-5">
-              <label
-                htmlFor="jumlah_pilihan_desain"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Jumlah Pilihan Desain
-              </label>
-              <input
-                type="number"
-                name="jumlah_pilihan_desain"
-                id="jumlah_pilihan_desain"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.jumlah_pilihan_desain} // Gunakan nilai awal jika value kosong
-                onChange={handleInputChange}
-              />
-            </div>
-            {/* <div className="mb-6 ">
+            <div className="mb-6 ">
               <label className="mb-5 block text-base font-semibold text-[#07074D]">
-                Gambar
+                Jumlah Pilihan Desain
               </label>
               <div className="mb-8">
                 <input
-                  type="file"
-                  name="gambar"
-                  id="gambar"
-                  htmlFor="gambar"
+                  type="number"
+                  name="jumlah_pilihan_desain"
+                  id="jumlah_pilihan_desain"
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  value={formData.jumlah_pilihan_desain}
                   onChange={handleInputChange}
+                  required
                 />
               </div>
-            </div> */}
+            </div>
 
             <div className="mb-5">
               <label
@@ -201,6 +187,8 @@ export default function Edit() {
               >
                 Status Website
               </label>
+
+              <div className="mb-5">
               <select
                   name="status_website"
                   id="status_website"
@@ -216,17 +204,19 @@ export default function Edit() {
                   <option value="Tersedia">Tersedia</option>
                   <option value="Tidak Tersedia">Tidak Tersedia</option>
                 </select>
+              </div>
             </div>
-
 
             <div className="mb-5">
               <label
-                htmlFor="kategori_website"
+                htmlFor="kategori_website_id"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
                 Kategori Website
               </label>
-              <select
+
+              <div className="mb-5">
+                <select
                   name="kategori_website_id"
                   id="kategori_website_id"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -234,7 +224,7 @@ export default function Edit() {
                   onChange={handleInputChange}
                   required
                 >
-                  <option value="" disabled hidden>
+                  <option value="" hidden>
                     Pilih Kategori Website
                   </option>
                   {kategoriWebsite.map((item) => (
@@ -243,10 +233,11 @@ export default function Edit() {
                     </option>
                   ))}
                 </select>
+              </div>
             </div>
 
             <div>
-              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-gradient-to-r from-indigo-400 to-gray-600 hover:bg-indigo-400 focus:bg-indigo-400">
+              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-blue-400 hover:bg-blue-500">
                 Simpan
               </button>
             </div>
