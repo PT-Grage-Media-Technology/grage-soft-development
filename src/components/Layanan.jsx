@@ -67,13 +67,13 @@ export default function Layanan() {
         </span>
       </div>
       <div className="relative flex flex-col items-center px-6 py-2 justify-center lg:px-24">
-        <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-3">
-          {paket.map((item) => (
+        <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-3 xl:grid-cols-3 w-full">
+          {paket.slice(0, 3).map((item) => ( // Hanya menampilkan 3 data
             <div
-              className={`grid grid-5 shadow-2xl rounded-2xl ${styles.paketCard}`} // Add CSS module class
+              className={`shadow-2xl rounded-2xl ${styles.paketCard} w-full`}
               key={item.id}
             >
-              <h2 className="flex justify-center font-bold h-16 px-16 pt-4 bg-green-400 text-xl text-white">
+              <h2 className="flex justify-center font-bold h-16 pt-4 bg-emerald-400 text-xl text-white">
                 {item["nama_paket"]}
               </h2>
 
@@ -85,10 +85,10 @@ export default function Layanan() {
                 {item["status_website"]}
               </span>
 
-              <span className="bg-white text-center h-16 pt-4 font-semibold px-2 lg:px-18 text-lg">
-                {item["jumlah_pilihan_desain"]} Pilihan Desain.{" "}
+              <span className="bg-white text-center h-16 pt-4 font-semibold px-2 text-lg">
+                {item["jumlah_pilihan_desain"]} pilihan desain.{" "}
                 <a href="contoh_desain" className="text-blue-500">
-                  Lihat klik disini
+                  Lihat klik di sini
                 </a>
               </span>
 
@@ -97,7 +97,7 @@ export default function Layanan() {
                 .map((benefit, index) => {
                   const bgColor = index % 2 === 0 ? 'bg-gray-100' : 'bg-white';
                   return (
-                    <div key={benefit.id} className={`text-center h-16 pt-4 px-18 lg:px-16 text-lg w-full ${bgColor}`}>
+                    <div key={benefit.id} className={`text-center h-16 pt-4 text-lg w-full ${bgColor}`}>
                        {benefit.nama_benefit}
                     </div>
                   );

@@ -302,7 +302,7 @@ export default function Sidebar() {
                           : "text-blueGray-300")
                       }
                     ></i>{" "}
-                    administrators
+                    Administrators
                   </Link>
                 </li>
 
@@ -325,7 +325,7 @@ export default function Sidebar() {
                           : "text-blueGray-300")
                       }
                     ></i>{" "}
-                    keterangan
+                    Keterangan
                   </Link>
                 </li>
 
@@ -347,7 +347,29 @@ export default function Sidebar() {
                           : "text-blueGray-300")
                       }
                     ></i>{" "}
-                    benefit paket
+                    Benefit Paket
+                  </Link>
+                </li>
+
+                <li className="items-center">
+                  <Link
+                    href={"/admin/syarat_ketentuan"}
+                    className={
+                      "text-xs uppercase py-3 font-bold block " +
+                      (router.pathname.indexOf("/admin/benefit_paket") !== -1
+                        ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                        : "text-blueGray-700 hover:text-blueGray-500")
+                    }
+                  >
+                    <i
+                      className={
+                        "fa-solid fa-book mr-2 text-sm " +
+                        (router.pathname.indexOf("/admin/benefit_paket") !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    Syarat & Ketentuan
                   </Link>
                 </li>
         
