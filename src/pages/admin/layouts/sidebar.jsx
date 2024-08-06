@@ -356,7 +356,7 @@ export default function Sidebar() {
                     href={"/admin/syarat_ketentuan"}
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/admin/benefit_paket") !== -1
+                      (router.pathname.indexOf("/admin/syarat_ketentuan") !== -1
                         ? "bg-orange-300 text-black rounded-lg px-4 py-2"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
@@ -364,7 +364,7 @@ export default function Sidebar() {
                     <i
                       className={
                         "fa-solid fa-book mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/benefit_paket") !== -1
+                        (router.pathname.indexOf("/admin/syarat_ketentuan") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
                       }
