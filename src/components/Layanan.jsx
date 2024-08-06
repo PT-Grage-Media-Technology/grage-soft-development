@@ -9,12 +9,12 @@ export default function Layanan() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => { 
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const [paketResponse, benefitResponse] = await Promise.all([
           axios.get("http://localhost:5000/api/paket"),
-          axios.get("http://localhost:5000/api/benefitPaket")
+          axios.get("http://localhost:5000/api/benefitPaket"),
         ]);
         setPaket(paketResponse.data.data);
         setBenefitPaket(benefitResponse.data.data);
@@ -86,17 +86,23 @@ export default function Layanan() {
 
               <span className="bg-white text-center h-16 pt-4 font-semibold px-2 lg:px-18 text-lg">
                 {item["jumlah_pilihan_desain"]} Pilihan Desain.{" "}
-                <a href="contoh_desain" className="text-blue-500">
+                <a
+                  href={`/contoh_desain/id=${item.id}`}
+                  className="text-blue-500"
+                >
                   Lihat klik disini
                 </a>
               </span>
 
               {benefitPaket
-                .filter(benefit => benefit.paket_id === item.id)
+                .filter((benefit) => benefit.paket_id === item.id)
                 .map((benefit, index) => {
-                  const bgColor = index % 2 === 0 ? 'bg-gray-100' : 'bg-white';
+                  const bgColor = index % 2 === 0 ? "bg-gray-100" : "bg-white";
                   return (
-                    <div key={benefit.id} className={`text-center h-16 pt-4 px-18 lg:px-20 text-lg w-full ${bgColor}`}>
+                    <div
+                      key={benefit.id}
+                      className={`text-center h-16 pt-4 px-18 lg:px-20 text-lg w-full ${bgColor}`}
+                    >
                       {benefit.nama_benefit}
                     </div>
                   );
