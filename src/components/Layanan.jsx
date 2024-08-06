@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import LoadingLayanan from "./elements/LoadingLayanan";
+import styles from './Layanan.module.css'; // Import CSS module
 
 export default function Layanan() {
   const [paket, setPaket] = useState([]);
@@ -65,22 +66,22 @@ export default function Layanan() {
           Perferendis!
         </span>
       </div>
-      <div className="relative flex flex-col items-center px-6 py-2 justify-center lg:px-28">
-        <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
-          {paket.map((item) => (
+      <div className="relative flex flex-col items-center px-6 py-2 justify-center lg:px-24">
+        <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-3 xl:grid-cols-3 w-full">
+          {paket.slice(0, 3).map((item) => ( // Hanya menampilkan 3 data
             <div
-              className="grid grid-5 shadow-2xl h-full rounded-2xl"
+              className={`shadow-2xl rounded-2xl ${styles.paketCard} w-full`}
               key={item.id}
             >
-              <h2 className="flex justify-center font-bold h-16 pt-4 bg-green-400 text-xl text-white">
+              <h2 className="flex justify-center font-bold h-16 pt-4 bg-emerald-400 text-xl text-white">
                 {item["nama_paket"]}
               </h2>
 
-              <span className="bg-gray-100 text-center h-16 pt-3 text-3xl font-semibold px-20">
+              <span className="bg-gray-100 text-center h-16 pt-3 text-3xl font-semibold px-16">
                 Rp {item["harga"]}
               </span>
 
-              <span className="bg-gray-100 text-center h-16 pt-4 px-20 text-lg">
+              <span className="bg-gray-100 text-center h-16 pt-4 px-16 text-lg">
                 {item["status_website"]}
               </span>
 
