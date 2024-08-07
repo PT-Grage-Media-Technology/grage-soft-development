@@ -71,10 +71,10 @@ export default function Layanan() {
         TESTIMONI LEWAT WHATSAPP
       </p>
 
-      <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-8 mt-8 mx-20 md:grid-cols-3 xl:grid-cols-2">
         {testimoni.map((item) =>
           item.jenis_testimoni === "wa" ? (
-            <div key={item.id} className="p-4 bg-white rounded-lg shadow-md text-center">
+            <div key={item.id} className="p-4 bg-white rounded-lg shadow-xl text-center">
               <p className="text-lg font-semibold">{item.judul_testimoni}</p>
               <p className="text-gray-600">{item.deskripsi_testimoni}</p>
               <img

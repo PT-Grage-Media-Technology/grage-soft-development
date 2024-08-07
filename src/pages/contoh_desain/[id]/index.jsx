@@ -39,7 +39,7 @@ export default function Layanan() {
           `http://localhost:5000/api/paket/${id}`
         );
         setPaket(response.data);
-        console.log(response.data);
+        console.log('coba', response);
       } catch (error) {
         console.error("Error fetching data", error);
       } finally {

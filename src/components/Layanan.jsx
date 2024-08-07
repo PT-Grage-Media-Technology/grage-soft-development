@@ -85,10 +85,13 @@ export default function Layanan() {
                 {item["status_website"]}
               </span>
 
-              <span className="bg-white text-center h-auto pt-4 pb-5 font-semibold px-2 lg:px-18 text-lg">
-                {item["jumlah_pilihan_desain"]} pilihan desain.{" "}
-                <a href="contoh_desain" className="text-blue-500">
-                  Lihat klik di sini
+              <span className="bg-white text-center h-16 pt-4 font-semibold px-2 lg:px-18 text-lg">
+                {item["jumlah_pilihan_desain"]} Pilihan Desain.{" "}
+                <a
+                  href={`/contoh_desain/${item.id}`}
+                  className="text-blue-500"
+                >
+                  Lihat klik disini
                 </a>
               </span>
 
