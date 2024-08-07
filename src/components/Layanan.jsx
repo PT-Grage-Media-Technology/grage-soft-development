@@ -88,7 +88,7 @@ export default function Layanan() {
               <span className="bg-white text-center h-16 pt-4 font-semibold px-2 lg:px-18 text-lg">
                 {item["jumlah_pilihan_desain"]} Pilihan Desain.{" "}
                 <a
-                  href={`/contoh_desain/id=${item.id}`}
+                  href={`/contoh_desain/${item.id}`}
                   className="text-blue-500"
                 >
                   Lihat klik disini
