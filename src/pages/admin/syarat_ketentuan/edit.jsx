@@ -13,7 +13,7 @@ export default function Edit() {
 
   // Initialize formData state with empty strings for text inputs and null for file input
   const [formData, setFormData] = useState({
-    nama_syarat_ketentuan: ""
+    nama_syarat_ketentuan: "",
   });
 
   useEffect(() => {
@@ -23,12 +23,12 @@ export default function Edit() {
           `http://localhost:5000/api/syaratketentuan/${id}`
         );
 
-        const data = response.data.data;
+        const data = response.data;
         console.log("Data:", data);
-        const { nama_syarat_ketentuan } = data.attributes;
+        const { nama_syarat_ketentuan } = data;
         setFormData((prevData) => ({
           ...prevData,
-          nama_syarat_ketentuan: nama_syarat_ketentuan || ""
+          nama_syarat_ketentuan: nama_syarat_ketentuan || "",
         }));
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -47,6 +47,7 @@ export default function Edit() {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
+      
       [name]: value,
     }));
   };
@@ -56,14 +57,17 @@ export default function Edit() {
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("nama_syarat_ketentuan", formData.nama_syarat_ketentuan);
+      formDataToSend.append(
+        "nama_syarat_ketentuan",
+        formData.nama_syarat_ketentuan
+      );
 
-      const response = await axios.put(
+      const response = await axios.patch(
         `http://localhost:5000/api/syaratketentuan/${id}`,
         formDataToSend,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
         }
       );
@@ -82,7 +86,10 @@ export default function Edit() {
     <AdminLayout>
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link href={"/admin/syarat_ketentuan"} className="relative ml-32 lg:ml-60">
+          <Link
+            href={"/admin/syarat_ketentuan"}
+            className="relative ml-32 lg:ml-60"
+          >
             <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer bg-orange-400 hover:bg-orange-500 lg:left-24 left-4 top-10 text-md">
               <i className="fas fa-arrow-left"></i>
               <span>Kembali</span>
