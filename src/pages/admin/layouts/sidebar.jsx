@@ -372,6 +372,53 @@ export default function Sidebar() {
                     Syarat & Ketentuan
                   </Link>
                 </li>
+
+                {/* Kategori Klien */}
+                <li className="items-center">
+                  <Link
+                    href={"/admin/kategoriKlien"}
+                    className={
+                      "text-xs uppercase py-3 font-bold block " +
+                      (router.pathname.indexOf("/admin/kategoriKlien") !== -1
+                        ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                        : "text-blueGray-700 hover:text-blueGray-500")
+                    }
+                  >
+                    <i
+                      className={
+                        "fa-solid fa-book mr-2 text-sm " +
+                        (router.pathname.indexOf("/admin/kategoriKlien") !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    Kategori Klien
+                  </Link>
+                </li>
+
+
+                {/* Klien */}
+                <li className="items-center">
+                  <Link
+                    href={"/admin/klien"}
+                    className={
+                      "text-xs uppercase py-3 font-bold block " +
+                      (router.pathname.indexOf("/admin/klien") !== -1
+                        ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                        : "text-blueGray-700 hover:text-blueGray-500")
+                    }
+                  >
+                    <i
+                      className={
+                        "fa-solid fa-book mr-2 text-sm " +
+                        (router.pathname.indexOf("/admin/klien") !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    Klien
+                  </Link>
+                </li>
         
 
               <li className="items-center">

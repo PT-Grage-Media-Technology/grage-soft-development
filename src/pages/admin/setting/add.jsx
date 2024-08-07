@@ -65,6 +65,7 @@ export default function Add() {
       }));
     }
   };
+  
   return (
     <AdminLayout>
       <div className="flex items-center justify-center p-12 ">
