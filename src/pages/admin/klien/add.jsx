@@ -74,7 +74,7 @@ export default function Add() {
         }
       );
 
-      if (response.status == 200) {
+      if (response.status == 201) {
         // console.log("Data berhasil di tambahkan!");
         // tambahkan logika lainnya sesuai kebutuhan, seperti mereset form atau menampilkan pesan sukses
         router.push("/admin/klien");
@@ -101,7 +101,7 @@ export default function Add() {
       <div className="flex items-center justify-center p-12 ">
         <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg  lg:-mt-48">
           <Link
-            href={"/admin/kategoriKlien"}
+            href={"/admin/klien"}
             className="relative ml-32 lg:ml-60 "
           >
             <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer m text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">

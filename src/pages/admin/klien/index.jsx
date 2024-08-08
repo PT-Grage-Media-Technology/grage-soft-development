@@ -191,7 +191,7 @@ const Klien = ({ isLoggedIn }) => {
                         </td>
                         <td className="px-24 py-4 whitespace-nowrap">
                           <img
-                            src={item.url_klien}
+                            src={item.logo_klien}
                             alt="Foto"
                             className="object-scale-down w-24 h-24 rounded-2xl"
                           />
