@@ -386,7 +386,7 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fa-solid fa-book mr-2 text-sm " +
+                        "fa-solid fa-list mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/kategoriKlien") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
@@ -410,7 +410,7 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fa-solid fa-book mr-2 text-sm " +
+                        "fa-solid fa-user mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/klien") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
@@ -432,7 +432,7 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fa-solid fa-book mr-2 text-sm " +
+                        "fa-solid fa-pen mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/contoh_desain") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
