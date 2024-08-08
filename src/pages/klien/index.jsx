@@ -97,7 +97,7 @@ export default function Layanan() {
             <div key={index} className="bg-white p-6 rounded-lg shadow-lg">
               <h2 className="text-xl font-semibold mb-2">{item.kategori_klien ? item.kategori_klien.nama_kategori_klien : "Kategori tidak ditemukan"}</h2>
               <img src={item["url_klien"]} alt={item["logo-klien"]} className="mb-4" />
-              <p className="text-gray-500">Paket ID: {item["paket-id"]}</p>
+              <p className="text-gray-500">Nama Paket: {item.paket.nama_paket}</p>
             </div>
           );
         })}

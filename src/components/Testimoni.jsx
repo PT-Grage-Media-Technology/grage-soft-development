@@ -75,7 +75,7 @@ const Testimoni = () => {
       </div>
       <div className="flex justify-center">
         <Link
-          href={"/testimoni"}
+          href={"/testimoni_klien"}
           type="submit"
           className="block px-4 py-3 mt-6 font-semibold text-center text-white rounded-full w-52 bg-blue-400 hover:bg-blue-900"
         >
