@@ -25,17 +25,17 @@ export default function Edit() {
         const response = await axios.get(
           `http://localhost:5000/api/contohdesain/${id}`
         );
-       // console.log("API response:", response.data); // Log the entire API response
+        // console.log("API response:", response.data); // Log the entire API response
         const data = response.data;
-      //  console.log("Data:", data);
+        //  console.log("Data:", data);
         // Log the data object
         // Access attributes directly
-        const { link_contoh_desain, is_gambar, deskripsi} = data;
+        const { link_contoh_desain, is_gambar, deskripsi } = data;
         // Update formData state with data from the API response
         setFormData((prevData) => ({
           ...prevData,
           link_contoh_desain: link_contoh_desain || "",
-          is_gambar: is_gambar || "",
+          is_gambar: is_gambar ? "true" : "false" || "",
           deskripsi: deskripsi || "",
         }));
       } catch (error) {
@@ -69,16 +69,13 @@ export default function Edit() {
       const formDataToSend = new FormData();
       formDataToSend.append("link_contoh_desain", formData.link_contoh_desain);
       formDataToSend.append("is_gambar", formData.is_gambar);
-      formDataToSend.append(
-        "deskripsi",
-        formData.deskripsi
-      );
+      formDataToSend.append("deskripsi", formData.deskripsi);
 
       console.log("link", formData.link_contoh_desain);
       console.log("isgambar", formData.is_gambar);
       console.log("deskripsi", formData.deskripsi);
 
-      const response = await axios.put(
+      const response = await axios.patch(
         `http://localhost:5000/api/contohdesain/${id}`,
         formDataToSend,
         {
@@ -102,7 +99,10 @@ export default function Edit() {
     <AdminLayout>
       <div className="flex items-center justify-center p-12 ">
         <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg  lg:-mt-48">
-          <Link href={"/admin/contoh_desain"} className="relative ml-32 lg:ml-60 ">
+          <Link
+            href={"/admin/contoh_desain"}
+            className="relative ml-32 lg:ml-60 "
+          >
             <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer m text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
               <i className="fas fa-arrow-left"></i>
               <span>Kembali</span>
@@ -134,22 +134,18 @@ export default function Edit() {
                 Is Gambar
               </label>
               <select
-                  name="is_gambar"
-                  id="is_gambar"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  value={formData.is_gambar}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="" hidden>
-                    Pilih True / False
-                  </option>
-                  <option value="1">True</option>
-                  <option value="0">False</option>
-                </select>
+                name="is_gambar"
+                id="is_gambar"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                value={formData.is_gambar == "true" ? "true" : "false"}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="1">Ya</option>
+                <option value="0">Tidak</option>
+              </select>
             </div>
 
-            
             <div className="mb-5">
               <label
                 htmlFor="no_rek"
