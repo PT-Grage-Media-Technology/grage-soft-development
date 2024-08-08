@@ -44,7 +44,7 @@ export default function Rating() {
             <div key={item.id} className="flex flex-col items-center gap-5">
               <div className="flex flex-col items-center">
                 <img
-                  src={item.url_klien}
+                  src={item.logo_klien}
                   alt={item.nama_klien}
                   className="w-36 h-36 rounded-full"
                 />
