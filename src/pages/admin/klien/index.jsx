@@ -25,7 +25,7 @@ const Klien = ({ isLoggedIn }) => {
       const response = await axios.get(
         `http://localhost:5000/api/klien?page=${currentPage}`
       );
-      console.log('rendi ganteng',response.data.data);
+      console.log("rendi ganteng", response.data.data);
       setKlien(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
@@ -152,6 +152,9 @@ const Klien = ({ isLoggedIn }) => {
                         Nama Paket
                       </th>
                       <th scope="col" className="px-32 py-4">
+                        Nama Klien
+                      </th>
+                      <th scope="col" className="px-32 py-4">
                         Nama Kategori Klien
                       </th>
                       <th scope="col" className="px-32 py-4">
@@ -178,6 +181,9 @@ const Klien = ({ isLoggedIn }) => {
                           {item.paket.nama_paket}
                         </td>
                         <td className="px-24 py-4 whitespace-nowrap">
+                          {item.nama_klien}
+                        </td>
+                        <td className="px-24 py-4 whitespace-nowrap">
                           {item.kategori_klien.nama_kategori_klien}
                         </td>
                         <td className="px-24 py-4 whitespace-nowrap">
@@ -185,7 +191,7 @@ const Klien = ({ isLoggedIn }) => {
                         </td>
                         <td className="px-24 py-4 whitespace-nowrap">
                           <img
-                            src={item.logo_klien}
+                            src={item.url_klien}
                             alt="Foto"
                             className="object-scale-down w-24 h-24 rounded-2xl"
                           />
@@ -193,7 +199,7 @@ const Klien = ({ isLoggedIn }) => {
                         <td className="px-24 py-4 whitespace-nowrap">
                           {item.is_headline ? "Ya" : "Tidak"}
                         </td>
-                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
+                        <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
                           <Link href={"/admin/klien/edit?id=" + item.id}>
                             <div
                               className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"

@@ -14,6 +14,7 @@ export default function Add() {
   const [formData, setFormData] = useState({
     id_kategori_klien: "",
     id_paket: "",
+    nama_klien: "",
     url_klien: "",
     logo_klien: null,
     is_headline: "",
@@ -35,10 +36,8 @@ export default function Add() {
 
   const fetchDataPaket = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/paket`
-      );
-      console.log('rendi ganteng',response.data.data);
+      const response = await axios.get(`http://localhost:5000/api/paket`);
+      console.log("rendi ganteng", response.data.data);
       setPaket(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
@@ -57,20 +56,25 @@ export default function Add() {
     e.preventDefault();
 
     try {
-      const formDataToSend = new FormData; 
+      const formDataToSend = new FormData();
       formDataToSend.append("kategori_klien_Id", formData.id_kategori_klien);
       formDataToSend.append("paket_Id", formData.id_paket);
+      formDataToSend.append("nama_klien", formData.nama_klien);
       formDataToSend.append("url_klien", formData.url_klien);
       formDataToSend.append("is_headline", formData.is_headline);
       formDataToSend.append("logo_klien", formData.logo_klien);
-   
-      const response = await axios.post("http://localhost:5000/api/klien/", formDataToSend, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-        }
-      });
 
-      if (response.status == 201) {
+      const response = await axios.post(
+        "http://localhost:5000/api/klien/",
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.status == 200) {
         // console.log("Data berhasil di tambahkan!");
         // tambahkan logika lainnya sesuai kebutuhan, seperti mereset form atau menampilkan pesan sukses
         router.push("/admin/klien");
@@ -96,14 +100,16 @@ export default function Add() {
     <AdminLayout>
       <div className="flex items-center justify-center p-12 ">
         <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg  lg:-mt-48">
-          <Link href={"/admin/kategoriKlien"} className="relative ml-32 lg:ml-60 ">
+          <Link
+            href={"/admin/kategoriKlien"}
+            className="relative ml-32 lg:ml-60 "
+          >
             <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer m text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
               <i className="fas fa-arrow-left"></i>
               <span>Kembali</span>
             </div>
           </Link>
           <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
-
             <div className="mt-4 mb-5">
               <label
                 htmlFor="id_paket"
@@ -143,14 +149,33 @@ export default function Add() {
               >
                 <option value="">Pilih Kategori Klien</option>
                 {kategoriKlien.map((item) => (
-                  <option value={item.id}>{item.attributes['nama-kategori-klien']}</option>
+                  <option value={item.id}>
+                    {item.attributes["nama-kategori-klien"]}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div className="mt-4 mb-5">
               <label
+                htmlFor="nama_klien"
+                className="mb-3 block text-base font-medium text-[#07074D]"
+              >
+                Nama Klien
+              </label>
+              <input
+                type="text"
+                name="nama_klien"
+                id="nama_klien"
+                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                value={formData.nama_klien}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
+            <div className="mt-4 mb-5">
+              <label
                 htmlFor="url_klien"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
