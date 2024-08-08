@@ -80,7 +80,7 @@ export default function Layanan() {
 
       <div className="relative flex flex-col pt-20">
         <div className="grid ms-20 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-16">
-          <img src="/images/testing.jpg" alt="" className="w-52 h-58" />
+          <img src="#" alt="" className="w-52 h-58" />
         </div>
       </div>
     </section>
