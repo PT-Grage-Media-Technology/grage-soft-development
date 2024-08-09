@@ -26,6 +26,7 @@ export default function Edit() {
           `http://localhost:5000/api/contohdesain/${id}`
         );
         const data = response.data;
+        console.log("response", response.data);
         // Update formData state with data from the API response
         setFormData({
           link_contoh_desain: data.link_contoh_desain || "",
@@ -46,35 +47,69 @@ export default function Edit() {
     }
   }, [id]);
 
-  // Handle input change function
+  //Handle input change function
   const handleInputChange = ({ target: { name, value, files } }) => {
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: name === "gambar_link_contoh_desain" ? files[0] : value,
-      ...(name === "gambar_link_contoh_desain" && { gambarUrl: URL.createObjectURL(files[0]) }),
-    }));
+    if (name === "is_gambar" && value === "0") {
+      // Reset link_contoh_desain jika is_gambar dipilih sebagai "Tidak"
+      setFormData((prevData) => ({
+        ...prevData,
+        is_gambar: value,
+        link_contoh_desain: "",
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: name === "gambar_link_contoh_desain" ? files[0] : value,
+        ...(name === "gambar_link_contoh_desain" && {
+          gambarUrl: URL.createObjectURL(files[0]),
+        }),
+      }));
+    }
   };
+
+  // const handleInputChange = ({ target: { name, value, files } }) => {
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: name === "gambar_link_contoh_desain" ? files[0] : value,
+  //     ...(name === "gambar_link_contoh_desain" && {
+  //       gambarUrl: URL.createObjectURL(files[0]),
+  //     }),
+  //   }));
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("link_contoh_desain", formData.link_contoh_desain);
+      // Append data to formData
       formDataToSend.append("is_gambar", formData.is_gambar);
-      
+
       if (formData.is_gambar === "1" && formData.gambar_link_contoh_desain) {
-        formDataToSend.append("gambar_link_contoh_desain", formData.gambar_link_contoh_desain);
+        formDataToSend.append(
+          "gambar_link_contoh_desain",
+          formData.gambar_link_contoh_desain
+        );
+      } else if (formData.is_gambar === "0") {
+        formDataToSend.append(
+          "link_contoh_desain",
+          formData.link_contoh_desain
+        );
       }
 
       formDataToSend.append("deskripsi", formData.deskripsi);
+
+      console.log("is_gambar value:", formData.is_gambar);
+
 
       const response = await axios.patch(
         `http://localhost:5000/api/contohdesain/${id}`,
         formDataToSend,
         {
           headers: {
-            "Content-Type": formData.is_gambar ? "multipart/form-data" : "application/json",
+            "Content-Type": formData.is_gambar
+              ? "multipart/form-data"
+              : "application/json",
           },
         }
       );
@@ -101,30 +136,41 @@ export default function Edit() {
     <AdminLayout>
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link href={"/admin/contoh_desain"} className="relative ml-32 lg:ml-60">
+          <Link
+            href={"/admin/contoh_desain"}
+            className="relative ml-32 lg:ml-60"
+          >
             <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
               <i className="fas fa-arrow-left"></i>
               <span>Kembali</span>
             </div>
           </Link>
           <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
-            <div className="mt-4 mb-5">
-              <label htmlFor="link_contoh_desain" className="mb-3 block text-base font-medium text-[#07074D]">
-                Link Contoh Desain
-              </label>
-              <input
-                type="text"
-                name="link_contoh_desain"
-                id="link_contoh_desain"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.link_contoh_desain}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+            {formData.is_gambar !== "1" && (
+              <div className="mt-4 mb-5">
+                <label
+                  htmlFor="link_contoh_desain"
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Link Contoh Desain
+                </label>
+                <input
+                  type="text"
+                  name="link_contoh_desain"
+                  id="link_contoh_desain"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  value={formData.link_contoh_desain}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            )}
 
             <div className="mt-4 mb-5">
-              <label htmlFor="is_gambar" className="mb-3 block text-base font-medium text-[#07074D]">
+              <label
+                htmlFor="is_gambar"
+                className="mb-3 block text-base font-medium text-[#07074D]"
+              >
                 Is Gambar
               </label>
               <select
@@ -161,7 +207,10 @@ export default function Edit() {
             )}
 
             <div className="mb-5">
-              <label htmlFor="deskripsi" className="mb-3 block text-base font-medium text-[#07074D]">
+              <label
+                htmlFor="deskripsi"
+                className="mb-3 block text-base font-medium text-[#07074D]"
+              >
                 Deskripsi
               </label>
               <input
