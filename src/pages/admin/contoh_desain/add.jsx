@@ -11,7 +11,8 @@ export default function Add() {
   const { id } = router.query;
   const [formData, setFormData] = useState({
     link_contoh_desain: "",
-    is_gambar: null,
+    gambar_link_contoh_desain: null,
+    is_gambar: "",
     deskripsi: ""
   });
 
@@ -22,21 +23,22 @@ export default function Add() {
       const formDataToSend = new FormData();
       formDataToSend.append("link_contoh_desain", formData.link_contoh_desain);
       formDataToSend.append("is_gambar", formData.is_gambar);
+
+      if(formData.is_gambar){
+        formDataToSend.append("gambar_link_contoh_desain", formData.gambar_link_contoh_desain);
+      }
+
       formDataToSend.append(
         "deskripsi",
         formData.deskripsi
       );
-
-      console.log("link", formData.link_contoh_desain);
-      console.log("isgambar", formData.is_gambar);
-      console.log("deskripsi", formData.deskripsi);
 
       const response = await axios.post(
         "http://localhost:5000/api/contohdesain",
         formDataToSend,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": formData.is_gambar ? "multipart/form-data" : "application/json",
           },
         }
       );
@@ -52,11 +54,19 @@ export default function Add() {
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
+
+  const handleInputChange = ({ target: { name, value, files } }) => {
+    setFormData(prevData => ({
       ...prevData,
-      [name]: value,
+      [name]: name === "gambar_link_contoh_desain" ? files[0] : value,
+      ...(name === "gambar_link_contoh_desain" && { gambarUrl: URL.createObjectURL(files[0]) }),
     }));
   };
 
@@ -84,6 +94,26 @@ export default function Add() {
               >
                 Link Contoh Desain
               </label>
+              <div className="mb-6 ">
+                {" "}
+                <label className="mb-5 block text-base font-semibold text-[#07074D]">
+                  Gambar
+                </label>
+                <div className="mb-8">
+                  <input
+                    type="file"
+                    name="gambar_link_contoh_desain"
+                    id="gambar_link_contoh_desain"
+                    htmlFor="gambar_link_contoh_desain"
+                    className={`w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md`}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+                {" "}
+                <label className="mb-5 block text-base font-semibold text-[#07074D]">
+                  Link Website
+                </label>
               <input
                 type="text"
                 name="link_contoh_desain"
@@ -91,7 +121,6 @@ export default function Add() {
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 value={formData.link_contoh_desain}
                 onChange={handleInputChange}
-                required
               />
             </div>
             <div className="mt-4 mb-5">
@@ -102,22 +131,22 @@ export default function Add() {
                 Is Gambar
               </label>
               <select
-                  name="is_gambar"
-                  id="is_gambar"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  value={formData.is_gambar}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="" hidden>
-                    Pilih True / False
-                  </option>
-                  <option value="1">True</option>
-                  <option value="0">False</option>
-                </select>
+                name="is_gambar"
+                id="is_gambar"
+                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                value={formData.is_gambar}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="" hidden>
+                  Pilih Ya / Tidak
+                </option>
+                <option value="1">Ya</option>
+                <option value="0">Tidak</option>
+              </select>
             </div>
 
-            
+
             <div className="mb-5">
               <label
                 htmlFor="no_rek"

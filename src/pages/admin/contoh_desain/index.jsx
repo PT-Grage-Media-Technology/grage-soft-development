@@ -42,17 +42,13 @@ const ConntohDesain = ({ isLoggedIn }) => {
   const handleDelete = async () => {
     const id = isDeleting;
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/contohdesain/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.delete(`http://localhost:5000/api/contohdesain/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Gagal menghapus data");
       }
 
@@ -125,7 +121,15 @@ const ConntohDesain = ({ isLoggedIn }) => {
                         key={item.id}
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.link_contoh_desain}
+                          {item.is_gambar ? (
+                            <>
+                              <img src={item.link_contoh_desain} alt="foto" width={100} />
+                            </>
+                          ) : (
+                            <>
+                              {item.link_contoh_desain}
+                            </>
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {item.deskripsi}
