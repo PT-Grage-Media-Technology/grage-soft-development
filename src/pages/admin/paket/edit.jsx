@@ -14,11 +14,11 @@ export default function Edit() {
   // Initialize formData state with empty strings for text inputs and null for file input
   // Inisialisasi state formData dengan nilai default jika tidak ada data sebelumnya
   const [formData, setFormData] = useState({
-    nama_paket: "", 
-    harga: "", 
-    jumlah_pilihan_desain: "", 
-    status_website: "", 
-    kategori_website: "", 
+    nama_paket: "",
+    harga: "",
+    jumlah_pilihan_desain: "",
+    status_website: "",
+    kategori_website: "",
   });
 
   const [kategoriWebsite, setKategoriWebsite] = useState([]);
@@ -26,7 +26,6 @@ export default function Edit() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-
         const response = await axios.get(
           `http://localhost:5000/api/paket/${id}`
         );
@@ -35,15 +34,21 @@ export default function Edit() {
         console.log("Data:", data);
         // Log the data object
         // Access attributes directly
-        const { nama_paket, harga, jumlah_pilihan_desain, status_website, kategori_website } = data.attributes;
+        const {
+          nama_paket,
+          harga,
+          jumlah_pilihan_desain,
+          status_website,
+          kategori_website,
+        } = data.attributes;
         // Update formData state with data from the API response
         setFormData((prevData) => ({
           ...prevData,
-          nama_paket: data.attributes['nama-paket'] || "",
+          nama_paket: data.attributes["nama-paket"] || "",
           harga: data.attributes.harga || "",
-          jumlah_pilihan_desain: data.attributes['jumlah-pilihan-desain'] || "",
-          status_website: data.attributes['status-website'] || "",
-          kategori_website: data.attributes['kategori-website-id'] || "",
+          jumlah_pilihan_desain: data.attributes["jumlah-pilihan-desain"] || "",
+          status_website: data.attributes["status-website"] || "",
+          kategori_website: data.attributes["kategori-website-id"] || "",
         }));
       } catch (error) {
         console.error("Error fetching data layanan:", error);
@@ -86,7 +91,10 @@ export default function Edit() {
       const formDataToSend = new FormData();
       formDataToSend.append("nama_paket", formData.nama_paket);
       formDataToSend.append("harga", formData.harga);
-      formDataToSend.append("jumlah_pilihan_desain", formData.jumlah_pilihan_desain);
+      formDataToSend.append(
+        "jumlah_pilihan_desain",
+        formData.jumlah_pilihan_desain
+      );
       formDataToSend.append("status_website", formData.status_website);
       formDataToSend.append("kategori_website_id", formData.kategori_website);
 
@@ -177,19 +185,18 @@ export default function Edit() {
               </div>
             </div>
 
-            <div className="mb-5">
+            <div className="mb-6">
               <label
                 htmlFor="status_website"
-                className="mb-3 block text-base font-medium text-[#07074D]"
+                className="mb-2 block text-sm font-semibold text-gray-700"
               >
                 Status Website
               </label>
-
-              <div className="mb-5">
-              <select
+              <div className="relative">
+                <select
                   name="status_website"
                   id="status_website"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full appearance-none rounded-lg border-2 border-gray-200 bg-white px-4 py-2 pr-8 text-gray-700 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   value={formData.status_website}
                   onChange={handleInputChange}
                   required
@@ -197,26 +204,34 @@ export default function Edit() {
                   <option value="" disabled hidden>
                     Pilih Status Website
                   </option>
-                  <option value="Siap Di Pakai" selected={formData.status_website == "Siap Di Pakai" ? 'true' : 'false'}>Siap Di Pakai</option>
-                  <option value="Tersedia" selected={formData.status_website == "Tersedia" ? 'true' : 'false'}>Tersedia</option>
-                  <option value="Tidak Tersedia" selected={formData.status_website == "Tidak Tersedia" ? 'true' : 'false'}>Tidak Tersedia</option>
+                  <option value="Siap Di Pakai">Siap Di Pakai</option>
+                  <option value="Tersedia">Tersedia</option>
+                  <option value="Tidak Tersedia">Tidak Tersedia</option>
                 </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <svg
+                    className="h-4 w-4 fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
               </div>
             </div>
 
-            <div className="mb-5">
+            <div className="mb-6">
               <label
                 htmlFor="kategori_website_id"
-                className="mb-3 block text-base font-medium text-[#07074D]"
+                className="mb-2 block text-sm font-semibold text-gray-700"
               >
                 Kategori Website
               </label>
-
-              <div className="mb-5">
+              <div className="relative">
                 <select
                   name="kategori_website_id"
                   id="kategori_website_id"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full appearance-none rounded-lg border-2 border-gray-200 bg-white px-4 py-2 pr-8 text-gray-700 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   value={formData.kategori_website}
                   onChange={handleInputChange}
                   required
@@ -225,11 +240,20 @@ export default function Edit() {
                     Pilih Kategori Website
                   </option>
                   {kategoriWebsite.map((item) => (
-                    <option key={item.id} value={item.id} selected={item.id == formData.kategori_website ? 'true' : 'false'}>
-                      {item.attributes['nama-kategori']}
+                    <option key={item.id} value={item.id}>
+                      {item.attributes["nama-kategori"]}
                     </option>
                   ))}
                 </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <svg
+                    className="h-4 w-4 fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
               </div>
             </div>
 

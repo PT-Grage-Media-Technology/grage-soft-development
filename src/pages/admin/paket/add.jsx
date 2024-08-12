@@ -153,19 +153,18 @@ export default function Add() {
               </div>
             </div>
 
-            <div className="mb-5">
+            <div className="mb-8">
               <label
                 htmlFor="status_website"
-                className="mb-3 block text-base font-medium text-[#07074D]"
+                className="mb-3 block text-lg font-semibold text-indigo-700"
               >
                 Status Website
               </label>
-
-              <div className="mb-5">
-              <select
+              <div className="relative">
+                <select
                   name="status_website"
                   id="status_website"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full px-4 py-3 text-base text-gray-900 bg-white border-2 border-indigo-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
                   value={formData.status_website}
                   onChange={handleInputChange}
                   required
@@ -177,22 +176,30 @@ export default function Add() {
                   <option value="Tersedia">Tersedia</option>
                   <option value="Tidak Tersedia">Tidak Tersedia</option>
                 </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-indigo-600">
+                  <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                    <path
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                      fillRule="evenodd"
+                    ></path>
+                  </svg>
+                </div>
               </div>
             </div>
 
-            <div className="mb-5">
+            <div className="mb-8">
               <label
                 htmlFor="kategori_website_id"
-                className="mb-3 block text-base font-medium text-[#07074D]"
+                className="mb-3 block text-lg font-semibold text-indigo-700"
               >
                 Kategori Website
               </label>
-
-              <div className="mb-5">
+              <div className="relative">
                 <select
                   name="kategori_website_id"
                   id="kategori_website_id"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full px-4 py-3 text-base text-gray-900 bg-white border-2 border-indigo-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
                   value={formData.kategori_website_id}
                   onChange={handleInputChange}
                   required
@@ -202,10 +209,19 @@ export default function Add() {
                   </option>
                   {kategoriWebsite.map((item) => (
                     <option key={item.id} value={item.id}>
-                      {item.attributes['nama-kategori']}
+                      {item.attributes["nama-kategori"]}
                     </option>
                   ))}
                 </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-indigo-600">
+                  <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                    <path
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                      fillRule="evenodd"
+                    ></path>
+                  </svg>
+                </div>
               </div>
             </div>
 
@@ -218,5 +234,5 @@ export default function Add() {
         </div>
       </div>
     </AdminLayout>
-  );  
+  );
 }
