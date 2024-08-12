@@ -15,9 +15,9 @@ export default function Navbar() {
    
       <div className="antialiased bg-gray-100 dark-mode:bg-gray-900 mb-5">
         <div className="w-full text-slate-200 bg-blue-500 dark-mode:text-gray-200 dark-mode:bg-gray-800">
-          <div className="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
+          <div className="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-auto lg:px-auto">
             <div className="flex flex-row items-center justify-between p-4">
-              <h1 className="text-xl text-white font-bold">GMT SOFT TECHNOLOGY</h1>
+              <h1 className="text-xl text-white font-bold">GMT SOFT DEVELOPMENT</h1>
               {/* <Link
                 href={"/"}
                 className="text-lg font-semibold tracking-widest text-white uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"

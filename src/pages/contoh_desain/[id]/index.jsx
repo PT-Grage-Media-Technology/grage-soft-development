@@ -54,7 +54,7 @@ export default function Layanan() {
       </p>
 
       <div className="relative flex flex-col pt-5">
-        <div className="grid grid-cols-1 gap-x-32 mt-8 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-x-auto mt-8 lg:grid-cols-3">
           {links.map((item) => (
             <li className="ps-8 pt-10" key={item.id}>
               <a href={item.link_contoh_desain} className="text-blue-500">
