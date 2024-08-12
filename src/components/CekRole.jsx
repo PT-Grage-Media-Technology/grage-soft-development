@@ -33,8 +33,15 @@ const CekRole = () => {
       } catch (error) {
         // console.error(error);
         // error karena ngambil dari JWT lain
-        if (error.response.data.error != null) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.error
+        ) {
           router.push("/auth/login");
+        } else {
+          console.error("Unexpected error:", error);
+          // Anda bisa menambahkan penanganan error lainnya di sini
         }
       }
     };
