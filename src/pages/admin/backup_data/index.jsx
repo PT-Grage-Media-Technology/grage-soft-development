@@ -35,11 +35,12 @@ const BackupData = ({ isLoggedIn }) => {
         progress: undefined,
       });
 
-      // Menyimpan tanggal backup ke localStorage
-      const backupDate = new Date();
-      const formattedDate = backupDate.toLocaleDateString("id-ID");
-      const formattedTime = backupDate.toLocaleTimeString("id-ID");
-      const backupEntry = { date: formattedDate, time: formattedTime };
+      // Menyimpan tanggal dan waktu backup ke localStorage
+      const now = new Date();
+      const backupEntry = {
+        date: now.toLocaleDateString("id-ID"),
+        time: now.toLocaleTimeString("id-ID"),
+      };
       const updatedHistory = [...backupHistory, backupEntry];
       setBackupHistory(updatedHistory);
       localStorage.setItem("backupHistory", JSON.stringify(updatedHistory));
@@ -84,20 +85,28 @@ const BackupData = ({ isLoggedIn }) => {
       JSON.parse(localStorage.getItem("backupHistory")) || [];
     setBackupHistory(savedHistory);
 
-    const now = new Date();
-    const lastBackupDate =
-      savedHistory.length > 0
-        ? new Date(
-            `${savedHistory[savedHistory.length - 1].date} ${
-              savedHistory[savedHistory.length - 1].time
-            }`
-          )
-        : null;
+    const checkBackupInterval = () => {
+      const now = new Date();
+      const lastBackupDate =
+        savedHistory.length > 0
+          ? new Date(
+              `${savedHistory[savedHistory.length - 1].date} ${
+                savedHistory[savedHistory.length - 1].time
+              }`
+            )
+          : null;
 
-    // Hanya lakukan backup otomatis jika sudah lewat 30 hari dari backup terakhir
-    if (!lastBackupDate || now - lastBackupDate >= 2592000000) {
-      handleBackup();
-    }
+      // Hanya lakukan backup otomatis jika sudah lewat 30 hari dari backup terakhir
+      if (!lastBackupDate || now - lastBackupDate >= 2592000000) {
+        // 2592000000ms = 30 hari
+        handleBackup();
+      }
+    };
+
+    // Panggil fungsi pengecekan setiap hari
+    const intervalId = setInterval(checkBackupInterval, 86400000); // 86400000ms = 1 hari
+
+    return () => clearInterval(intervalId); // Bersihkan interval ketika komponen dibongkar
   }, [isLoggedIn]);
 
   if (!isLoggedIn) {
