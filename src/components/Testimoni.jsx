@@ -16,7 +16,6 @@ const Testimoni = () => {
       try {
         const response = await axios.get("http://localhost:5000/api/testimoni");
 
-        console.log(response.data); // Log seluruh data yang diterima
         setTestimoni(response.data.data);
       } catch (error) {
         console.error("Error fetching data testimoni:", error);
