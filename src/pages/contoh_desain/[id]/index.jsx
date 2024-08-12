@@ -71,7 +71,7 @@ export default function Layanan() {
               <img
                 src={item.link_contoh_desain}
                 alt={item.deskripsi}
-                className="w-52 h-58"
+                className="w-52 h-58 transition-transform duration-300 transform hover:scale-105"
               />
               ( {item.deskripsi} )
             </div>

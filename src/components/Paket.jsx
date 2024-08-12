@@ -4,7 +4,7 @@ import Link from "next/link";
 import LoadingLayanan from "./elements/LoadingLayanan";
 import styles from './Layanan.module.css'; // Import CSS module
 
-export default function Layanan() {
+export default function Paket() {
   const [paket, setPaket] = useState([]);
   const [benefitPaket, setBenefitPaket] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,7 +58,7 @@ export default function Layanan() {
           Layanan dan Harga
         </h1>
       </div>
-      <div className="relative flex flex-col items-center px-6 justify-center lg:px-28 mt-4">
+      <div className="relative flex flex-col items-center px-6 justify-center px-auto mt-4">
         <span className="flex text-center text-gray-500">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Error magnam
           beatae assumenda consequuntur numquam iure ad cumque, ut non hic porro
@@ -77,15 +77,15 @@ export default function Layanan() {
                 {item["nama_paket"]}
               </h2>
 
-              <span className="bg-gray-100 text-center h-16 pt-3 text-3xl font-semibold px-16">
+              <span className="flex justify-center bg-gray-100 text-center h-16 pt-3 text-3xl font-semibold px-auto">
                 Rp {item["harga"]}
               </span>
 
-              <span className="bg-gray-100 text-center h-16 pt-4 px-16 text-lg">
+              <span className="bg-gray-100 text-center h-16 pt-4 flex justify-center text-lg">
                 {item["status_website"]}
               </span>
 
-              <span className="bg-white text-center h-16 pt-4 font-semibold px-2 lg:px-18 text-lg">
+              <span className="bg-white text-center h-16 pt-4 font-semibold flex justify-center text-lg">
                 {item["jumlah_pilihan_desain"]} Pilihan Desain.{" "}
                 <a
                   href={`/contoh_desain/${item.id}`}
@@ -100,7 +100,7 @@ export default function Layanan() {
                 .map((benefit, index) => {
                   const bgColor = index % 2 === 0 ? 'bg-gray-100' : 'bg-white';
                   return (
-                    <div key={benefit.id} className={`text-center h-auto pb-5 pt-4 px-18 lg:px-16 text-lg w-full ${bgColor}`}>
+                    <div key={benefit.id} className={`text-center h-auto pb-5 pt-4 px-18 lg:flex justify-center text-lg w-full ${bgColor}`}>
                        {benefit.nama_benefit}
                     </div>
                   );

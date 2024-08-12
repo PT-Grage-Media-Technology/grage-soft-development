@@ -1,6 +1,6 @@
 import Hero from "@/components/Hero";
 import Pengurusan from "@/components/Pengurusan";
-import Layanan from "@/components/Layanan";
+import Layanan from "@/components/Paket";
 import Rating from "@/components/Klien";
 import Testimoni from "@/components/Testimoni";
 import Head from "next/head";
