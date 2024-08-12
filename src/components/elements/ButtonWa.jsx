@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 function ButtonWa() {
-  const phoneNumber = "6289661399499";
+  const [setting, setSetting] = useState(""); // State untuk menyimpan nomor WA
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/setting`
+        );
+        setSetting(response.data.data.data[0]);
+        console.log(response.data[0]);
+      } catch (error) {
+        console.error("Error fetching data layanan:", error);
+        setError(error);
+      } 
+    };
+
+    fetchData();
+  }, []);
 
   const handleSubmit = () => {
-    window.location.href = `https://wa.me/${phoneNumber}`;
+    window.location.href = `https://wa.me/62${ setting.wa }`;
   };
 
   return (
