@@ -29,13 +29,13 @@ function Kontak_Kami() {
     
   return (
     <div className='grid text-start px-10 py-28'>
-        <div className='grid grid-rows-5 px-10 py-8'>
+        <div className='grid grid-rows-5 px-10 py-8 text-center lg:text-start'>
         <h3 className='text-lg font-semibold'>Jasa Pembuatan Website Murah Berkualitas</h3>
             <div>
                 <p className='pt-4'>Testing</p>
             </div>
         </div>
-        <div className='grid grid-rows-7 px-10 py-8'>
+        <div className='grid grid-rows-7 px-10 py-8 text-center lg:text-start'>
         <h3 className='text-lg font-semibold'>MENGAPA KAMI?</h3>
                   {wcu.map((item, index) => (
                      <p className='pt-4'>
@@ -43,7 +43,7 @@ function Kontak_Kami() {
                     </p>
                   ))}
         </div>
-        <div className='grid px-10 py-8'>
+        <div className='grid px-10 py-8 text-center lg:text-start'>
         <h3 className='text-lg font-semibold'>PROFIL KAMI</h3>
             <div>
                 <p className='my-6'>Gmt Soft Development merupakan jasa pembuatan website profesional dan berkualitas terbaik Sejak 2008. Kami melayani jasa pembuatan Toko Online, Web Profile, Web Pulsa Elektrik, Web PPOB, Web Sekolah, Web Instansi, Web Rumah Sakit, Web Jejaring Sosial, Web Iklan baris, dll. Saat ini kami menawarkan pembuatan web toko online dan iklan baris dengan paket harga murah dengan server handal sehingga mendukung toko anda online 24 jam nonstop dan hasil jual beli anda akan semakin ramai. Gmt Soft Development juga membuka lapak di kaskus, silahkan dicari dengan kata kunci Gmt Soft Development. Selain itu kami juga melayani kursus membuat website. Penawaran yang kami berikan sangat menarik karena anda juga akan mendapat bonus website akan masuk google index dalam 6 jam saja. </p>

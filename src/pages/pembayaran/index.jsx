@@ -76,7 +76,7 @@ export default function Pembayaran() {
       <p className="text-center text-md pt-6 text-gray-600">
         Pembayaran bisa dilakukan ke bank berikut ini :
       </p>
-      <div>
+      <div className="px-8 py-4 lg:px-20 lg:py-4">
         {pembayaran.map((item, index) => (
           <div key={index} className="bg-white p-6 rounded-lg shadow-lg mb-4">
             <img
