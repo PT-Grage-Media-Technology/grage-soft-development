@@ -4,7 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 
 export default function Layanan() {
-  const [contohDesain, setcontohDesain] = useState([]);
+  const [contohDesain, setContohDesain] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const router = useRouter();
@@ -16,11 +16,11 @@ export default function Layanan() {
       try {
         const [desainResponse, paketResponse] = await Promise.all([
           axios.get("http://localhost:5000/api/contohDesain"),
-          axios.get(`http://localhost:5000/api/paket/${id}`)
+          axios.get(`http://localhost:5000/api/paket/${id}`),
         ]);
 
-        console.log("contoh desain", desainResponse.data); // Log seluruh data yang diterima
-        setcontohDesain(desainResponse.data);
+        console.log("contoh desain", desainResponse.data);
+        setContohDesain(desainResponse.data);
         setPaket(paketResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -34,6 +34,10 @@ export default function Layanan() {
       fetchData();
     }
   }, [id]);
+
+  // Filter data menjadi dua: satu untuk link dan satu lagi untuk gambar
+  const links = contohDesain.filter((item) => !item.is_gambar);
+  const images = contohDesain.filter((item) => item.is_gambar);
 
   return (
     <section className="relative -mt-5 bg-transparent">
@@ -51,21 +55,26 @@ export default function Layanan() {
 
       <div className="relative flex flex-col pt-5">
         <div className="grid grid-cols-1 gap-x-32 mt-8 lg:grid-cols-3">
-          {contohDesain.map((item) => (
+          {links.map((item) => (
             <li className="ps-8 pt-10" key={item.id}>
-              {item.is_gambar ? (
-                <img
-                  src={item.link_contoh_desain}
-                  alt={item.deskripsi}
-                  className="w-52 h-58"
-                />
-              ) : (
-                <a href={item.link_contoh_desain} className="text-blue-500">
-                  {item.link_contoh_desain}
-                </a>
-              )}{" "}
+              <a href={item.link_contoh_desain} className="text-blue-500">
+                {item.link_contoh_desain}
+              </a>{" "}
               ( {item.deskripsi} )
             </li>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 gap-x-32 mt-8 lg:grid-cols-3">
+          {images.map((item) => (
+            <div className="ps-8 pt-10" key={item.id}>
+              <img
+                src={item.link_contoh_desain}
+                alt={item.deskripsi}
+                className="w-52 h-58"
+              />
+              ( {item.deskripsi} )
+            </div>
           ))}
         </div>
       </div>

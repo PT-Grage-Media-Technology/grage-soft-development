@@ -109,7 +109,7 @@ export default function Layanan() {
               <div className="flex-auto text-center bg-gray-100">
                 <div className="flex justify-center text-sm font-medium pt-4 pb-9">
                   <Link
-                    href={`/pesan_web`}
+                    href={`/layanan`}
                     className="px-8 py-2 mb-2 tracking-wider text-lg text-white rounded-full shadow-sm md:mb-0 bg-blue-400 hover:bg-blue-900"
                     type="button"
                     aria-label="like"

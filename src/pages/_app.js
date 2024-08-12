@@ -20,7 +20,7 @@ export default function App({ Component, pageProps, router }) {
         <
         Head >
         <
-        title > Ngurus Izin < /title> <
+        title > Gmt Soft Development < /title> <
         /Head> <
         NextTopLoader color = "#A8CF45" / >
         <
