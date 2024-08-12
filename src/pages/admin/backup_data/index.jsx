@@ -43,7 +43,7 @@ const BackupData = ({ isLoggedIn }) => {
         <ToastContainer />
         <div>
           <h3 className="text-center text-xl font-semibold">
-            Tekan Untuk Backup Data
+            Tekan Untuk Backup Data nya
           </h3>
           <div className="flex justify-center py-8">
             <button
