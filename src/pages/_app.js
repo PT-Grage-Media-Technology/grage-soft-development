@@ -20,8 +20,8 @@ export default function App({ Component, pageProps, router }) {
         <
         Head >
         <
-        title > Gmt Soft Development < /title> <
-        /Head> <
+        title > GMT SOFT DEVELOPMENT < /title> < /
+        Head > <
         NextTopLoader color = "#A8CF45" / >
         <
         Navbar / >
