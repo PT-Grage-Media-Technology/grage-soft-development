@@ -70,7 +70,7 @@ export default function Navbar() {
                 HOME
               </Link>
               <Link
-                href={"/layanan"}
+                href={"/paket"}
                 className={`nav-link ${
                   router.pathname === "/layanan"
                     ? "font-bold text-white"

@@ -29,13 +29,13 @@ function Kontak_Kami() {
     
   return (
     <div className='grid text-start px-auto py-28'>
-        <div className='grid grid-rows-5 px-auto py-8 text-center lg:px-10 lg:text-start'>
+        <div className='grid grid-flow-row px-5 py-8 text-start lg:px-10'>
         <h3 className='text-lg font-semibold'>Jasa Pembuatan Website Murah Berkualitas</h3>
             <div>
                 <p className='pt-4'>Testing</p>
             </div>
         </div>
-        <div className='grid grid-rows-7 px-auto py-8 text-center lg:px-10 lg:text-start'>
+        <div className='grid grid-flow-row px-5 py-8 text-start lg:px-10'>
         <h3 className='text-lg font-semibold'>MENGAPA KAMI?</h3>
                   {wcu.map((item, index) => (
                      <p className='pt-4'>
@@ -43,8 +43,8 @@ function Kontak_Kami() {
                     </p>
                   ))}
         </div>
-        <div className='grid px-auto py-8 text-center lg:px-10 lg:text-start'>
-        <h3 className='text-lg font-semibold'>PROFIL KAMI</h3>
+        <div className='grid px-5 py-8 text-start lg:px-10'>
+          <h3 className='text-lg font-semibold'>PROFIL KAMI</h3>
             <div>
                 <p className='my-6'>Gmt Soft Development merupakan jasa pembuatan website profesional dan berkualitas terbaik Sejak 2008. Kami melayani jasa pembuatan Toko Online, Web Profile, Web Pulsa Elektrik, Web PPOB, Web Sekolah, Web Instansi, Web Rumah Sakit, Web Jejaring Sosial, Web Iklan baris, dll. Saat ini kami menawarkan pembuatan web toko online dan iklan baris dengan paket harga murah dengan server handal sehingga mendukung toko anda online 24 jam nonstop dan hasil jual beli anda akan semakin ramai. Gmt Soft Development juga membuka lapak di kaskus, silahkan dicari dengan kata kunci Gmt Soft Development. Selain itu kami juga melayani kursus membuat website. Penawaran yang kami berikan sangat menarik karena anda juga akan mendapat bonus website akan masuk google index dalam 6 jam saja. </p>
                 <p className='my-6'>Gmt Soft Development merupakan jasa/ perusahaan bisnis yang menawarkan jasa pembuatan web murah di Yogyakarta (Jogja) , Jakarta, Surabaya, Semarang, Bali, Sumatra, Padang, Bandung, Kalimantan Dan seluruh wilayah indonesia tanpa batasan apapun. Sebagai jasa pembuatan website kami berdiri sejak tahun 2008 dan hingga kini telah menangani Lebih dari 2.000 klien aktif. Kualitas layanan pembuatan website adalah hal yang kami utamakan. Walaupun kami menawarkan buat web murah namun dengan harga murah itu kualitas web tetap terajamin. Bisa anda lihat testimoni klien yang sudah beli web di tempat kami. </p>
