@@ -126,6 +126,10 @@ const Testimoni = () => {
                       </th>
 
                       <th scope="col" className="px-6 py-4">
+                        Is Publish
+                      </th>
+
+                      <th scope="col" className="px-6 py-4">
                         Action
                       </th>
                     </tr>
@@ -157,6 +161,10 @@ const Testimoni = () => {
 
                         <td className="px-6 py-4 whitespace-nowrap">
                           {item.deskripsi_testimoni}
+                        </td>
+
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {item.is_publish ? "Ya" : "Tidak"}
                         </td>
 
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">

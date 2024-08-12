@@ -18,6 +18,7 @@ export default function Edit() {
     gambar_testimoni: null, // Set default value to null
     judul_testimoni: "", // Set default value to empty string
     deskripsi_testimoni: "", // Set default value to empty string
+    is_publish: "",
   });
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export default function Edit() {
           gambar_testimoni: gambar_testimoni || "",
           judul_testimoni: judul_testimoni || "",
           deskripsi_testimoni: deskripsi_testimoni || "",
+          is_publish: data.is_publish ? "1" : "0",
         }));
       } catch (error) {
         console.error("Error fetching data testimoni:", error);
@@ -83,6 +85,7 @@ export default function Edit() {
         "deskripsi_testimoni",
         formData.deskripsi_testimoni
       );
+      formDataToSend.append("is_publish", formData.is_publish);
 
       // Jika ada gambar baru, tambahkan ke formDataToSend
       if (formData.gambar_testimoni) {
@@ -186,6 +189,29 @@ export default function Edit() {
                 value={formData.deskripsi_testimoni} // Gunakan nilai awal jika value kosong
                 onChange={handleInputChange}
               ></textarea>
+            </div>
+
+            <div className="mt-4 mb-5">
+              <label
+                htmlFor="is_publish"
+                className="mb-3 block text-base font-medium text-[#07074D]"
+              >
+                Is Publish
+              </label>
+              <select
+                name="is_publish"
+                id="is_publish"
+                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                value={formData.is_publish}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="" hidden>
+                  Pilih Ya / Tidak
+                </option>
+                <option value="1">Ya</option>
+                <option value="0">Tidak</option>
+              </select>
             </div>
 
             <div>

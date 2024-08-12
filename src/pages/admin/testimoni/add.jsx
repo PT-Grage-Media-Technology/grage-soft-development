@@ -11,6 +11,7 @@ export default function Add() {
     jenis_testimoni: "",
     judul_testimoni: "",
     deskripsi_testimoni: "",
+    is_publish: "",
     gambar_testimoni: null,
     url_gambar: null,
   });
@@ -22,6 +23,7 @@ export default function Add() {
       const formDataToSend = new FormData();
       formDataToSend.append("jenis_testimoni", formData.jenis_testimoni);
       formDataToSend.append("judul_testimoni", formData.judul_testimoni);
+      formDataToSend.append("is_publish", formData.is_publish);
 
       formDataToSend.append(
         "deskripsi_testimoni",
@@ -153,6 +155,29 @@ export default function Add() {
                 onChange={handleInputChange}
                 required
               ></textarea>
+            </div>
+
+            <div className="mt-4 mb-5">
+              <label
+                htmlFor="nama_rek"
+                className="mb-3 block text-base font-medium text-[#07074D]"
+              >
+                Is Publish
+              </label>
+              <select
+                name="is_publish"
+                id="is_publish"
+                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                value={formData.is_publish}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="" hidden>
+                  Pilih Ya / Tidak
+                </option>
+                <option value="1">Ya</option>
+                <option value="0">Tidak</option>
+              </select>
             </div>
 
             <div>
