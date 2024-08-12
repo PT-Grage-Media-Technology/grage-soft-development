@@ -29,7 +29,6 @@ export default function Edit() {
         );
 
         const data = response.data.data.data;
-        console.log("Data:", data);
 
         setFormData((prevData) => ({
           ...prevData,

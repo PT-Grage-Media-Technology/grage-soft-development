@@ -26,7 +26,6 @@ const Testimoni = () => {
         //`https://api.ngurusizin.online/api/testimoni?page=${currentPage}&search=${searchTerm}`
         "http://localhost:5000/api/testimoni/"
       );
-      console.log("data testimoni", response.data.data);
       setTestimoni(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);

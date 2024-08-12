@@ -24,7 +24,6 @@ const Paket = ({ isLoggedIn }) => {
       const response = await axios.get(
         `http://localhost:5000/api/syaratketentuan?page=${currentPage}`
       );
-      console.log(response)
       setSyaratketentuan(response.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);

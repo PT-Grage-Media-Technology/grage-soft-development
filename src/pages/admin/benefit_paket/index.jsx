@@ -25,7 +25,6 @@ const BenefitPaket = ({ isLoggedIn }) => {
       const response = await axios.get(
         `http://localhost:5000/api/benefitpaket?page=${currentPage}`
       );
-      console.log('rendi ganteng',response.data.data);
       setBenefitPaket(response.data.data);
       // setbenefitPaket(response.data.data);
       setTotalPages(response.data.totalPages);

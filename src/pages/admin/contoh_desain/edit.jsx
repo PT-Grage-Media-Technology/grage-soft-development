@@ -26,7 +26,6 @@ export default function Edit() {
           `http://localhost:5000/api/contohdesain/${id}`
         );
         const data = response.data;
-        console.log("response", response.data);
         // Update formData state with data from the API response
         setFormData({
           link_contoh_desain: data.link_contoh_desain || "",

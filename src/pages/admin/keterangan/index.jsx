@@ -25,7 +25,6 @@ const Keterangan = ({ isLoggedIn }) => {
       const response = await axios.get(
         `http://localhost:5000/api/keterangan?page=${currentPage}`
       );
-      console.log('rendi ganteng',response.data.data);
       setKeterangan(response.data.data);
       // setKeterangan(response.data.data);
       setTotalPages(response.data.totalPages);

@@ -31,15 +31,27 @@ export default function Sidebar() {
           Authorization: `${token}`,
         },
       };
-      await axios.post("http://localhost:5000/auth/logout", null, config);
+      await axios.post("http://localhost:5000/api/auth/logout", null, config);
       deleteCookie("token");
       router.push("/auth/login");
     } catch (error) {}
   };
 
-  const [dropdownOpenPaket, setDropdownOpenPaket] = useState(router.pathname.indexOf("/admin/paket") !== -1 || router.pathname.indexOf("/admin/benefit_paket") !== -1 || router.pathname.indexOf("/admin/contoh_desain") !== -1);
-  const [dropdownOpenKlien, setDropdownOpenKlien] = useState(router.pathname.indexOf("/admin/kategoriKlien") !== -1 || router.pathname.indexOf("/admin/klien") !== -1);
-  const [dropdownOpenPembayaran, setDropdownOpenPembayaran] = useState(router.pathname.indexOf("/admin/pembayaran") !== -1 || router.pathname.indexOf("/admin/testimoni") !== -1 || router.pathname.indexOf("/admin/kategoriWebsite") !== -1 || router.pathname.indexOf("/admin/syarat_ketentuan") !== -1);
+  const [dropdownOpenPaket, setDropdownOpenPaket] = useState(
+    router.pathname.indexOf("/admin/paket") !== -1 ||
+      router.pathname.indexOf("/admin/benefit_paket") !== -1 ||
+      router.pathname.indexOf("/admin/contoh_desain") !== -1
+  );
+  const [dropdownOpenKlien, setDropdownOpenKlien] = useState(
+    router.pathname.indexOf("/admin/kategoriKlien") !== -1 ||
+      router.pathname.indexOf("/admin/klien") !== -1
+  );
+  const [dropdownOpenPembayaran, setDropdownOpenPembayaran] = useState(
+    router.pathname.indexOf("/admin/pembayaran") !== -1 ||
+      router.pathname.indexOf("/admin/testimoni") !== -1 ||
+      router.pathname.indexOf("/admin/kategoriWebsite") !== -1 ||
+      router.pathname.indexOf("/admin/syarat_ketentuan") !== -1
+  );
 
   return (
     <>
@@ -123,7 +135,9 @@ export default function Sidebar() {
                         <Link
                           href={"/admin/paket"}
                           className={`text-blueGray-700 hover:text-blueGray-500 font-semibold text-sm ${
-                            router.pathname.indexOf("/admin/paket") !== -1 ? "bg-orange-300 text-black rounded-lg px-4 py-2" : ""
+                            router.pathname.indexOf("/admin/paket") !== -1
+                              ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                              : ""
                           }`}
                         >
                           Paket
@@ -133,7 +147,10 @@ export default function Sidebar() {
                         <Link
                           href={"/admin/benefit_paket"}
                           className={`text-blueGray-700 hover:text-blueGray-500 font-semibold text-sm ${
-                            router.pathname.indexOf("/admin/benefit_paket") !== -1 ? "bg-orange-300 text-black rounded-lg px-4 py-2" : ""
+                            router.pathname.indexOf("/admin/benefit_paket") !==
+                            -1
+                              ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                              : ""
                           }`}
                         >
                           Benefit Paket
@@ -143,7 +160,10 @@ export default function Sidebar() {
                         <Link
                           href={"/admin/contoh_desain"}
                           className={`text-blueGray-700 hover:text-blueGray-500 font-semibold text-sm ${
-                            router.pathname.indexOf("/admin/contoh_desain") !== -1 ? "bg-orange-300 text-black rounded-lg px-4 py-2" : ""
+                            router.pathname.indexOf("/admin/contoh_desain") !==
+                            -1
+                              ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                              : ""
                           }`}
                         >
                           Contoh Desain
@@ -190,7 +210,10 @@ export default function Sidebar() {
                         <Link
                           href={"/admin/kategoriKlien"}
                           className={`text-blueGray-700 hover:text-blueGray-500 font-semibold text-sm ${
-                            router.pathname.indexOf("/admin/kategoriKlien") !== -1 ? "bg-orange-300 text-black rounded-lg px-4 py-2" : ""
+                            router.pathname.indexOf("/admin/kategoriKlien") !==
+                            -1
+                              ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                              : ""
                           }`}
                         >
                           Kategori Klien
@@ -200,7 +223,9 @@ export default function Sidebar() {
                         <Link
                           href={"/admin/klien"}
                           className={`text-blueGray-700 hover:text-blueGray-500 font-semibold text-sm ${
-                            router.pathname.indexOf("/admin/klien") !== -1 ? "bg-orange-300 text-black rounded-lg px-4 py-2" : ""
+                            router.pathname.indexOf("/admin/klien") !== -1
+                              ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                              : ""
                           }`}
                         >
                           Klien
@@ -251,7 +276,9 @@ export default function Sidebar() {
                         <Link
                           href={"/admin/pembayaran"}
                           className={`text-blueGray-700 hover:text-blueGray-500 font-semibold text-sm ${
-                            router.pathname.indexOf("/admin/pembayaran") !== -1 ? "bg-orange-300 text-black rounded-lg px-4 py-2" : ""
+                            router.pathname.indexOf("/admin/pembayaran") !== -1
+                              ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                              : ""
                           }`}
                         >
                           Pembayaran
@@ -261,7 +288,9 @@ export default function Sidebar() {
                         <Link
                           href={"/admin/testimoni"}
                           className={`text-blueGray-700 hover:text-blueGray-500 font-semibold text-sm ${
-                            router.pathname.indexOf("/admin/testimoni") !== -1 ? "bg-orange-300 text-black rounded-lg px-4 py-2" : ""
+                            router.pathname.indexOf("/admin/testimoni") !== -1
+                              ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                              : ""
                           }`}
                         >
                           Testimoni
@@ -271,7 +300,11 @@ export default function Sidebar() {
                         <Link
                           href={"/admin/kategoriWebsite"}
                           className={`text-blueGray-700 hover:text-blueGray-500 font-semibold text-sm ${
-                            router.pathname.indexOf("/admin/kategoriWebsite") !== -1 ? "bg-orange-300 text-black rounded-lg px-4 py-2" : ""
+                            router.pathname.indexOf(
+                              "/admin/kategoriWebsite"
+                            ) !== -1
+                              ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                              : ""
                           }`}
                         >
                           Kategori Website
@@ -281,7 +314,11 @@ export default function Sidebar() {
                         <Link
                           href={"/admin/syarat_ketentuan"}
                           className={`text-blueGray-700 hover:text-blueGray-500 font-semibold text-sm ${
-                            router.pathname.indexOf("/admin/syarat_ketentuan") !== -1 ? "bg-orange-300 text-black rounded-lg px-4 py-2" : ""
+                            router.pathname.indexOf(
+                              "/admin/syarat_ketentuan"
+                            ) !== -1
+                              ? "bg-orange-300 text-black rounded-lg px-4 py-2"
+                              : ""
                           }`}
                         >
                           Syarat & Ketentuan

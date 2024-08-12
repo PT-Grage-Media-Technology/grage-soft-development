@@ -25,7 +25,6 @@ const Klien = ({ isLoggedIn }) => {
       const response = await axios.get(
         `http://localhost:5000/api/klien?page=${currentPage}`
       );
-      console.log("rendi ganteng", response.data.data);
       setKlien(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
