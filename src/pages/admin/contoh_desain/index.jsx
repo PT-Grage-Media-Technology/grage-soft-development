@@ -22,7 +22,6 @@ const ConntohDesain = ({ isLoggedIn }) => {
         const response = await axios.get(
           "http://localhost:5000/api/contohDesain"
         );
-        console.log(response);
         setContohDesain(response.data);
       } catch (error) {
         console.error("Error fetching data contoh desain:", error);

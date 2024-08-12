@@ -27,7 +27,6 @@ export default function Edit() {
         if (!response.data.data || !response.data) {
           throw new Error("Data tidak lengkap.");
         }
-        console.log("response.data", response.data);
         const data = response.data.data;
         setFormData({
           nama_benefit: data.nama_benefit || "",

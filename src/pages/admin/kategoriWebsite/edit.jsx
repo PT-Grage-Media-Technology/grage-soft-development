@@ -30,8 +30,6 @@ export default function Edit() {
         }
         const data = response.data.data;
 
-        console.log('coba', data);
-
         setFormData((prevData) => ({
           ...prevData,
           nama_kategori: data.attributes['nama-kategori'] || "",

@@ -32,7 +32,6 @@ export default function Edit() {
           throw new Error("Data tidak lengkap.");
         }
         const data = response.data;
-        console.log("Data:", data);
         // Log the data object
         // Access attributes directly
         const {

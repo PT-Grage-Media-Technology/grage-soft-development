@@ -23,8 +23,6 @@ const Setting = () => {
       const response = await axios.get(
         `http://localhost:5000/api/setting?page=${currentPage}&search=${searchTerm}`
       );
-
-      console.log(response.data.data.data);
       setSetting(response.data.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);

@@ -24,7 +24,6 @@ export default function Edit() {
         );
 
         const data = response.data;
-        console.log("Data:", data);
         const { nama_syarat_ketentuan } = data;
         setFormData((prevData) => ({
           ...prevData,

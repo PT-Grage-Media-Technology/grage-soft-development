@@ -25,7 +25,6 @@ const Wcu = ({ isLoggedIn }) => {
       const response = await axios.get(
         `http://localhost:5000/api/wcu?page=${currentPage}`
       );
-      console.log('rendi ganteng',response.data.data);
       setWcu(response.data.data);
       // setWcu(response.data.data);
       setTotalPages(response.data.totalPages);
