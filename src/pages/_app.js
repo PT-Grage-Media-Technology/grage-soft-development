@@ -7,14 +7,14 @@ import Head from "next/head";
 import ButtonWa from "@/components/elements/ButtonWa";
 export default function App({ Component, pageProps, router }) {
     const isInsideAdmin = router.pathname.startsWith("/admin");
+    const isLoginPage = router.pathname === "/auth/login"; // Tambahkan kondisi untuk halaman login
 
-    if (isInsideAdmin) {
-        // Jika berada di dalam folder admin, kembalikan null
+    if (isInsideAdmin || isLoginPage) { // Perbarui kondisi untuk mengembalikan hanya komponen
         return <Component {...pageProps }
         />;
     }
 
-    // Jika tidak berada di dalam folder admin, tampilkan Navbar dan Footer
+    // Jika tidak berada di dalam folder admin atau halaman login, tampilkan Navbar dan Footer
     return ( <
         div className = "overflow-x-hidden" >
         <
