@@ -19,6 +19,7 @@ const BenefitPaket = ({ isLoggedIn }) => {
   const [pageSize, setPageSize] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false); // Tambahkan state untuk modal delete
 
   const fetchData = async () => {
     try {
@@ -65,36 +66,13 @@ const BenefitPaket = ({ isLoggedIn }) => {
   }, [currentPage, searchTerm]);
 
   const handleDelete = async (id) => {
-    setIsDeleting(true);
-    const confirmDelete = window.confirm(
-      "Apakah Anda yakin ingin menghapus item ini?"
-    );
-    if (!confirmDelete) {
-      setIsDeleting(false);
-      return;
-    }
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/benefitpaket/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+    setIsDeleting(id); // Simpan id yang akan dihapus
+    toggleModalDelete(); // Tampilkan modal konfirmasi
+  };
 
-      if (!response.ok) {
-        throw new Error("Gagal menghapus data");
-      }
-
-      setBenefitPaket(benefitPaket.filter((item) => item.id !== id));
-      showToastMessage();
-    } catch (error) {
-      console.error("Terjadi kesalahan:", error);
-    } finally {
-      setIsDeleting(false);
-    }
+  // Tambahkan fungsi untuk toggle modal delete
+  const toggleModalDelete = () => {
+    setShowDeleteModal(!showDeleteModal);
   };
 
   const showToastMessage = () => {
@@ -230,11 +208,9 @@ const BenefitPaket = ({ isLoggedIn }) => {
                             className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                             aria-label="delete"
                           >
-                            {isDeleting ? (
-                              "Menghapus..."
-                            ) : (
+                          
                               <i className="fa-solid fa-trash"></i>
-                            )}
+                            
                           </button>
                         </td>
                       </tr>
@@ -291,6 +267,41 @@ const BenefitPaket = ({ isLoggedIn }) => {
           </div>
         </div>
       </AdminLayout>
+
+      {/* Modal konfirmasi delete */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 transition-opacity">
+            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+          </div>
+          <div className="relative w-full max-w-md transition transform bg-white rounded-lg shadow-xl">
+            <div className="px-4 py-5 sm:px-6">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Hapus Item
+              </h3>
+              <p className="max-w-2xl mt-1 text-sm text-gray-500">
+                Apakah Anda yakin ingin menghapus item ini?
+              </p>
+            </div>
+            <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+              <button
+                type="button"
+                onClick={() => handleDelete(isDeleting)} // Panggil handleDelete dengan id yang disimpan
+                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Hapus
+              </button>
+              <button
+                type="button"
+                onClick={toggleModalDelete} // Tutup modal
+                className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
