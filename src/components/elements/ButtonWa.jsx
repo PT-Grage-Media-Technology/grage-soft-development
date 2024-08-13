@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function ButtonWa() {
   const [setting, setSetting] = useState(""); // State untuk menyimpan nomor WA
@@ -11,7 +12,7 @@ function ButtonWa() {
           `http://localhost:5000/api/setting`
         );
         setSetting(response.data.data.data[0]);
-        console.log(response.data[0]);
+        console.log(response.data.data.data[0]);
       } catch (error) {
         console.error("Error fetching data layanan:", error);
         setError(error);
@@ -22,7 +23,7 @@ function ButtonWa() {
   }, []);
 
   const handleSubmit = () => {
-    window.location.href = `https://wa.me/62${ setting.wa }`;
+    window.location.href = `https://wa.me/62${ setting.attributes.wa }`;
   };
 
   return (
