@@ -125,26 +125,26 @@ const Wcu = ({ isLoggedIn }) => {
       <AdminLayout>
         <ToastContainer />
 
-        <div className="flex items-center justify-end mb-4 lg:-mt-48 md:-mt-48">
+        <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
+        <input
+                  type="text"
+                  placeholder="Cari wcu..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                />
           <Link
             href={"/admin/wcu/add"}
             className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400 hover:bg-orange-600"
           >
             <i className="fa-solid fa-plus"></i>
-            Wcu
+            WCU
           </Link>
         </div>
-        <div className="flex flex-col overflow-x-auto bg-white ">
+        <div className="flex flex-col overflow-x-auto bg-white rounded-xl">
           <div className="sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
               <div className="overflow-x-auto">
-                <input
-                  type="text"
-                  placeholder="Cari wcu..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-48 md:w-56 lg:w-72 rounded-l-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
                 <table className="min-w-full text-sm font-light text-left">
                   <thead className="font-medium border-b dark:border-neutral-500">
                     <tr>

@@ -100,7 +100,7 @@ const Pembayaran = ({ isLoggedIn }) => {
             </Link>
           )}
         </div>
-        <div className="flex flex-col overflow-x-auto bg-white ">
+        <div className="flex flex-col overflow-x-auto bg-white rounded-xl">
           <div className=" sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
               <div className="overflow-x-auto">
@@ -171,7 +171,7 @@ const Pembayaran = ({ isLoggedIn }) => {
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
                           <Link href={"/admin/pembayaran/edit?id=" + item.id}>
                             <div
-                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400"
                               aria-label="edit"
                             >
                               <i className="fa-solid fa-pen"></i>
@@ -184,7 +184,7 @@ const Pembayaran = ({ isLoggedIn }) => {
                               setIsDeleting(item.id);
                               // Simpan ID item yang akan dihapus
                             }}
-                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400"
                             aria-label="delete"
                           >
                             {/* {isDeleting ? (

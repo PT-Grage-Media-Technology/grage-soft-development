@@ -79,27 +79,26 @@ const Setting = () => {
         <title>Data Setting</title>
       </Head>
       <AdminLayout>
-        <div className="flex items-center justify-end mb-4 lg:-mt-48 md:-mt-48">
+        <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
+        <input
+                  type="text"
+                  placeholder="Cari administrators..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                />
           <Link
             href={"/admin/setting/add"}
-            className="z-10 flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 i tems-center text-end hover:bg-green-700 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-green-500"
+            className="z-10 flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400"
           >
             <i className="fa-solid fa-plus"></i>
             Setting
           </Link>
         </div>
-        <div className="flex flex-col overflow-x-auto bg-white ">
+        <div className="flex flex-col overflow-x-auto bg-white rounded-xl">
           <div className=" sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
               <div className="overflow-x-auto">
-                {/* search */}
-                <input
-                  type="text"
-                  placeholder="Cari setting..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
                 <table className="min-w-full text-sm font-light text-left">
                   <thead className="font-medium border-b dark:border-neutral-500">
                     <tr>
@@ -136,13 +135,13 @@ const Setting = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {setting.map((item) => (
+                    {setting.map((item, index) => (
                       <tr
                         className="border-b dark:border-neutral-500"
                         key={item.id}
                       >
                         <td className="px-6 py-4 font-medium whitespace-nowrap">
-                          {item.id}
+                          {index + 1}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {item.attributes.settingWarna}
@@ -173,7 +172,7 @@ const Setting = () => {
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
                           <Link href={"/admin/setting/edit?id=" + item.id}>
                             <div
-                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400"
                               aria-label="edit"
                             >
                               <i className="fa-solid fa-pen"></i>
@@ -183,7 +182,7 @@ const Setting = () => {
                           <button
                             onClick={() => handleDelete(item.id)}
                             disabled={isDeleting}
-                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400"
                             aria-label="delete"
                           >
                             {isDeleting ? (

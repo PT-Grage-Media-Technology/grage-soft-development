@@ -16,9 +16,10 @@ export default function AdminLayout({ children }) {
     <>
       <Sidebar />
       <div className="relative md:ml-64 bg-blueGray-100">
-        <AdminNavbar />
+        <div className="bg-blue-500">
         {/* Header */}
         <HeaderStats />
+        </div>
         <div className="w-full px-4 mx-auto -m-24 md:px-10">
           {children}
           <FooterAdmin />

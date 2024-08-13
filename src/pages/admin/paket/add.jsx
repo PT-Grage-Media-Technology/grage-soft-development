@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Head from "next/head";
 
 export default function Add() {
   const router = useRouter();
@@ -91,148 +92,156 @@ export default function Add() {
   };
 
   return (
-    <AdminLayout>
-      <ToastContainer />
-      <div className="flex items-center justify-center p-12 ">
-        <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg  lg:-mt-48">
-          <Link href={"/admin/paket"} className="relative ml-32 lg:ml-60 ">
-            <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer m text-end bg-orange-400 hover:bg-orange-500 lg:left-24 left-4 top-10 text-md">
-              <i className="fas fa-arrow-left"></i>
-              <span>Kembali</span>
+    <>
+      <Head>
+        <title>Tambah Data Paket</title>
+      </Head>
+
+      <AdminLayout>
+        <ToastContainer />
+        <div className="flex items-center justify-center p-12 ">
+          <div className="mx-auto w-full max-w-[700px] bg-white rounded-xl  lg:-mt-40">
+            <div className="relative">
+              <Link href={"/admin/paket"} className="py-6">
+                <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer m text-end bg-orange-400 hover:bg-orange-500 right-4 top-10 text-md">
+                  <i className="fas fa-arrow-left"></i>
+                  <span>Kembali</span>
+                </div>
+              </Link>
             </div>
-          </Link>
-          <form className="py-20 bg-white px-9" onSubmit={handleSubmit}>
-            <div className="mb-5">
-              <label
-                htmlFor="nama_paket"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Nama Paket
-              </label>
-              <input
-                type="text"
-                name="nama_paket"
-                id="nama_paket"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.nama_paket}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="mb-5">
-              <label
-                htmlFor="harga"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Harga
-              </label>
-              <input
-                type="text"
-                name="harga"
-                id="harga"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.harga}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="mb-6 ">
-              <label className="mb-5 block text-base font-semibold text-[#07074D]">
-                Jumlah Pilihan Desain
-              </label>
-              <div className="mb-8">
+            <form className="py-20 bg-white px-9" onSubmit={handleSubmit}>
+              <div className="mb-5">
+                <label
+                  htmlFor="nama_paket"
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Nama Paket
+                </label>
                 <input
-                  type="number"
-                  name="jumlah_pilihan_desain"
-                  id="jumlah_pilihan_desain"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                  value={formData.jumlah_pilihan_desain}
+                  type="text"
+                  name="nama_paket"
+                  id="nama_paket"
+                  className="w-full rounded-md border-2 border-bl-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  value={formData.nama_paket}
                   onChange={handleInputChange}
                   required
                 />
               </div>
-            </div>
-
-            <div className="mb-8">
-              <label
-                htmlFor="status_website"
-                className="mb-3 block text-lg font-semibold text-indigo-700"
-              >
-                Status Website
-              </label>
-              <div className="relative">
-                <select
-                  name="status_website"
-                  id="status_website"
-                  className="block w-full px-4 py-3 text-base text-gray-900 bg-white border-2 border-indigo-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
-                  value={formData.status_website}
+              <div className="mb-5">
+                <label
+                  htmlFor="harga"
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Harga
+                </label>
+                <input
+                  type="text"
+                  name="harga"
+                  id="harga"
+                  className="w-full rounded-md border-2 border-bl-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  value={formData.harga}
                   onChange={handleInputChange}
                   required
-                >
-                  <option value="" disabled hidden>
-                    Pilih Status Website
-                  </option>
-                  <option value="Siap Di Pakai">Siap Di Pakai</option>
-                  <option value="Tersedia">Tersedia</option>
-                  <option value="Tidak Tersedia">Tidak Tersedia</option>
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-indigo-600">
-                  <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                    <path
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                      fillRule="evenodd"
-                    ></path>
-                  </svg>
+                />
+              </div>
+              <div className="mb-6 ">
+                <label className="mb-5 block text-base font-semibold text-[#07074D]">
+                  Jumlah Pilihan Desain
+                </label>
+                <div className="mb-8">
+                  <input
+                    type="number"
+                    name="jumlah_pilihan_desain"
+                    id="jumlah_pilihan_desain"
+                    className="w-full rounded-md border-2 border-bl-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    value={formData.jumlah_pilihan_desain}
+                    onChange={handleInputChange}
+                    required
+                  />
                 </div>
               </div>
-            </div>
 
-            <div className="mb-8">
-              <label
-                htmlFor="kategori_website_id"
-                className="mb-3 block text-lg font-semibold text-indigo-700"
-              >
-                Kategori Website
-              </label>
-              <div className="relative">
-                <select
-                  name="kategori_website_id"
-                  id="kategori_website_id"
-                  className="block w-full px-4 py-3 text-base text-gray-900 bg-white border-2 border-indigo-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
-                  value={formData.kategori_website_id}
-                  onChange={handleInputChange}
-                  required
+              <div className="mb-8">
+                <label
+                  htmlFor="status_website"
+                  className="mb-3 block font-semibold text-black"
                 >
-                  <option value="" disabled hidden>
-                    Pilih Kategori Website
-                  </option>
-                  {kategoriWebsite.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.attributes["nama-kategori"]}
+                  Status Website
+                </label>
+                <div className="relative">
+                  <select
+                    name="status_website"
+                    id="status_website"
+                    className="block w-full px-4 py-3 text-base text-gray-900 bg-white border-2 border-bl-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
+                    value={formData.status_website}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="" disabled hidden>
+                      Pilih Status Website
                     </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-indigo-600">
-                  <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                    <path
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                      fillRule="evenodd"
-                    ></path>
-                  </svg>
+                    <option value="Siap Di Pakai">Siap Di Pakai</option>
+                    <option value="Tersedia">Tersedia</option>
+                    <option value="Tidak Tersedia">Tidak Tersedia</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-indigo-600">
+                    <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                      <path
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                        fillRule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div>
-              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-blue-400 hover:bg-blue-500">
-                Simpan
-              </button>
-            </div>
-          </form>
+              <div className="mb-8">
+                <label
+                  htmlFor="kategori_website_id"
+                  className="mb-3 block font-semibold text-black"
+                >
+                  Kategori Website
+                </label>
+                <div className="relative">
+                  <select
+                    name="kategori_website_id"
+                    id="kategori_website_id"
+                    className="block w-full px-4 py-3 text-base text-gray-900 bg-white border-2 border-bl-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
+                    value={formData.kategori_website_id}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="" disabled hidden>
+                      Pilih Kategori Website
+                    </option>
+                    {kategoriWebsite.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.attributes["nama-kategori"]}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-indigo-600">
+                    <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                      <path
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                        fillRule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-blue-400 hover:bg-blue-500">
+                  Simpan
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    </AdminLayout>
+      </AdminLayout>
+    </>
   );
 }
