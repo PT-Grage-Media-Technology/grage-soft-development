@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Head from "next/head";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 
@@ -115,6 +116,9 @@ const BackupData = ({ isLoggedIn }) => {
 
   return (
     <>
+      <Head>
+        <title>Backup Data</title>
+      </Head>
       <AdminLayout>
         <ToastContainer />
         <div>

@@ -120,7 +120,7 @@ const Wcu = ({ isLoggedIn }) => {
   return (
     <>
       <Head>
-        <title>Data wcu</title>
+        <title>Data WCU</title>
       </Head>
       <AdminLayout>
         <ToastContainer />

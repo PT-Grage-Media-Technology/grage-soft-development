@@ -120,7 +120,7 @@ const BenefitPaket = ({ isLoggedIn }) => {
   return (
     <>
       <Head>
-        <title>Data benefit paket</title>
+        <title>Data Benefit Paket</title>
       </Head>
       <AdminLayout>
         <ToastContainer />
