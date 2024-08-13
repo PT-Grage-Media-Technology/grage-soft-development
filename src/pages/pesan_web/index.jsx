@@ -5,7 +5,6 @@ import { IoCallOutline } from "react-icons/io5";
 import LoadingLayanan from "@/components/elements/LoadingLayanan";
 
 export default function Layanan() {
-  const [layanan, setLayanan] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [setting, setSetting] = useState(""); // State untuk menyimpan nomor WA
