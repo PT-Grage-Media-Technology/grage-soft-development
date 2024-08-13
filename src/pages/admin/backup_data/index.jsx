@@ -17,16 +17,23 @@ const BackupData = ({ isLoggedIn }) => {
         responseType: "blob",
       });
 
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "backup.sql");
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      // Tidak langsung mendownload file, hanya menyimpan histori
+      const now = new Date();
+      const backupEntry = {
+        date: now.toLocaleDateString("id-ID"),
+        time: now.toLocaleTimeString("id-ID"),
+        url: window.URL.createObjectURL(new Blob([response.data])),
+      };
+
+      const savedHistory =
+        JSON.parse(localStorage.getItem("backupHistory")) || [];
+      const updatedHistory = [...savedHistory, backupEntry];
+
+      setBackupHistory(updatedHistory);
+      localStorage.setItem("backupHistory", JSON.stringify(updatedHistory));
 
       // Tampilkan notifikasi sukses
-      toast.success("Backup berhasil!", {
+      toast.success("Backup berhasil disimpan!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -35,16 +42,6 @@ const BackupData = ({ isLoggedIn }) => {
         draggable: true,
         progress: undefined,
       });
-
-      // Menyimpan tanggal dan waktu backup ke localStorage
-      const now = new Date();
-      const backupEntry = {
-        date: now.toLocaleDateString("id-ID"),
-        time: now.toLocaleTimeString("id-ID"),
-      };
-      const updatedHistory = [...backupHistory, backupEntry];
-      setBackupHistory(updatedHistory);
-      localStorage.setItem("backupHistory", JSON.stringify(updatedHistory));
     } catch (error) {
       console.error("Error during backup:", error);
       toast.error("Backup gagal!", {
@@ -98,14 +95,14 @@ const BackupData = ({ isLoggedIn }) => {
           : null;
 
       // Hanya lakukan backup otomatis jika sudah lewat 30 hari dari backup terakhir
-      if (!lastBackupDate || now - lastBackupDate >= 2592000000) {
+      if (!lastBackupDate || now - lastBackupDate >= 10000) {
         // 2592000000ms = 30 hari
         handleBackup();
       }
     };
 
     // Panggil fungsi pengecekan setiap hari
-    const intervalId = setInterval(checkBackupInterval, 86400000); // 86400000ms = 1 hari
+    const intervalId = setInterval(checkBackupInterval, 10000); // 86400000ms = 1 hari
 
     return () => clearInterval(intervalId); // Bersihkan interval ketika komponen dibongkar
   }, [isLoggedIn]);
@@ -147,6 +144,7 @@ const BackupData = ({ isLoggedIn }) => {
                 <th className="border px-4 py-2">No</th>
                 <th className="border px-4 py-2">Tanggal Backup</th>
                 <th className="border px-4 py-2">Jam Backup</th>
+                <th className="border px-4 py-2">Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -155,6 +153,15 @@ const BackupData = ({ isLoggedIn }) => {
                   <td className="border px-4 py-2 text-center">{index + 1}</td>
                   <td className="border px-4 py-2 text-center">{entry.date}</td>
                   <td className="border px-4 py-2 text-center">{entry.time}</td>
+                  <td className="border px-4 py-2 text-center">
+                    <a
+                      href={entry.url}
+                      download={`backup-${entry.date}.sql`}
+                      className="bg-green-400 rounded-xl px-4 py-1 text-white"
+                    >
+                      Download
+                    </a>
+                  </td>
                 </tr>
               ))}
             </tbody>
