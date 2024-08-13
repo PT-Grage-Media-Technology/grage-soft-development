@@ -95,14 +95,14 @@ const BackupData = ({ isLoggedIn }) => {
           : null;
 
       // Hanya lakukan backup otomatis jika sudah lewat 30 hari dari backup terakhir
-      if (!lastBackupDate || now - lastBackupDate >= 10000) {
+      if (!lastBackupDate || now - lastBackupDate >= 2592000000) {
         // 2592000000ms = 30 hari
         handleBackup();
       }
     };
 
     // Panggil fungsi pengecekan setiap hari
-    const intervalId = setInterval(checkBackupInterval, 10000); // 86400000ms = 1 hari
+    const intervalId = setInterval(checkBackupInterval, 86400000); // 86400000ms = 1 hari
 
     return () => clearInterval(intervalId); // Bersihkan interval ketika komponen dibongkar
   }, [isLoggedIn]);
