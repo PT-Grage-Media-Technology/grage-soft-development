@@ -71,7 +71,7 @@ export default function Layanan() {
                     {item.nama_paket}
                   </h2>
 
-                  <span className="bg-gray-100 text-center h-16 pt-3 text-3xl font-semibold px-16">
+                  <span className="bg-gray-100 text-center h-16 pt-3 text-3xl font-semibold px-auto">
                     Rp {item.harga}
                   </span>
 
@@ -79,7 +79,7 @@ export default function Layanan() {
                     {item.status_website}
                   </span>
 
-                  <span className="bg-white text-center h-16 pt-4 font-semibold px-2 lg:px-18 text-lg">
+                  <span className="bg-white text-center h-16 pt-4 font-semibold px-auto text-lg">
                     {item.jumlah_pilihan_desain} Pilihan Desain.{" "}
                     <a href={`/contoh_desain/${item.id}`} className="text-blue-500">
                       Lihat klik disini
@@ -94,7 +94,7 @@ export default function Layanan() {
                       return (
                         <div
                           key={benefit.id}
-                          className={`text-center h-auto pb-5 pt-4 px-18 lg:px-16 text-lg w-full ${bgColor}`}
+                          className={`text-center h-auto pb-5 pt-4 px-auto text-lg w-full ${bgColor}`}
                         >
                           {benefit.nama_benefit}
                         </div>

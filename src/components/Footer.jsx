@@ -65,13 +65,17 @@ export default function Footer() {
                     {" "}
                     Home{" "}
                   </Link>
-                  <Link href={"/layanan"} className="hover:opacity-75">
+                  <Link href={"/paket"} className="hover:opacity-75">
                     {" "}
-                    Layanan{" "}
+                    Paket{" "}
                   </Link>
-                  <Link href={"/tentang"} className="hover:opacity-75">
+                  <Link href={"/pesan_web"} className="hover:opacity-75">
                     {" "}
-                    Tentang Kami{" "}
+                    Cara Pesan Web{" "}
+                  </Link>
+                  <Link href={"/pembayaran"} className="hover:opacity-75">
+                    {" "}
+                    Pembayaran{" "}
                   </Link>
                 </nav>
               </div>
