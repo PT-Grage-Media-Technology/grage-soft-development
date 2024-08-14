@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
+import Head from "next/head";
 
 export default function Edit() {
   const router = useRouter();
@@ -105,14 +106,19 @@ export default function Edit() {
 
   return (
     <AdminLayout>
+      <Head>
+        <title>Edit Setting</title>
+      </Head>
       <div className="flex items-center justify-center p-12">
-        <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link href={"/admin/setting"} className="relative ml-32 lg:ml-60">
-            <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
+        <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
+          <div className="relative py-3">
+          <Link href={"/admin/setting"} className="absolute right-4 top-10">
+            <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
               <i className="fas fa-arrow-left"></i>
               <span>Kembali</span>
             </div>
           </Link>
+          </div>
 
           <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
             <div className="mb-6 ">
@@ -241,7 +247,7 @@ export default function Edit() {
                 ></textarea>
               </div>
             <div>
-              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-gradient-to-r from-indigo-400 to-gray-600 hover:bg-indigo-400 focus:bg-indigo-400">
+              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-blue-400 hover:bg-indigo-600 focus:bg-indigo-400">
                 Simpan
               </button>
             </div>

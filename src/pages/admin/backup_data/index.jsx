@@ -118,20 +118,20 @@ const BackupData = ({ isLoggedIn }) => {
       </Head>
       <AdminLayout>
         <ToastContainer />
-        <div>
-          <h3 className="text-center text-xl font-semibold">
+        <div className="justify-center rounded-lg lg:-mt-40">
+          <h3 className="text-center text-xl text-white font-semibold pb-6">
             Tekan Untuk Backup Data nya
           </h3>
-          <div className="flex justify-center py-8">
+          <div className="flex justify-center">
             <button
-              className="bg-blue-500 px-10 py-2 text-white rounded-xl"
+              className="bg-green-400 px-10 py-2 text-white rounded-xl"
               onClick={handleBackup}
             >
               Backup Manual
             </button>
           </div>
-          <div className="flex justify-center py-8">
-            <p className="text-center text-lg font-semibold">
+          <div className="flex justify-center pt-3 pb-8">
+            <p className="text-center text-white text-lg font-semibold">
               Backup Automatis Setiap 30 Hari Sekali
             </p>
           </div>

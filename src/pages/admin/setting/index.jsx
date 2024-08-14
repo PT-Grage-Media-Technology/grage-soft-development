@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Head from "next/head";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Setting = () => {
   const [setting, setSetting] = useState([]);
@@ -14,6 +16,9 @@ const Setting = () => {
   const [pageSize, setPageSize] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+
   useEffect(() => {
     fetchData();
   }, [currentPage]); // Fetch data when currentPage changes
@@ -35,18 +40,20 @@ const Setting = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
+    setItemToDelete(id);
+    toggleModalDelete();
+  };
+
+  const toggleModalDelete = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
+
+  const handleDeleteItem = async () => {
     setIsDeleting(true);
-    const confirmDelete = window.confirm(
-      "Apakah Anda yakin ingin menghapus item ini?"
-    );
-    if (!confirmDelete) {
-      setIsDeleting(false);
-      return;
-    }
     try {
       const response = await fetch(
-        `http://localhost:5000/api/setting/${id}`,
+        `http://localhost:5000/api/setting/${itemToDelete}`,
         {
           method: "DELETE",
           headers: {
@@ -59,11 +66,15 @@ const Setting = () => {
         throw new Error("Gagal menghapus data");
       }
 
-      setSetting(setting.filter((item) => item.id !== id));
+      setSetting(setting.filter((item) => item.id !== itemToDelete));
+      toast.success("Item berhasil dihapus", {
+        position: "top-right",
+      });
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
     } finally {
       setIsDeleting(false);
+      toggleModalDelete();
     }
   };
 
@@ -75,6 +86,7 @@ const Setting = () => {
 
   return (
     <>
+      <ToastContainer />
       <Head>
         <title>Data Setting</title>
       </Head>
@@ -239,6 +251,40 @@ const Setting = () => {
           </div>
         </div>
       </AdminLayout>
+
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 transition-opacity">
+            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+          </div>
+          <div className="relative w-full max-w-md transition transform bg-white rounded-lg shadow-xl">
+            <div className="px-4 py-5 sm:px-6">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Hapus Item
+              </h3>
+              <p className="max-w-2xl mt-1 text-sm text-gray-500">
+                Apakah Anda yakin ingin menghapus item ini?
+              </p>
+            </div>
+            <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+              <button
+                type="button"
+                onClick={handleDeleteItem}
+                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Hapus
+              </button>
+              <button
+                type="button"
+                onClick={toggleModalDelete}
+                className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
