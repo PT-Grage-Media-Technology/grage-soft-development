@@ -86,7 +86,7 @@ const ConntohDesain = ({ isLoggedIn }) => {
         <div className="flex items-center justify-end mb-4 lg:-mt-48 md:-mt-48">
           <Link
             href={"/admin/contoh_desain/add"}
-            className="z-10 flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400 hover:bg-orange-600"
+            className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400 hover:bg-orange-600"
           >
             <i className="fa-solid fa-plus"></i>
             Contoh Desain

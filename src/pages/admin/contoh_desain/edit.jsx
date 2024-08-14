@@ -135,22 +135,22 @@ export default function Edit() {
   return (
     <AdminLayout>
       <Head>
-        <title>Edit Data Contoh Desain</title>
+        <title>Edit Contoh Desain</title>
       </Head>
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
-        <div className="relative py-2">
-          <Link
-            href={"/admin/contoh_desain"}
-            className="absolute right-4 top-10" // Mengubah posisi ke kanan
-          >
-            <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400 text-md">
-              <i className="fas fa-arrow-left"></i>
-              <span>Kembali</span>
-            </div>
-          </Link>
+          <div className="flex justify-end pt-4 px-4">
+            <Link
+              href={"/admin/contoh_desain"}
+              className="relative"
+            >
+              <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
+                <i className="fas fa-arrow-left"></i>
+                <span>Kembali</span>
+              </div>
+            </Link>
           </div>
-          <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
+          <form className="bg-white px-9" onSubmit={handleSubmit}>
             {formData.is_gambar !== "1" && (
               <div className="mt-4 mb-5">
                 <label

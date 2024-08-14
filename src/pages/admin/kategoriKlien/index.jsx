@@ -19,13 +19,14 @@ const KategoriKlien = ({ isLoggedIn }) => {
   const [pageSize, setPageSize] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const fetchData = async () => {
     try {
       const response = await axios.get(
         `http://localhost:5000/api/kategoriKlien?page=${currentPage}`
       );
-      console.log('rendi ganteng',response.data.data);
+      console.log('rendi ganteng',response.data);
       setKategoriKlien(response.data.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
@@ -64,15 +65,9 @@ const KategoriKlien = ({ isLoggedIn }) => {
     }
   }, [currentPage, searchTerm]);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
+    const id = isDeleting;
     setIsDeleting(true);
-    const confirmDelete = window.confirm(
-      "Apakah Anda yakin ingin menghapus item ini?"
-    );
-    if (!confirmDelete) {
-      setIsDeleting(false);
-      return;
-    }
     try {
       const response = await fetch(`http://localhost:5000/api/kategoriKlien/${id}`, {
         method: "DELETE",
@@ -91,7 +86,12 @@ const KategoriKlien = ({ isLoggedIn }) => {
       console.error("Terjadi kesalahan:", error);
     } finally {
       setIsDeleting(false);
+      setShowDeleteModal(false);
     }
+  };
+
+  const toggleModalDelete = () => {
+    setShowDeleteModal(!showDeleteModal);
   };
 
   const showToastMessage = () => {
@@ -168,7 +168,7 @@ const KategoriKlien = ({ isLoggedIn }) => {
                          <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
                           <Link href={"/admin/kategoriKlien/edit?id=" + item.id}>
                             <div
-                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                               aria-label="edit"
                             >
                               <i className="fa-solid fa-pen"></i>
@@ -176,16 +176,14 @@ const KategoriKlien = ({ isLoggedIn }) => {
                           </Link>
 
                           <button
-                            onClick={() => handleDelete(item.id)}
-                            disabled={isDeleting}
-                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                            onClick={() => {
+                              setIsDeleting(item.id);
+                              setShowDeleteModal(true);
+                            }}
+                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                             aria-label="delete"
                           >
-                            {isDeleting ? (
-                              "Menghapus..."
-                            ) : (
-                              <i className="fa-solid fa-trash"></i>
-                            )}
+                            <i className="fa-solid fa-trash"></i>
                           </button>
                         </td>
                       </tr>
@@ -242,6 +240,40 @@ const KategoriKlien = ({ isLoggedIn }) => {
           </div>
         </div>
       </AdminLayout>
+
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 transition-opacity">
+            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+          </div>
+          <div className="relative w-full max-w-md transition transform bg-white rounded-lg shadow-xl">
+            <div className="px-4 py-5 sm:px-6">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Hapus Kategori Klien
+              </h3>
+              <p className="max-w-2xl mt-1 text-sm text-gray-500">
+                Apakah Anda yakin ingin menghapus kategori ini?
+              </p>
+            </div>
+            <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Hapus
+              </button>
+              <button
+                type="button"
+                onClick={toggleModalDelete}
+                className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

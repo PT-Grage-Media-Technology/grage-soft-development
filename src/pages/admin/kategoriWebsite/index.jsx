@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Head from "next/head";
+import { ToastContainer, toast } from "react-toastify"; // Tambahkan import ini
+import "react-toastify/dist/ReactToastify.css"; // Pastikan ini ada
 
 const KategoriWebsite = () => {
   const [kategoriWebsite, setKategoriWebsite] = useState([]);
@@ -14,6 +16,8 @@ const KategoriWebsite = () => {
   const [pageSize, setPageSize] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false); // Tambahkan state untuk modal
+
   useEffect(() => {
     fetchData();
   }, [currentPage]); // Fetch data when currentPage changes
@@ -37,17 +41,14 @@ const KategoriWebsite = () => {
   };
 
   const handleDelete = async (id) => {
-    setIsDeleting(true);
-    const confirmDelete = window.confirm(
-      "Apakah Anda yakin ingin menghapus item ini?"
-    );
-    if (!confirmDelete) {
-      setIsDeleting(false);
-      return;
-    }
+    setIsDeleting(id); // Simpan ID yang akan dihapus
+    setShowDeleteModal(true); // Tampilkan modal konfirmasi
+  };
+
+  const confirmDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/kategoriWebsite/${id}`,
+        `http://localhost:5000/api/kategoriWebsite/${isDeleting}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -59,11 +60,18 @@ const KategoriWebsite = () => {
         throw new Error("Gagal menghapus data");
       }
 
-      setKategoriWebsite(kategoriWebsite.filter((item) => item.id !== id));
+      setKategoriWebsite(
+        kategoriWebsite.filter((item) => item.id !== isDeleting)
+      );
+      toast.success("Kategori berhasil dihapus", {
+        // Tambahkan pesan sukses
+        position: "top-right",
+      });
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
     } finally {
       setIsDeleting(false);
+      setShowDeleteModal(false); // Sembunyikan modal setelah konfirmasi
     }
   };
 
@@ -80,7 +88,7 @@ const KategoriWebsite = () => {
       </Head>
       <AdminLayout>
         <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
-        <input
+          <input
             type="text"
             placeholder="Cari benefit paket..."
             value={searchTerm}
@@ -89,7 +97,7 @@ const KategoriWebsite = () => {
           />
           <Link
             href={"/admin/kategoriWebsite/add"}
-            className="z-10 flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400 hover:bg-orange-600"
+            className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400"
           >
             <i className="fa-solid fa-plus"></i>
             Kategori Website
@@ -127,15 +135,17 @@ const KategoriWebsite = () => {
                           {++index}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes['nama-kategori']}
+                          {item.attributes["nama-kategori"]}
                         </td>
 
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes['deskripsi-kategori']}
+                          {item.attributes["deskripsi-kategori"]}
                         </td>
 
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
-                          <Link href={"/admin/kategoriWebsite/edit?id=" + item.id}>
+                          <Link
+                            href={"/admin/kategoriWebsite/edit?id=" + item.id}
+                          >
                             <div
                               className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                               aria-label="edit"
@@ -150,11 +160,7 @@ const KategoriWebsite = () => {
                             className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                             aria-label="delete"
                           >
-                            {isDeleting ? (
-                              "Menghapus..."
-                            ) : (
-                              <i className="fa-solid fa-trash"></i>
-                            )}
+                            <i className="fa-solid fa-trash"></i>
                           </button>
                         </td>
                       </tr>
@@ -204,6 +210,43 @@ const KategoriWebsite = () => {
           </div>
         </div>
       </AdminLayout>
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 transition-opacity">
+            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+          </div>
+          <div className="relative w-full max-w-md transition transform bg-white rounded-lg shadow-xl">
+            <div className="px-4 py-5 sm:px-6">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Hapus Kategori
+              </h3>
+              <p className="max-w-2xl mt-1 text-sm text-gray-500">
+                Apakah Anda yakin ingin menghapus kategori ini?
+              </p>
+            </div>
+            <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+              <button
+                type="button"
+                onClick={() => {
+                  confirmDelete();
+                  setShowDeleteModal(false);
+                }}
+                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Hapus
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowDeleteModal(false)}
+                className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <ToastContainer /> {/* Tambahkan komponen ini */}
     </>
   );
 };

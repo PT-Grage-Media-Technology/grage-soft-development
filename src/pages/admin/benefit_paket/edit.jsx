@@ -92,11 +92,11 @@ export default function Edit() {
   return (
     <AdminLayout>
       <Head>
-        <title>Edit Data Benefit Paket</title>
+        <title>Edit Benefit Paket</title>
       </Head>
 
       <div className="flex items-center justify-center p-12">
-        <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-48">
+        <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
           <div className="flex justify-end pt-4 px-4">
             <Link
               href={"/admin/benefit_paket"}

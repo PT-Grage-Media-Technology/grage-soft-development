@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export default function Add() {
   const router = useRouter();
@@ -17,15 +18,19 @@ export default function Add() {
     e.preventDefault();
 
     try {
-      const formDataToSend = new FormData;
+      const formDataToSend = new FormData();
       formDataToSend.append("nama_kategori", formData.nama_kategori);
       formDataToSend.append("deskripsi_kategori", formData.deskripsi_kategori);
 
-      const response = await axios.post("http://localhost:5000/api/kategoriWebsite", formDataToSend, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/kategoriWebsite",
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.status == 201) {
         router.push("/admin/kategoriWebsite");
@@ -40,23 +45,30 @@ export default function Add() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
     <AdminLayout>
-      <div className="flex items-center justify-center p-12 ">
-        <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg  lg:-mt-48">
-          <Link href={"/admin/kategoriWebsite"} className="relative ml-32 lg:ml-60 ">
-            <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer m text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
-              <i className="fas fa-arrow-left"></i>
-              <span>Kembali</span>
-            </div>
-          </Link>
-          <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
+      <Head><title>Tambah Kategori Website</title></Head>
+      <div className="flex items-center justify-center p-12">
+        <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
+          <div className="flex justify-end pt-4 px-4">
+            <Link
+              href={"/admin/kategoriWebsite"}
+              className="relative"
+            >
+              <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
+                <i className="fas fa-arrow-left"></i>
+                <span>Kembali</span>
+              </div>
+            </Link>
+          </div>
+
+          <form className="bg-white px-9" onSubmit={handleSubmit}>
             <div className="mt-4 mb-5">
               <label
                 htmlFor="nama"
@@ -68,7 +80,7 @@ export default function Add() {
                 type="text"
                 name="nama_kategori"
                 id="nama_kategori"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 value={formData.nama_kategori}
                 onChange={handleInputChange}
                 required
@@ -86,7 +98,7 @@ export default function Add() {
                 type="text"
                 name="deskripsi_kategori"
                 id="deskripsi_kategori"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 value={formData.deskripsi_kategori}
                 onChange={handleInputChange}
                 required
@@ -94,7 +106,7 @@ export default function Add() {
             </div>
 
             <div>
-              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-gradient-to-r from-indigo-400 to-gray-600 hover:bg-indigo-400 focus:bg-indigo-400">
+              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-blue-400 hover:bg-indigo-600 focus:bg-indigo-400">
                 Simpan
               </button>
             </div>

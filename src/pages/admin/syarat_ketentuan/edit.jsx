@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
+import Head from "next/head";
 
 export default function Edit() {
   const router = useRouter();
@@ -46,7 +47,7 @@ export default function Edit() {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      
+
       [name]: value,
     }));
   };
@@ -83,17 +84,22 @@ export default function Edit() {
 
   return (
     <AdminLayout>
+      <Head>
+        <title>Edit Syarat & Ketentuan</title>
+      </Head>
       <div className="flex items-center justify-center p-12">
-        <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link
-            href={"/admin/syarat_ketentuan"}
-            className="relative ml-32 lg:ml-60"
-          >
-            <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer bg-orange-400 hover:bg-orange-500 lg:left-24 left-4 top-10 text-md">
-              <i className="fas fa-arrow-left"></i>
-              <span>Kembali</span>
-            </div>
-          </Link>
+        <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-40">
+        <div className="relative py-3">
+            <Link
+              href={"/admin/syarat_ketentuan"}
+              className="absolute right-4 top-10" // Ubah posisi ke kanan
+            >
+              <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer bg-orange-400 hover:bg-orange-500 text-md">
+                <i className="fas fa-arrow-left"></i>
+                <span>Kembali</span>
+              </div>
+            </Link>
+          </div>
           <form className="py-20 bg-white px-9" onSubmit={handleSubmit}>
             <div className="mb-5">
               <label

@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
+import Head from "next/head";
 
 export default function Edit() {
   const router = useRouter();
@@ -32,10 +33,9 @@ export default function Edit() {
 
         setFormData((prevData) => ({
           ...prevData,
-          nama_kategori: data.attributes['nama-kategori'] || "",
-          deskripsi_kategori: data.attributes['deskripsi-kategori'] || "",
+          nama_kategori: data.attributes["nama-kategori"] || "",
+          deskripsi_kategori: data.attributes["deskripsi-kategori"] || "",
         }));
-
       } catch (error) {
         console.error("Error fetching data kategori website:", error);
         setError(error);
@@ -64,7 +64,7 @@ export default function Edit() {
     e.preventDefault();
 
     try {
-      const formDataToSend = new FormData;
+      const formDataToSend = new FormData();
       formDataToSend.append("nama_kategori", formData.nama_kategori);
       formDataToSend.append("deskripsi_kategori", formData.deskripsi_kategori);
 
@@ -73,13 +73,13 @@ export default function Edit() {
         formDataToSend.append("gambar", formData.gambar);
       }
 
-      const response = await axios.patch(`http://localhost:5000/api/kategoriWebsite/${id}`, formDataToSend, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (response.status == 200) {
+      const response = await axios.patch(
+        `http://localhost:5000/api/kategoriWebsite/${id}`,
+        formDataToSend
+      );
+      
+      // Cek status respons
+      if (response.status === 200) {
         router.push("/admin/kategoriWebsite");
       } else {
         console.error("Gagal mengirim data.");
@@ -91,17 +91,24 @@ export default function Edit() {
 
   return (
     <AdminLayout>
+      <Head>
+        <title>Edit Kategori Website</title>
+      </Head>
       <div className="flex items-center justify-center p-12">
-        <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link href={"/admin/kategoriWebsite"} className="relative ml-32 lg:ml-60">
-            <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
-              <i className="fas fa-arrow-left"></i>
-              <span>Kembali</span>
-            </div>
-          </Link>
+        <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
+          <div className="flex justify-end pt-4 px-4">
+            <Link
+              href={"/admin/kategoriWebsite"}
+              className="relative"
+            >
+              <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
+                <i className="fas fa-arrow-left"></i>
+                <span>Kembali</span>
+              </div>
+            </Link>
+          </div>
 
-          <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
-
+          <form className="py-4 bg-white px-9" onSubmit={handleSubmit}>
             <div className="mb-5">
               <label
                 htmlFor="nama_kategori"
@@ -118,7 +125,7 @@ export default function Edit() {
                 onChange={handleInputChange}
               />
             </div>
-            
+
             <div className="mb-5">
               <label
                 htmlFor="deskripsi_kategori"
@@ -137,7 +144,7 @@ export default function Edit() {
             </div>
 
             <div>
-              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-gradient-to-r from-indigo-400 to-gray-600 hover:bg-indigo-400 focus:bg-indigo-400">
+              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-blue-400 hover:bg-indigo-600 focus:bg-indigo-400">
                 Simpan
               </button>
             </div>

@@ -78,24 +78,24 @@ export default function Add() {
   return (
     <>
       <Head>
-        <title>Tambah Data Benefit Paket</title>
+        <title>Tambah Benefit Paket</title>
       </Head>
       <AdminLayout>
-        <div className="flex items-center justify-center p-12 ">
-          <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg  lg:-mt-48">
-            <div className="relative">
-              <Link
-                href={"/admin/benefit_paket"}
-                className="absolute right-4 top-10"
-              >
-                <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer m text-end bg-orange-400">
-                  <i className="fas fa-arrow-left"></i>
-                  <span>Kembali</span>
-                </div>
-              </Link>
-            </div>
-            <div className="mt-6">
-              <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
+      <div className="flex items-center justify-center p-12">
+        <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
+          <div className="flex justify-end pt-4 px-4">
+            <Link
+              href={"/admin/benefit_paket"}
+              className="relative"
+            >
+              <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
+                <i className="fas fa-arrow-left"></i>
+                <span>Kembali</span>
+              </div>
+            </Link>
+          </div>
+         
+              <form className="bg-white px-9" onSubmit={handleSubmit}>
                 <div className="mt-4 mb-5">
                   <label
                     htmlFor="benefit_paket"
@@ -158,7 +158,7 @@ export default function Add() {
               </form>
             </div>
           </div>
-        </div>
+
       </AdminLayout>
     </>
   );

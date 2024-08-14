@@ -5,6 +5,9 @@ import Link from "next/link";
 import Head from "next/head";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import { ToastContainer, toast } from "react-toastify"; // Tambahkan import ini
+import "react-toastify/dist/ReactToastify.css"; // Pastikan ini ada
+
 const Pembayaran = ({ isLoggedIn }) => {
   const router = useRouter();
   const [bank, setBank] = useState([]);
@@ -60,12 +63,19 @@ const Pembayaran = ({ isLoggedIn }) => {
       }
 
       setBank(bank.filter((item) => item.id !== id));
-      showToastMessage("Data berhasil dihapus!");
+      showToastMessage("Data berhasil dihapus!"); // Tampilkan pesan sukses
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
     } finally {
       setShowDeleteModal(false);
     }
+  };
+
+  // Tambahkan fungsi ini
+  const showToastMessage = (message) => {
+    toast.success(message, {
+      position: "top-right",
+    });
   };
 
   if (error) {
@@ -93,7 +103,7 @@ const Pembayaran = ({ isLoggedIn }) => {
           ) : (
             <Link
               href={"/admin/pembayaran/add"}
-              className="z-10 flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400 hover:bg-orange-600"
+              className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400"
             >
               <i className="fa-solid fa-plus"></i>
               Bank
@@ -277,6 +287,7 @@ const Pembayaran = ({ isLoggedIn }) => {
           </div>
         )}
       </AdminLayout>
+      <ToastContainer /> {/* Tambahkan ini di dalam return */}
     </>
   );
 };

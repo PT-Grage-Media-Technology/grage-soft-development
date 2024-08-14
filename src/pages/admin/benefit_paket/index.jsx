@@ -70,6 +70,20 @@ const BenefitPaket = ({ isLoggedIn }) => {
     toggleModalDelete(); // Tampilkan modal konfirmasi
   };
 
+  const handleConfirmDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/api/benefitpaket/${isDeleting}`); // Hapus data
+      setBenefitPaket(benefitPaket.filter((item) => item.id !== isDeleting)); // Hapus dari state
+      showToastMessage(); // Tampilkan pesan sukses
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      toast.error("Gagal menghapus item!"); // Tampilkan pesan error
+    } finally {
+      setShowDeleteModal(false); // Tutup modal
+      setIsDeleting(false); // Reset state isDeleting
+    }
+  };
+
   // Tambahkan fungsi untuk toggle modal delete
   const toggleModalDelete = () => {
     setShowDeleteModal(!showDeleteModal);
@@ -286,7 +300,7 @@ const BenefitPaket = ({ isLoggedIn }) => {
             <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
               <button
                 type="button"
-                onClick={() => handleDelete(isDeleting)} // Panggil handleDelete dengan id yang disimpan
+                onClick={handleConfirmDelete} // Panggil fungsi baru untuk konfirmasi penghapusan
                 className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
               >
                 Hapus

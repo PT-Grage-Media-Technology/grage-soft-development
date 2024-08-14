@@ -94,22 +94,25 @@ export default function Add() {
   return (
     <>
       <Head>
-        <title>Tambah Data Paket</title>
+        <title>Tambah Paket</title>
       </Head>
 
       <AdminLayout>
         <ToastContainer />
-        <div className="flex items-center justify-center p-12 ">
-          <div className="mx-auto w-full max-w-[700px] bg-white rounded-xl  lg:-mt-40">
-            <div className="relative">
-              <Link href={"/admin/paket"} className="py-6">
-                <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer m text-end bg-orange-400 hover:bg-orange-500 right-4 top-10 text-md">
-                  <i className="fas fa-arrow-left"></i>
-                  <span>Kembali</span>
-                </div>
-              </Link>
-            </div>
-            <form className="py-20 bg-white px-9" onSubmit={handleSubmit}>
+        <div className="flex items-center justify-center p-12">
+        <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
+          <div className="flex justify-end pt-4 px-4">
+            <Link
+              href={"/admin/paket"}
+              className="relative"
+            >
+              <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
+                <i className="fas fa-arrow-left"></i>
+                <span>Kembali</span>
+              </div>
+            </Link>
+          </div>
+            <form className="bg-white px-9" onSubmit={handleSubmit}>
               <div className="mb-5">
                 <label
                   htmlFor="nama_paket"
