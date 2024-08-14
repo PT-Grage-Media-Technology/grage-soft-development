@@ -91,7 +91,7 @@ const Testimoni = () => {
           />
           <Link
             href={"/admin/testimoni/add"}
-            className="z-10 flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 i tems-center text-end hover:bg-green-700 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-green-500"
+            className="z-10 flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400 i tems-center text-end hover:bg-orange-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-green-500"
           >
             <i className="fa-solid fa-plus"></i>
             Testimoni
@@ -168,7 +168,7 @@ const Testimoni = () => {
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
                           <Link href={"/admin/testimoni/edit?id=" + item.id}>
                             <div
-                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 md:mb-0 hover:bg-orange-800"
                               aria-label="edit"
                             >
                               <i className="fa-solid fa-pen"></i>
@@ -181,7 +181,7 @@ const Testimoni = () => {
                               setIsDeleting(item.id);
                               // Simpan ID item yang akan dihapus
                             }}
-                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
+                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 md:mb-0 hover:bg-orange-800"
                             aria-label="delete"
                           >
                             {/* {isDeleting ? (
