@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
+import Head from "next/head";
 
 export default function Edit() {
   const router = useRouter();
@@ -132,16 +133,23 @@ export default function Edit() {
 
   return (
     <AdminLayout>
+      <Head>
+        <title>Edit Klien</title>
+      </Head>
       <div className="flex items-center justify-center p-12">
-        <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link href={"/admin/klien"} className="relative ml-32 lg:ml-60">
-            <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
-              <i className="fas fa-arrow-left"></i>
-              <span>Kembali</span>
-            </div>
-          </Link>
-
-          <form className="py-6 pt-16 bg-white px-9" onSubmit={handleSubmit}>
+        <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
+          <div className="flex justify-end pt-4 px-4">
+            <Link
+              href={"/admin/klien"}
+              className="relative"
+            >
+              <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
+                <i className="fas fa-arrow-left"></i>
+                <span>Kembali</span>
+              </div>
+            </Link>
+          </div>
+          <form className="bg-white px-9" onSubmit={handleSubmit}>
             <div className="mt-4 mb-5">
                 <label
                   htmlFor="id_paket"
@@ -152,7 +160,7 @@ export default function Edit() {
                 <select
                   name="id_paket"
                   id="id_paket"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   value={formData.id_paket}
                   onChange={handleInputChange}
                   required
@@ -174,7 +182,7 @@ export default function Edit() {
                 <select
                   name="id_kategori_klien"
                   id="id_kategori_klien"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   value={formData.id_kategori_klien}
                   onChange={handleInputChange}
                   required
@@ -198,7 +206,7 @@ export default function Edit() {
                   type="text"
                   name="url_klien"
                   id="url_klien"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   value={formData.url_klien}
                   onChange={handleInputChange}
                   required
@@ -215,7 +223,7 @@ export default function Edit() {
                     name="logo_klien"
                     id="logo_klien"
                     htmlFor="logo_klien"
-                    className="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    className="w-full  rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -231,7 +239,7 @@ export default function Edit() {
                 <select
                   name="is_headline"
                   id="is_headline"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   value={formData.is_headline == 'true' ? "true" : "false"}
                   onChange={handleInputChange}
                   required
@@ -242,7 +250,7 @@ export default function Edit() {
               </div>
 
             <div>
-              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-gradient-to-r from-indigo-400 to-gray-600 hover:bg-indigo-400 focus:bg-indigo-400">
+              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-blue-400 hover:bg-indigo-600 focus:bg-indigo-400">
                 Simpan
               </button>
             </div>
