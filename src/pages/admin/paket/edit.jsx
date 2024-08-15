@@ -156,7 +156,7 @@ export default function Edit() {
                   type="text"
                   name="nama_paket"
                   id="nama_paket"
-                  className="w-full rounded-md border-2 border--300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   value={formData.nama_paket}
                   onChange={handleInputChange}
                   required
@@ -173,7 +173,7 @@ export default function Edit() {
                   type="text"
                   name="harga"
                   id="harga"
-                  className="w-full rounded-md border-2 border--300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   value={formData.harga}
                   onChange={handleInputChange}
                   required
@@ -188,7 +188,7 @@ export default function Edit() {
                     type="number"
                     name="jumlah_pilihan_desain"
                     id="jumlah_pilihan_desain"
-                    className="w-full rounded-md border-2 border--300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     value={formData.jumlah_pilihan_desain}
                     onChange={handleInputChange}
                     required
@@ -207,7 +207,7 @@ export default function Edit() {
                   <select
                     name="status_website"
                     id="status_website"
-                    className="block w-full px-4 py-3 text-base text-gray-900 bg-white border-2 border--300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
+                    className="block w-full px-4 py-3 text-base text-gray-900 bg-white border-2 border-indigo-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
                     value={formData.status_website}
                     onChange={handleInputChange}
                     required
@@ -242,7 +242,7 @@ export default function Edit() {
                   <select
                     name="kategori_website" // Ubah dari kategori_website_id ke kategori_website
                     id="kategori_website_id"
-                    className="block w-full px-4 py-3 text-base text-gray-900 bg-white border-2 border--300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
+                    className="block w-full px-4 py-3 text-base text-gray-900 bg-white border-2 border-indigo-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
                     value={formData.kategori_website}
                     onChange={handleInputChange}
                     required

@@ -6,6 +6,7 @@ import { useCookies } from "react-cookie";
 import { useRouter } from "next/router";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import Head from "next/head";
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -46,6 +47,10 @@ export default function Login() {
     });
   };
   return (
+    <>
+    <Head>
+      <title>Login</title>
+    </Head>
     <section className="flex flex-col items-center mx-auto md:flex-row lg:px-28">
       <div className="hidden lg:block md:w-1/2 xl:w-2/3">
         <Image
@@ -126,5 +131,6 @@ export default function Login() {
         </div>
       </div>
     </section>
+    </>
   );
 }

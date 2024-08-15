@@ -73,9 +73,8 @@ export default function Edit() {
       formDataToSend.append("nama_rek", formData.nama_rek);
       formDataToSend.append("no_rek", formData.no_rek);
       formDataToSend.append("atas_nama", formData.atas_nama);
-      formDataToSend.append("image_bank", formData.image_bank);
-
-      // Jika ada gambar baru, tambahkan ke formDataToSend
+      
+      // Hanya tambahkan image_bank jika ada file yang dipilih
       if (formData.image_bank) {
         formDataToSend.append("image_bank", formData.image_bank);
       }
@@ -135,7 +134,7 @@ export default function Edit() {
               />
             </div>
 
-            <div className="mb-6 ">
+            <div className="mb-6">
               <label className="mb-5 block text-base font-semibold text-[#07074D]">
                 Gambar
               </label>
