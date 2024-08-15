@@ -28,7 +28,7 @@ const KategoriWebsite = () => {
         `http://localhost:5000/api/kategoriWebsite?page=${currentPage}&search=${searchTerm}`
       );
       // console.log('masuk',response);
-      setKategoriWebsite(response.data.data);
+      setKategoriWebsite(response.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
@@ -135,11 +135,11 @@ const KategoriWebsite = () => {
                           {++index}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes["nama-kategori"]}
+                          {item.nama_kategori}
                         </td>
 
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes["deskripsi-kategori"]}
+                          {item.deskripsi_kategori}
                         </td>
 
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">

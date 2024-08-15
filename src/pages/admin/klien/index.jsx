@@ -25,6 +25,7 @@ const Klien = ({ isLoggedIn }) => {
       const response = await axios.get(
         `http://localhost:5000/api/klien?page=${currentPage}`
       );
+      console.log("Data", response.data.data);
       setKlien(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
@@ -73,20 +74,22 @@ const Klien = ({ isLoggedIn }) => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5000/api/klien/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.delete(
+        `http://localhost:5000/api/klien/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) {
+      if (response.status != 200) {
         throw new Error("Gagal menghapus data");
       }
 
-      setKlien(klien.filter((item) => item.id !== id));
+      fetchData();
       showToastMessage();
-    } catch (error) {
+    } catch (error) { 
       console.error("Terjadi kesalahan:", error);
     } finally {
       setIsDeleting(false);
@@ -125,13 +128,13 @@ const Klien = ({ isLoggedIn }) => {
         <ToastContainer />
 
         <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
-        <input
-                  type="text"
-                  placeholder="Cari klien..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
+          <input
+            type="text"
+            placeholder="Cari klien..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+          />
           <Link
             href={"/admin/klien/add"}
             className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400"
@@ -177,7 +180,7 @@ const Klien = ({ isLoggedIn }) => {
                         key={item.id}
                       >
                         <td className="px-4 py-4 whitespace-nowrap">
-                          {item.nama_paket}
+                          {item.paket.nama_paket}
                         </td>
                         <td className="px-4 py-4 whitespace-nowrap">
                           {item.nama_klien}
@@ -214,7 +217,7 @@ const Klien = ({ isLoggedIn }) => {
                             className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-700"
                             aria-label="delete"
                           >
-                              <i className="fa-solid fa-trash"></i>
+                            <i className="fa-solid fa-trash"></i>
                           </button>
                         </td>
                       </tr>

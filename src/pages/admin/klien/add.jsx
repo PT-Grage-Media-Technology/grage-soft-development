@@ -26,7 +26,7 @@ export default function Add() {
       const response = await axios.get(
         `http://localhost:5000/api/kategoriKlien`
       );
-      setKategoriKlien(response.data.data.data);
+      setKategoriKlien(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
@@ -105,10 +105,7 @@ export default function Add() {
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
           <div className="flex justify-end pt-4 px-4">
-            <Link
-              href={"/admin/klien"}
-              className="relative"
-            >
+            <Link href={"/admin/klien"} className="relative">
               <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
                 <i className="fas fa-arrow-left"></i>
                 <span>Kembali</span>
@@ -155,9 +152,7 @@ export default function Add() {
               >
                 <option value="">Pilih Kategori Klien</option>
                 {kategoriKlien.map((item) => (
-                  <option value={item.id}>
-                    {item.attributes["nama-kategori-klien"]}
-                  </option>
+                  <option value={item.id}>{item.nama_kategori_klien}</option>
                 ))}
               </select>
             </div>

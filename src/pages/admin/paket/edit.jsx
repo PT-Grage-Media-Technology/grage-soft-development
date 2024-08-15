@@ -27,29 +27,22 @@ export default function Edit() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
+        const responseId = await axios.get(
           `http://localhost:5000/api/paket/${id}`
         );
 
-        const data = response.data.data;
+        const data = responseId.data;
         console.log("Data:", data);
         // Log the data object
-        // Access attributes directly
-        const {
-          nama_paket,
-          harga,
-          jumlah_pilihan_desain,
-          status_website,
-          kategori_website,
-        } = data.attributes;
+
         // Update formData state with data from the API response
         setFormData((prevData) => ({
           ...prevData,
-          nama_paket: data.attributes["nama-paket"] || "",
-          harga: data.attributes.harga || "",
-          jumlah_pilihan_desain: data.attributes["jumlah-pilihan-desain"] || "",
-          status_website: data.attributes["status-website"] || "",
-          kategori_website: data.attributes["kategori-website-id"] || "",
+          nama_paket: data.nama_paket || "",
+          harga: data.harga || "",
+          jumlah_pilihan_desain: data.jumlah_pilihan_desain || "0",
+          status_website: data.status_website || "",
+          kategori_website: data.kategori_website_id || "",
         }));
       } catch (error) {
         console.error("Error fetching data layanan:", error);
@@ -59,11 +52,8 @@ export default function Edit() {
       }
 
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/kategoriWebsite`
-        );
-        console.log(response);
-        setKategoriWebsite(response.data.data);
+        const response = await axios.get(`http://localhost:5000/api/kategoriWebsite`);
+        setKategoriWebsite(response.data);
       } catch (error) {
         console.error("Error fetching data paket:", error);
       }
@@ -131,19 +121,16 @@ export default function Edit() {
       </Head>
 
       <AdminLayout>
-      <div className="flex items-center justify-center p-12">
-        <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
-          <div className="flex justify-end pt-4 px-4">
-            <Link
-              href={"/admin/paket"}
-              className="relative"
-            >
-              <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
-                <i className="fas fa-arrow-left"></i>
-                <span>Kembali</span>
-              </div>
-            </Link>
-          </div>
+        <div className="flex items-center justify-center p-12">
+          <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
+            <div className="flex justify-end pt-4 px-4">
+              <Link href={"/admin/paket"} className="relative">
+                <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
+                  <i className="fas fa-arrow-left"></i>
+                  <span>Kembali</span>
+                </div>
+              </Link>
+            </div>
             <form className="bg-white px-9" onSubmit={handleSubmit}>
               <div className="mb-5">
                 <label
@@ -252,7 +239,7 @@ export default function Edit() {
                     </option>
                     {kategoriWebsite.map((item) => (
                       <option key={item.id} value={item.id}>
-                        {item.attributes["nama-kategori"]}
+                        {item.nama_kategori}
                       </option>
                     ))}
                   </select>

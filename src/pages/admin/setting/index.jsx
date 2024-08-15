@@ -28,7 +28,8 @@ const Setting = () => {
       const response = await axios.get(
         `http://localhost:5000/api/setting?page=${currentPage}&search=${searchTerm}`
       );
-      setSetting(response.data.data.data);
+      //console.log("data:", response.data.data);
+      setSetting(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
@@ -52,21 +53,21 @@ const Setting = () => {
   const handleDeleteItem = async () => {
     setIsDeleting(true);
     try {
-      const response = await fetch(
+      const response = await axios.delete(
         `http://localhost:5000/api/setting/${itemToDelete}`,
         {
-          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
 
-      if (!response.ok) {
+      if (response.status != 200) {
         throw new Error("Gagal menghapus data");
       }
 
-      setSetting(setting.filter((item) => item.id !== itemToDelete));
+      //  setSetting(setting.filter((item) => item.id !== itemToDelete));
+      fetchData();
       toast.success("Item berhasil dihapus", {
         position: "top-right",
       });
@@ -92,13 +93,13 @@ const Setting = () => {
       </Head>
       <AdminLayout>
         <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
-        <input
-                  type="text"
-                  placeholder="Cari administrators..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
+          <input
+            type="text"
+            placeholder="Cari administrators..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+          />
           <Link
             href={"/admin/setting/add"}
             className="z-10 flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400"
@@ -144,6 +145,18 @@ const Setting = () => {
                       <th scope="col" className="px-6 py-4">
                         Foto
                       </th>
+                      <th scope="col" className="px-6 py-4">
+                        Foto Cap
+                      </th>
+                      <th scope="col" className="px-6 py-4">
+                        Bidang Perusahaan
+                      </th>
+                      <th scope="col" className="px-6 py-4">
+                        Foto Ttd
+                      </th>
+                      <th scope="col" className="px-6 py-4">
+                        Aksi
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -156,26 +169,45 @@ const Setting = () => {
                           {index + 1}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.settingWarna}
+                          {item.settingWarna}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.wa}
+                          {item.wa}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.telp}
+                          {item.telp}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.email}
+                          {item.email}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.profilPerusahaan}
+                          {item.profilPerusahaan}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.alamat}
+                          {item.alamat}
                         </td>
                         <td className="py-4 whitespace-nowrap">
                           <img
-                            src={item.attributes.gambarSetting}
+                            src={item.gambar_setting}
+                            alt="Foto"
+                            className="object-scale-down w-24 h-24 rounded-2xl"
+                          />
+                        </td>
+
+                        <td className="py-4 whitespace-nowrap">
+                          <img
+                            src={item.url_foto_cap}
+                            alt="Foto"
+                            className="object-scale-down w-24 h-24 rounded-2xl"
+                          />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {item.bidang_perusahaan}
+                        </td>
+
+                        <td className="py-4 whitespace-nowrap">
+                          <img
+                            src={item.url_foto_ttd}
                             alt="Foto"
                             className="object-scale-down w-24 h-24 rounded-2xl"
                           />

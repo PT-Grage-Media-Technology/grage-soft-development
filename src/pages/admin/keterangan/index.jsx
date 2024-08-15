@@ -74,18 +74,16 @@ const Keterangan = ({ isLoggedIn }) => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5000/api/keterangan/${id}`, {
-        method: "DELETE",
+      const response = await axios.delete(`http://localhost:5000/api/keterangan/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      if (!response.ok) {
+      if (response.status != 200) {
         throw new Error("Gagal menghapus data");
       }
-
-      setKeterangan(keterangan.filter((item) => item.id !== id));
+      fetchData()
       showToastMessage();
     } catch (error) {
       console.error("Terjadi kesalahan:", error);

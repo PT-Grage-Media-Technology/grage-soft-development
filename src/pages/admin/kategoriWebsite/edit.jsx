@@ -25,16 +25,13 @@ export default function Edit() {
         const response = await axios.get(
           `http://localhost:5000/api/kategoriWebsite/${id}`
         );
-        // console.log("API response:", response); // Log the entire API response
-        if (!response.data.data || !response.data.data.attributes) {
-          throw new Error("Data tidak lengkap.");
-        }
-        const data = response.data.data;
+
+        const data = response.data;
 
         setFormData((prevData) => ({
           ...prevData,
-          nama_kategori: data.attributes["nama-kategori"] || "",
-          deskripsi_kategori: data.attributes["deskripsi-kategori"] || "",
+          nama_kategori: data.nama_kategori || "",
+          deskripsi_kategori: data.deskripsi_kategori || "",
         }));
       } catch (error) {
         console.error("Error fetching data kategori website:", error);
@@ -75,9 +72,14 @@ export default function Edit() {
 
       const response = await axios.patch(
         `http://localhost:5000/api/kategoriWebsite/${id}`,
-        formDataToSend
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
-      
+
       // Cek status respons
       if (response.status === 200) {
         router.push("/admin/kategoriWebsite");
@@ -97,10 +99,7 @@ export default function Edit() {
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
           <div className="flex justify-end pt-4 px-4">
-            <Link
-              href={"/admin/kategoriWebsite"}
-              className="relative"
-            >
+            <Link href={"/admin/kategoriWebsite"} className="relative">
               <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
                 <i className="fas fa-arrow-left"></i>
                 <span>Kembali</span>

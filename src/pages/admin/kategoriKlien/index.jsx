@@ -27,7 +27,7 @@ const KategoriKlien = ({ isLoggedIn }) => {
         `http://localhost:5000/api/kategoriKlien?page=${currentPage}`
       );
       console.log("rendi ganteng", response.data);
-      setKategoriKlien(response.data.data.data);
+      setKategoriKlien(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
@@ -69,21 +69,19 @@ const KategoriKlien = ({ isLoggedIn }) => {
     const id = isDeleting;
     setIsDeleting(true);
     try {
-      const response = await fetch(
+      const response = await axios.delete(
         `http://localhost:5000/api/kategoriKlien/${id}`,
         {
-          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
 
-      if (!response.ok) {
+      if (response.status != 200) {
         throw new Error("Gagal menghapus data");
       }
-
-      setKategoriKlien(kategoriKlien.filter((item) => item.id !== id));
+      fetchData();
       showToastMessage();
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
@@ -166,7 +164,7 @@ const KategoriKlien = ({ isLoggedIn }) => {
                         key={item.id}
                       >
                         <td className="px-24 py-4 whitespace-nowrap">
-                          {item.attributes["nama-kategori-klien"]}
+                          {item.nama_kategori_klien}
                         </td>
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
                           <Link
