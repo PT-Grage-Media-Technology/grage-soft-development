@@ -178,7 +178,7 @@ const Klien = ({ isLoggedIn }) => {
                         key={item.id}
                       >
                         <td className="px-4 py-4 whitespace-nowrap">
-                          {item.nama_paket}
+                          {item.paket.nama_paket}
                         </td>
                         <td className="px-4 py-4 whitespace-nowrap">
                           {item.nama_klien}

@@ -26,7 +26,7 @@ export default function Add() {
         `http://localhost:5000/api/kategoriWebsite`
       );
       console.log(response);
-      setKategoriWebsite(response.data.data);
+      setKategoriWebsite(response.data);
     } catch (error) {
       console.error("Error fetching data paket:", error);
     }
@@ -220,7 +220,7 @@ export default function Add() {
                     </option>
                     {kategoriWebsite.map((item) => (
                       <option key={item.id} value={item.id}>
-                        {item.attributes["nama-kategori"]}
+                        {item.nama_kategori}
                       </option>
                     ))}
                   </select>

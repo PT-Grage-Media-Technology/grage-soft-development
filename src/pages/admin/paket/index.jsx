@@ -26,7 +26,7 @@ const Paket = ({ isLoggedIn }) => {
       const response = await axios.get(
         `http://localhost:5000/api/paket?page=${currentPage}`
       );
-      console.log(response)
+      console.log("paket", response.data.data)
       setPaket(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
@@ -77,8 +77,7 @@ const Paket = ({ isLoggedIn }) => {
   const handleDeleteItem = async () => {
     setIsDeleting(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/paket/${itemToDelete}`, {
-        method: "DELETE",
+      const response = await axios.delete(`http://localhost:5000/api/paket/${itemToDelete}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -178,7 +177,7 @@ const Paket = ({ isLoggedIn }) => {
                         key={item.id}
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item['nama_paket']}
+                          {item.nama_paket}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {item['harga']}

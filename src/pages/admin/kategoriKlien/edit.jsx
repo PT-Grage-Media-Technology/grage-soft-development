@@ -23,12 +23,12 @@ export default function Edit() {
           `http://localhost:5000/api/kategoriKlien/${id}`
         );
 
-        const data = response.data.data.data;
+        const data = response.data.data;
         console.log("Data:", data);
 
         setFormData((prevData) => ({
           ...prevData,
-          nama_kategori_klien: data.attributes["nama-kategori-klien"] || "",
+          nama_kategori_klien: data.nama_kategori_klien || "",
         }));
       } catch (error) {
         console.error("Error fetching data kategori klien:", error);

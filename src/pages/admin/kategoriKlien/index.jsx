@@ -26,8 +26,8 @@ const KategoriKlien = ({ isLoggedIn }) => {
       const response = await axios.get(
         `http://localhost:5000/api/kategoriKlien?page=${currentPage}`
       );
-      console.log('rendi ganteng',response.data);
-      setKategoriKlien(response.data.data.data);
+      console.log("rendi ganteng", response.data);
+      setKategoriKlien(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
       setTotalCount(response.data.totalCount);
@@ -69,12 +69,15 @@ const KategoriKlien = ({ isLoggedIn }) => {
     const id = isDeleting;
     setIsDeleting(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/kategoriKlien/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/kategoriKlien/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Gagal menghapus data");
@@ -126,13 +129,13 @@ const KategoriKlien = ({ isLoggedIn }) => {
         <ToastContainer />
 
         <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
-        <input
-                  type="text"
-                  placeholder="Cari kategori klien..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
+          <input
+            type="text"
+            placeholder="Cari kategori klien..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+          />
           <Link
             href={"/admin/kategoriKlien/add"}
             className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400"
@@ -163,10 +166,12 @@ const KategoriKlien = ({ isLoggedIn }) => {
                         key={item.id}
                       >
                         <td className="px-24 py-4 whitespace-nowrap">
-                          {item.attributes['nama-kategori-klien']}
+                          {item.nama_kategori_klien}
                         </td>
-                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
-                          <Link href={"/admin/kategoriKlien/edit?id=" + item.id}>
+                        <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
+                          <Link
+                            href={"/admin/kategoriKlien/edit?id=" + item.id}
+                          >
                             <div
                               className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                               aria-label="edit"
