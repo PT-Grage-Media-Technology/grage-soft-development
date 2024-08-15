@@ -6,7 +6,7 @@ import Head from "next/head";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const ConntohDesain = ({ isLoggedIn }) => {
   const router = useRouter();
@@ -41,13 +41,16 @@ const ConntohDesain = ({ isLoggedIn }) => {
   const handleDelete = async () => {
     const id = isDeleting;
     try {
-      const response = await axios.delete(`http://localhost:5000/api/contohdesain/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.delete(
+        `http://localhost:5000/api/contohdesain/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (response.status !== 200) {
+      if (response.status != 200) {
         throw new Error("Gagal menghapus data");
       }
 
@@ -122,12 +125,14 @@ const ConntohDesain = ({ isLoggedIn }) => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           {item.is_gambar ? (
                             <>
-                              <img src={item.link_contoh_desain} alt="foto" width={100} />
+                              <img
+                                src={item.link_contoh_desain}
+                                alt="foto"
+                                width={100}
+                              />
                             </>
                           ) : (
-                            <>
-                              {item.link_contoh_desain}
-                            </>
+                            <>{item.link_contoh_desain}</>
                           )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">

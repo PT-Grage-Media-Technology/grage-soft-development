@@ -26,7 +26,7 @@ const Paket = ({ isLoggedIn }) => {
       const response = await axios.get(
         `http://localhost:5000/api/paket?page=${currentPage}`
       );
-      console.log("paket", response.data.data)
+      console.log("paket", response.data.data);
       setPaket(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
@@ -77,17 +77,21 @@ const Paket = ({ isLoggedIn }) => {
   const handleDeleteItem = async () => {
     setIsDeleting(true);
     try {
-      const response = await axios.delete(`http://localhost:5000/api/paket/${itemToDelete}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.delete(
+        `http://localhost:5000/api/paket/${itemToDelete}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) {
+      if (response.status != 200) {
         throw new Error("Gagal menghapus data");
       }
 
-      setPaket(paket.filter((item) => item.id !== itemToDelete));
+      //setPaket(paket.filter((item) => item.id !== itemToDelete));
+      fetchData();
       showToastMessage();
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
@@ -180,16 +184,16 @@ const Paket = ({ isLoggedIn }) => {
                           {item.nama_paket}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item['harga']}
+                          {item["harga"]}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item['jumlah_pilihan_desain']}
+                          {item["jumlah_pilihan_desain"]}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item['status_website']}
+                          {item["status_website"]}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item['kategoriWebsite']['nama_kategori']}
+                          {item["kategoriWebsite"]["nama_kategori"]}
                         </td>
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
                           <Link href={"/admin/paket/edit?id=" + item.id}>

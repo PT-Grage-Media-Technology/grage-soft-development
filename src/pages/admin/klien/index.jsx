@@ -74,20 +74,22 @@ const Klien = ({ isLoggedIn }) => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5000/api/klien/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.delete(
+        `http://localhost:5000/api/klien/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) {
+      if (response.status != 200) {
         throw new Error("Gagal menghapus data");
       }
 
-      setKlien(klien.filter((item) => item.id !== id));
+      fetchData();
       showToastMessage();
-    } catch (error) {
+    } catch (error) { 
       console.error("Terjadi kesalahan:", error);
     } finally {
       setIsDeleting(false);
@@ -215,7 +217,7 @@ const Klien = ({ isLoggedIn }) => {
                             className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-700"
                             aria-label="delete"
                           >
-                              <i className="fa-solid fa-trash"></i>
+                            <i className="fa-solid fa-trash"></i>
                           </button>
                         </td>
                       </tr>

@@ -69,21 +69,19 @@ const KategoriKlien = ({ isLoggedIn }) => {
     const id = isDeleting;
     setIsDeleting(true);
     try {
-      const response = await fetch(
+      const response = await axios.delete(
         `http://localhost:5000/api/kategoriKlien/${id}`,
         {
-          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
 
-      if (!response.ok) {
+      if (response.status != 200) {
         throw new Error("Gagal menghapus data");
       }
-
-      setKategoriKlien(kategoriKlien.filter((item) => item.id !== id));
+      fetchData();
       showToastMessage();
     } catch (error) {
       console.error("Terjadi kesalahan:", error);

@@ -28,7 +28,7 @@ const Setting = () => {
       const response = await axios.get(
         `http://localhost:5000/api/setting?page=${currentPage}&search=${searchTerm}`
       );
-      console.log("data:", response.data.data);
+      //console.log("data:", response.data.data);
       setSetting(response.data.data);
       setTotalPages(response.data.totalPages);
       setPageSize(response.data.pageSize);
@@ -53,21 +53,21 @@ const Setting = () => {
   const handleDeleteItem = async () => {
     setIsDeleting(true);
     try {
-      const response = await fetch(
+      const response = await axios.delete(
         `http://localhost:5000/api/setting/${itemToDelete}`,
         {
-          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
 
-      if (!response.ok) {
+      if (response.status != 200) {
         throw new Error("Gagal menghapus data");
       }
 
-      setSetting(setting.filter((item) => item.id !== itemToDelete));
+      //  setSetting(setting.filter((item) => item.id !== itemToDelete));
+      fetchData();
       toast.success("Item berhasil dihapus", {
         position: "top-right",
       });
@@ -188,14 +188,15 @@ const Setting = () => {
                         </td>
                         <td className="py-4 whitespace-nowrap">
                           <img
-                            src={item.gambarSetting}
+                            src={item.gambar_setting}
                             alt="Foto"
                             className="object-scale-down w-24 h-24 rounded-2xl"
                           />
                         </td>
+
                         <td className="py-4 whitespace-nowrap">
                           <img
-                            src={item.foto_cap}
+                            src={item.url_foto_cap}
                             alt="Foto"
                             className="object-scale-down w-24 h-24 rounded-2xl"
                           />
@@ -203,9 +204,10 @@ const Setting = () => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           {item.bidang_perusahaan}
                         </td>
+
                         <td className="py-4 whitespace-nowrap">
                           <img
-                            src={item.foto_ttd}
+                            src={item.url_foto_ttd}
                             alt="Foto"
                             className="object-scale-down w-24 h-24 rounded-2xl"
                           />
