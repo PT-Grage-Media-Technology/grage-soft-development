@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
+import Head from "next/head";
 
 export default function Edit() {
   const router = useRouter();
@@ -113,16 +114,24 @@ export default function Edit() {
 
   return (
     <AdminLayout>
+      <Head>
+        <title>Edit Testimoni</title>
+      </Head>
       <div className="flex items-center justify-center p-12">
-        <div className="mx-auto w-full max-w-[550px] bg-white rounded-lg lg:-mt-48">
-          <Link href={"/admin/testimoni"} className="relative ml-32 lg:ml-60">
-            <div className="absolute flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-gradient-to-r from-indigo-400 to-gray-600 lg:left-24 left-4 top-10 text-md">
-              <i className="fas fa-arrow-left"></i>
-              <span>Kembali</span>
-            </div>
-          </Link>
+        <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
+          <div className="flex justify-end pt-4 px-4">
+            <Link
+              href={"/admin/testimoni"}
+              className="relative"
+            >
+              <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
+                <i className="fas fa-arrow-left"></i>
+                <span>Kembali</span>
+              </div>
+            </Link>
+          </div>
 
-          <form className="py-6 bg-white px-9" onSubmit={handleSubmit}>
+          <form className="bg-white px-9" onSubmit={handleSubmit}>
             <div className="mt-4 mb-5">
               <label
                 htmlFor="jenis_testimoni"
@@ -134,7 +143,7 @@ export default function Edit() {
                 type="text"
                 name="jenis_testimoni"
                 id="jenis_testimoni"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 value={formData.jenis_testimoni} // Gunakan nilai awal jika value kosong
                 onChange={handleInputChange}
               />
@@ -150,7 +159,7 @@ export default function Edit() {
                   name="gambar_testimoni"
                   id="gambar_testimoni"
                   htmlFor="gambar_testimoni"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   onChange={handleInputChange}
                 />
               </div>
@@ -167,7 +176,7 @@ export default function Edit() {
                 type="text"
                 name="judul_testimoni"
                 id="judul_testimoni"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 value={formData.judul_testimoni} // Gunakan nilai awal jika value kosong
                 onChange={handleInputChange}
               />
@@ -184,7 +193,7 @@ export default function Edit() {
                 name="deskripsi_testimoni"
                 id="deskripsi_testimoni"
                 rows="5"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 value={formData.deskripsi_testimoni} // Gunakan nilai awal jika value kosong
                 onChange={handleInputChange}
               ></textarea>
@@ -200,7 +209,7 @@ export default function Edit() {
               <select
                 name="is_publish"
                 id="is_publish"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 value={formData.is_publish}
                 onChange={handleInputChange}
                 required
@@ -214,7 +223,7 @@ export default function Edit() {
             </div>
 
             <div>
-              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-gradient-to-r from-indigo-400 to-gray-600 hover:bg-indigo-400 focus:bg-indigo-400">
+              <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-blue-400 hover:bg-indigo-600 focus:bg-indigo-400">
                 Simpan
               </button>
             </div>
