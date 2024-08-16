@@ -1,616 +1,284 @@
-import AdminLayout from "../layouts";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import Link from "next/link";
 import Head from "next/head";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import AdminLayout from "../layouts";
 
-const Invoice = () => {
-  const [editableField, setEditableField] = useState(null);
-  const [newValue, setNewValue] = useState("");
+export default function Invoice() {
+  const [settingData, setSettingData] = useState(null);
+  const [customerData, setCustomerData] = useState(null);
+  const [paketData, setpaketData] = useState([]);
+  const [cartPaketData, setCartPaketData] = useState([]);
+  const [invoiceData, setInvoiceData] = useState({
+    referensi: "",
+    tanggal: "",
+    tgl_jatuh_tempo: "",
+    pelanggan_id: "",
+    subtotal: 0,
+    total_diskon: 0,
+    total: 0,
+  });
 
-  const handleEdit = (field) => {
-    setEditableField(field);
-    setNewValue(field.value || ""); // Menangani nilai default
+  useEffect(() => {
+    fetchSettingData();
+    fetchCustomerData();
+    fetchpaketData();
+  }, []);
+
+  const fetchSettingData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/setting");
+      setSettingData(response.data.data[0]);
+      console.log("setting", response.data.data);
+    } catch (error) {
+      console.error("Error fetching setting data:", error);
+    }
   };
 
-  const handleEditField = (field) => {
-    setEditableField(field);
-    setNewValue(field.value || ""); // Menangani nilai default
+  const fetchCustomerData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/pelanggan");
+      console.log("Pelanggan", response.data);
+      setCustomerData(response.data);
+    } catch (error) {
+      console.error("Error fetching customer data:", error);
+    }
   };
 
-  const handleSave = () => {
-    setEditableField(null);
+  const fetchpaketData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/paket");
+      setpaketData(response.data.data || []);
+    } catch (error) {
+      console.error("Error fetching available packages:", error);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInvoiceData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handlePackageChange = (index, field, value) => {
+    const updatedCart = [...cartPaketData];
+    updatedCart[index] = { ...updatedCart[index], [field]: value };
+    setCartPaketData(updatedCart);
+  };
+
+  const addPackage = () => {
+    setCartPaketData((prevData) => [
+      ...prevData,
+      { id_paket: "", diskon: 0, harga: 0 },
+    ]);
+  };
+
+  const removePackage = (index) => {
+    const updatedCart = cartPaketData.filter((_, i) => i !== index);
+    setCartPaketData(updatedCart);
+  };
+
+  const calculateTotals = () => {
+    const subtotal = cartPaketData.reduce((sum, item) => sum + item.harga, 0);
+    const totalDiskon = cartPaketData.reduce(
+      (sum, item) => sum + item.diskon,
+      0
+    );
+    const total = subtotal - totalDiskon;
+
+    setInvoiceData((prevData) => ({
+      ...prevData,
+      subtotal,
+      total_diskon: totalDiskon,
+      total,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Create the invoice first
+      const invoiceResponse = await axios.post(
+        "http://localhost:5000/api/invoices",
+        invoiceData
+      );
+
+      // Assuming invoiceResponse contains the new invoice ID
+      const invoiceId = invoiceResponse.data.id;
+
+      // Update cartPaketData with the new invoice ID
+      const updatedCart = cartPaketData.map((item) => ({
+        ...item,
+        id_invoice: invoiceId,
+      }));
+
+      // Send the updated cart data
+      await axios.post(
+        "http://localhost:5000/api/cartpaket/update",
+        updatedCart
+      );
+
+      console.log("Invoice and cart packages saved:", invoiceResponse.data);
+    } catch (error) {
+      console.error("Error creating invoice or updating cart:", error);
+    }
+  };
+
+  const handlePrint = () => {
+    window.print();
   };
 
   return (
-    <>
+    <AdminLayout>
       <Head>
-        <title>Invoice</title>
+        <title>Create Invoice</title>
       </Head>
-      <AdminLayout>
-        <div className="flex flex-col overflow-hidden bg-white rounded-xl md:-mt-44">
-          <div className="sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-              {/* Invoice Template */}
-              <div className="invoice-container p-6 bg-white rounded-md shadow-md">
-                <div className="flex justify-between mb-6">
-                  <div>
-                    <h1 className="text-xl font-bold mb-2">
-                      Nama Perusahaan Anda
-                    </h1>
-                    <button className="text-gray-700 border text-sm border-gray-700 py-2 px-3 rounded-md mb-2">
-                      <i class="fa-solid fa-cloud-arrow-up me-2"></i>
-                      Upload Logo
-                    </button>
-                  </div>
-                  <div className="mx-auto">
-                    <h1 className="text-xl font-bold pb-2">Invoice</h1>
-                    <div className="text-gray-600 grid grid-flow-col">
-                      <div>Referensi</div>
-                      <div className="">
-                        {editableField === "reference" ? (
-                          <input
-                            type="text"
-                            value={newValue}
-                            className="border-2 w-2/2 py-1 border-indigo-300 rounded-xl"
-                            onChange={(e) => setNewValue(e.target.value)}
-                            onBlur={handleSave}
-                          />
-                        ) : (
-                          <>
-                            INV/00001
-                            <i
-                              className="fa-regular fa-pen-to-square mx-1"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("reference")}
-                            ></i>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                    <div className="text-gray-600 grid grid-flow-col">
-                      <div>Tanggal</div>
-                      <div className="">
-                        {editableField === "date" ? (
-                          <input
-                            type="text"
-                            value={newValue}
-                            className="border-2 w-2/2 py-1 border-indigo-300 rounded-xl"
-                            onChange={(e) => setNewValue(e.target.value)}
-                            onBlur={handleSave}
-                          />
-                        ) : (
-                          <>
-                            15/08/2024
-                            <i
-                              className="fa-regular fa-pen-to-square mx-1"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("date")}
-                            ></i>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                    <div className="text-gray-600 grid grid-flow-col">
-                      <div>Tgl. Jatuh Tempo </div>
-                      <div className="">
-                        {editableField === "dueDate" ? (
-                          <input
-                            type="text"
-                            value={newValue}
-                            className="border-2 w-2/2 py-1 border-indigo-300 rounded-xl"
-                            onChange={(e) => setNewValue(e.target.value)}
-                            onBlur={handleSave}
-                          />
-                        ) : (
-                          <>
-                            15/08/2024
-                            <i
-                              className="fa-regular fa-pen-to-square mx-1"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("dueDate")}
-                            ></i>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 pt-6 pb-12">
-                  <div className="">
-                    <h3 className="font-bold">Informasi Perusahaan</h3>
-                    <hr className="border-black w-3/4 mb-4" />
-                    <div className="text-gray-600">
-                      <div>
-                        <span className="font-semibold text-sm">
-                          {editableField === "companyName" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-2/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "Nama Perusahaan Anda"
-                          )}
-                          <span onClick={() => handleEditField("companyName")}>
-                            <i
-                              className="fa-regular fa-pen-to-square mx-3"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("companyName")}
-                            ></i>
-                          </span>
-                        </span>
-                      </div>
-                      <div>
-                        <span className="font-semibold text-sm">
-                          {editableField === "companyAddress" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-1/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "Alamat Perusahaan Anda"
-                          )}
-                          <span
-                            onClick={() => handleEditField("companyAddress")}
-                          >
-                            <i
-                              className="fa-regular fa-pen-to-square mx-3"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("companyAddress")}
-                            ></i>
-                          </span>
-                        </span>
-                      </div>
-                      <div>
-                        <span className="font-semibold text-sm">
-                          {editableField === "companyPhone" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-1/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "No Telp Perusahaan Anda"
-                          )}
-                          <span onClick={() => handleEditField("companyPhone")}>
-                            <i
-                              className="fa-regular fa-pen-to-square mx-3"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("companyPhone")}
-                            ></i>
-                          </span>
-                        </span>
-                      </div>
-                      <div>
-                        <span className="font-semibold text-sm">
-                          {editableField === "companyEmail" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-1/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "Email@perusahaan.anda"
-                          )}
-                          <span onClick={() => handleEditField("companyEmail")}>
-                            <i
-                              className="fa-regular fa-pen-to-square mx-3"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("companyEmail")}
-                            ></i>
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="">
-                    <h3 className="font-bold">Tagihan Kepada</h3>
-                    <hr className="border-black w-3/4 mb-4" />
-                    <div className="text-gray-600">
-                      <div>
-                        <span className="font-semibold text-sm">
-                          {editableField === "customerName" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-1/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "Nama Pelanggan"
-                          )}
-                          <span onClick={() => handleEditField("customerName")}>
-                            <i
-                              className="fa-regular fa-pen-to-square mx-3"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("customerName")}
-                            ></i>
-                          </span>
-                        </span>
-                      </div>
-                      <div>
-                        <span className="font-semibold text-sm">
-                          {editableField === "customerAddress" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-1/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "Alamat Pelanggan"
-                          )}
-                          <span
-                            onClick={() => handleEditField("customerAddress")}
-                          >
-                            <i
-                              className="fa-regular fa-pen-to-square mx-3"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("customerAddress")}
-                            ></i>
-                          </span>
-                        </span>
-                      </div>
-                      <div>
-                        <span className="font-semibold text-sm">
-                          {editableField === "customerPhone" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-1/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "No Telp Pelanggan"
-                          )}
-                          <span
-                            onClick={() => handleEditField("customerPhone")}
-                          >
-                            <i
-                              className="fa-regular fa-pen-to-square mx-3"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("customerPhone")}
-                            ></i>
-                          </span>
-                        </span>
-                      </div>
-                      <div>
-                        <span className="font-semibold text-sm">
-                          {editableField === "customerEmail" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-1/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "email@perusahaan.pelanggan"
-                          )}
-                          <span
-                            onClick={() => handleEditField("customerEmail")}
-                          >
-                            <i
-                              className="fa-regular fa-pen-to-square mx-3"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("customerEmail")}
-                            ></i>
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mb-6 mx-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-700 text-white">
-                      <tr>
-                        <th className="px-2 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                          Paket
-                        </th>
-                        <th className="px-2 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                          Nama Kategori
-                        </th>
-                        <th className="px-2 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                          Kuantitas
-                        </th>
-                        <th className="px-2 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                          Harga
-                        </th>
-                        <th className="px-2 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                          Diskon
-                        </th>
-                        <th className="px-2 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                          Pajak
-                        </th>
-                        <th className="px-2 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                          Jumlah
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-gray-300 divide-y divide-gray-200">
-                      <tr>
-                        <td className="mx-auto text-sm py-4 text-center">
-                          {editableField === "packageName" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-2/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "Nama Paket"
-                          )}
-                          <span>
-                            <i
-                              className="fa-regular fa-pen-to-square mx-2"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("packageName")}
-                            ></i>
-                          </span>
-                        </td>
-                        <td className="mx-auto text-sm py-4 text-center">
-                          {editableField === "categoryName" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-2/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "Nama Kategori"
-                          )}
-                          <span>
-                            <i
-                              className="fa-regular fa-pen-to-square mx-2"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("categoryName")}
-                            ></i>
-                          </span>
-                        </td>
-                        <td className="mx-auto text-sm py-4 text-center">
-                          {editableField === "quantity" ? (
-                            <input
-                              type="number"
-                              value={newValue}
-                              className="w-2/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "1"
-                          )}
-                          <span>
-                            <i
-                              className="fa-regular fa-pen-to-square mx-2"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("quantity")}
-                            ></i>
-                          </span>
-                        </td>
-                        <td className="mx-auto text-sm py-4 text-center">
-                          {editableField === "price" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-2/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "0,00"
-                          )}
-                          <span>
-                            <i
-                              className="fa-regular fa-pen-to-square mx-2"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("price")}
-                            ></i>
-                          </span>
-                        </td>
-                        <td className="mx-auto text-sm py-4 text-center">
-                          {editableField === "discount" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-2/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "0%"
-                          )}
-                          <span>
-                            <i
-                              className="fa-regular fa-pen-to-square mx-2"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("discount")}
-                            ></i>
-                          </span>
-                        </td>
-                        <td className="mx-auto text-sm py-4 text-center">
-                          {editableField === "tax" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-2/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "PPN 10%"
-                          )}
-                          <span>
-                            <i
-                              className="fa-regular fa-pen-to-square mx-2"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("tax")}
-                            ></i>
-                          </span>
-                        </td>
-                        <td className="mx-auto text-sm py-4 text-center">
-                          {editableField === "total" ? (
-                            <input
-                              type="text"
-                              value={newValue}
-                              className="w-2/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                              onChange={(e) => setNewValue(e.target.value)}
-                              onBlur={handleSave}
-                            />
-                          ) : (
-                            "0,00"
-                          )}
-                          <span>
-                            <i
-                              className="fa-regular fa-pen-to-square mx-2"
-                              style={{ color: "#FFD43B" }}
-                              onClick={() => handleEditField("total")}
-                            ></i>
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="grid grid-flow-col">
-                  {/* Tambahkan bagian untuk Pesan dan Total */}
-                  <div className="mt-6">
-                    <h3 className="font-bold">Pesan</h3>
-                    <hr className="border-black w-3/4 py-2" />
-                    <textarea
-                      className="w-3/4 border rounded-md p-2"
-                      rows="4"
-                      placeholder="Tulis pesan di sini..."
-                    ></textarea>
-                  </div>
-
-                  <div className="grid grid-flow-row mt-4">
-                    <div className="flex justify-between text-sm font-semibold mt-2">
-                      <div>Subtotal</div>
-                      <div>Rp 0,00</div>
-                    </div>
-                    <div className="flex justify-between text-sm font-semibold mt-2">
-                      <div>Total Diskon</div>
-                      <div>(Rp 0,00)</div>
-                    </div>
-                    <div className="flex justify-between text-sm font-semibold mt-2">
-                      <div>PPN</div>
-                      <div>Rp 0,00</div>
-                    </div>
-                    <div className="flex justify-between text-lg font-bold mt-2 underline">
-                      <div>Total</div>
-                      <div>Rp 0,00</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex justify-end pt-8 mx-24">
-                  <div>
-                    {editableField === "greeting" ? (
-                      <input
-                        type="text"
-                        value={newValue}
-                        className="w-2/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                        onChange={(e) => setNewValue(e.target.value)}
-                        onBlur={handleSave}
-                      />
-                    ) : (
-                      <span className="text-xs">Dengan Hormat,</span>
-                    )}
-                    <span>
-                      <i
-                        className="fa-regular fa-pen-to-square mx-2"
-                        style={{ color: "#FFD43B" }}
-                        onClick={() => handleEditField("greeting")}
-                      ></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex justify-end pt-16">
-                  <button className="border border-gray-700 text-gray-700 py-2 px-4 rounded-md text-sm me-20">
-                    <i class="fa-solid fa-cloud-arrow-up me-2"></i>
-                    Upload Signature
-                  </button>
-                </div>
-
-                <div className="flex justify-end mx-14 pt-4">
-                  <div>
-                    {editableField === "companyName" ? (
-                      <input
-                        type="text"
-                        value={newValue}
-                        className="w-2/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                        onChange={(e) => setNewValue(e.target.value)}
-                        onBlur={handleSave}
-                      />
-                    ) : (
-                      <span className="text-sm underline">
-                        PT. Kledo Berhati Nyaman
-                      </span>
-                    )}
-                    <i
-                      className="fa-regular fa-pen-to-square mx-2"
-                      style={{ color: "#FFD43B" }}
-                      onClick={() => handleEditField("companyName")}
-                    ></i>
-                  </div>
-                </div>
-
-                <div className="flex justify-end mx-24 pt-4">
-                  <div>
-                    {editableField === "department" ? (
-                      <input
-                        type="text"
-                        value={newValue}
-                        className="w-2/2 px-3 py-2 border-2 border-indigo-300 rounded-xl"
-                        onChange={(e) => setNewValue(e.target.value)}
-                        onBlur={handleSave}
-                      />
-                    ) : (
-                      <span className="text-xs">Finance Dept</span>
-                    )}
-                    <i
-                      className="fa-regular fa-pen-to-square mx-2"
-                      style={{ color: "#FFD43B" }}
-                      onClick={() => handleEditField("department")}
-                    ></i>
-                  </div>
-                </div>
-
-                <div className="flex justify-center py-14">
-                  <button className="bg-blue-400 w-full py-3 rounded-xl text-white">
-                    Buat Invoice
-                  </button>
-                </div>
-              </div>
-              {/* End of Invoice Template */}
-            </div>
+      <div className="p-6">
+        <h1 className="text-2xl font-bold mb-4">Create Invoice</h1>
+        {settingData && (
+          <div className="mb-4">
+            <h2 className="text-xl font-semibold">
+              {settingData.nama_perusahaan}
+            </h2>
+            <p>Alamat: {settingData.alamat}</p>
+            <p>Telp: {settingData.telp}</p>
+            <p>Email: {settingData.email}</p>
           </div>
-        </div>
-      </AdminLayout>
-    </>
+        )}
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block mb-2">Pelanggan</label>
+            <select
+              name="pelanggan_id"
+              value={invoiceData.pelanggan_id}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded"
+            >
+              <option value="">Masukan Pelanggan</option>
+              {customerData &&
+                customerData.map((customer) => (
+                  <option key={customer.id} value={customer.id}>
+                    {customer.nama}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <div className="mb-4">
+            <label className="block mb-2">Invoice Tanggal</label>
+            <input
+              type="date"
+              name="tanggal"
+              value={invoiceData.tanggal}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-2">Jatuh Tempo</label>
+            <input
+              type="date"
+              name="tgl_jatuh_tempo"
+              value={invoiceData.tgl_jatuh_tempo}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold mb-2">Info Paket</h3>
+            {cartPaketData.length > 0 ? (
+              cartPaketData.map((item, index) => (
+                <div key={index} className="flex mb-2">
+                  <select
+                    value={item.id_paket}
+                    onChange={(e) =>
+                      handlePackageChange(index, "id_paket", e.target.value)
+                    }
+                    className="w-1/3 p-2 border rounded mr-2"
+                  >
+                    <option value="">Masukan Paket</option>
+                    {paketData.map((pkg) => (
+                      <option key={pkg.id} value={pkg.id}>
+                        {pkg.nama_paket}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    type="number"
+                    placeholder="Price"
+                    value={item.harga}
+                    onChange={(e) =>
+                      handlePackageChange(
+                        index,
+                        "harga",
+                        parseFloat(e.target.value)
+                      )
+                    }
+                    className="w-1/3 p-2 border rounded mr-2"
+                  />
+                  <input
+                    type="number"
+                    placeholder="Discount"
+                    value={item.diskon}
+                    onChange={(e) =>
+                      handlePackageChange(
+                        index,
+                        "diskon",
+                        parseFloat(e.target.value)
+                      )
+                    }
+                    className="w-1/3 p-2 border rounded mr-2"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removePackage(index)}
+                    className="bg-red-500 text-white p-2 rounded"
+                  >
+                    Hapus
+                  </button>
+                </div>
+              ))
+            ) : (
+              <button
+                type="button"
+                onClick={addPackage}
+                className="bg-blue-500 text-white p-2 rounded mt-2"
+              >
+                Tambah Paket Invoice
+              </button>
+            )}
+          </div>
+          <div className="mb-4">
+            <button
+              type="button"
+              onClick={calculateTotals}
+              className="bg-green-500 text-white p-2 rounded mr-2"
+            >
+              Hitung Total
+            </button>
+            <span>Subtotal: {invoiceData.subtotal}</span>
+            <span className="ml-4">
+              Total Diskon: {invoiceData.total_diskon}
+            </span>
+            <span className="ml-4">Total: {invoiceData.total}</span>
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="bg-blue-500 text-white p-2 rounded mr-2"
+            >
+              Simpan Invoice
+            </button>
+            <button
+              type="button"
+              onClick={handlePrint}
+              className="bg-gray-500 text-white p-2 rounded"
+            >
+              Print Invoice
+            </button>
+          </div>
+        </form>
+      </div>
+    </AdminLayout>
   );
-};
-
-export default Invoice;
+}
