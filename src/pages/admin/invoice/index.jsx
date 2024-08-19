@@ -152,7 +152,7 @@ export default function Invoice() {
       <Head>
         <title>Create Invoice</title>
       </Head>
-      <div className="p-6">
+      <div className="p-6 bg-white rounded-lg md:-mt-40">
         <h1 className="text-2xl font-bold mb-4">Create Invoice</h1>
         {settingData && (
           <div className="mb-4">
