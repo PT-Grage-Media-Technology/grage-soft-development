@@ -9,8 +9,9 @@ export default function Invoice() {
   const [paketData, setpaketData] = useState([]);
   const [cartPaketData, setCartPaketData] = useState([]);
   const [invoiceData, setInvoiceData] = useState({
-    referensi: "",
+    refrensi: "",
     tanggal: "",
+    refrensi: "",
     tgl_jatuh_tempo: "",
     pelanggan_id: "",
     subtotal: 0,
@@ -98,9 +99,20 @@ export default function Invoice() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Validate cart data
+      if (
+        cartPaketData.some(
+          (item) =>
+            !item.id_paket || item.diskon === null || item.harga === null
+        )
+      ) {
+        alert("Semua field paket harus diisi");
+        return;
+      }
+
       // Create the invoice first
       const invoiceResponse = await axios.post(
-        "http://localhost:5000/api/invoices",
+        "http://localhost:5000/api/invoice",
         invoiceData
       );
 
@@ -111,15 +123,21 @@ export default function Invoice() {
       const updatedCart = cartPaketData.map((item) => ({
         ...item,
         id_invoice: invoiceId,
+        id_paket: item.id_paket,
+        diskon: item.diskon || 0, // Use 0 if diskon is null
+        harga: item.harga || 0, // Use 0 if harga is null
       }));
 
       // Send the updated cart data
-      await axios.post(
-        "http://localhost:5000/api/cartpaket/update",
-        updatedCart
-      );
+      await axios.post("http://localhost:5000/api/cartpaket/", updatedCart, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       console.log("Invoice and cart packages saved:", invoiceResponse.data);
+
+      alert("Invoice berhasil disimpan");
     } catch (error) {
       console.error("Error creating invoice or updating cart:", error);
     }
@@ -165,6 +183,16 @@ export default function Invoice() {
             </select>
           </div>
           <div className="mb-4">
+            <label className="block mb-2">Refrensi</label>
+            <input
+              type="text"
+              name="refrensi"
+              value={invoiceData.refrensi}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <div className="mb-4">
             <label className="block mb-2">Invoice Tanggal</label>
             <input
               type="date"
@@ -186,67 +214,64 @@ export default function Invoice() {
           </div>
           <div className="mb-4">
             <h3 className="text-lg font-semibold mb-2">Info Paket</h3>
-            {cartPaketData.length > 0 ? (
-              cartPaketData.map((item, index) => (
-                <div key={index} className="flex mb-2">
-                  <select
-                    value={item.id_paket}
-                    onChange={(e) =>
-                      handlePackageChange(index, "id_paket", e.target.value)
-                    }
-                    className="w-1/3 p-2 border rounded mr-2"
-                  >
-                    <option value="">Masukan Paket</option>
-                    {paketData.map((pkg) => (
-                      <option key={pkg.id} value={pkg.id}>
-                        {pkg.nama_paket}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    type="number"
-                    placeholder="Price"
-                    value={item.harga}
-                    onChange={(e) =>
-                      handlePackageChange(
-                        index,
-                        "harga",
-                        parseFloat(e.target.value)
-                      )
-                    }
-                    className="w-1/3 p-2 border rounded mr-2"
-                  />
-                  <input
-                    type="number"
-                    placeholder="Discount"
-                    value={item.diskon}
-                    onChange={(e) =>
-                      handlePackageChange(
-                        index,
-                        "diskon",
-                        parseFloat(e.target.value)
-                      )
-                    }
-                    className="w-1/3 p-2 border rounded mr-2"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removePackage(index)}
-                    className="bg-red-500 text-white p-2 rounded"
-                  >
-                    Hapus
-                  </button>
-                </div>
-              ))
-            ) : (
-              <button
-                type="button"
-                onClick={addPackage}
-                className="bg-blue-500 text-white p-2 rounded mt-2"
-              >
-                Tambah Paket Invoice
-              </button>
-            )}
+            {cartPaketData.map((item, index) => (
+              <div key={index} className="flex mb-2">
+                <select
+                  value={item.id_paket}
+                  onChange={(e) =>
+                    handlePackageChange(index, "id_paket", e.target.value)
+                  }
+                  className="w-1/3 p-2 border rounded mr-2"
+                >
+                  <option value="">Masukan Paket</option>
+                  {paketData.map((pkg) => (
+                    <option key={pkg.id} value={pkg.id}>
+                      {pkg.nama_paket}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="number"
+                  placeholder="Price"
+                  value={item.harga || 0}
+                  onChange={(e) =>
+                    handlePackageChange(
+                      index,
+                      "harga",
+                      e.target.value === "" ? null : parseFloat(e.target.value)
+                    )
+                  }
+                  className="w-1/3 p-2 border rounded mr-2"
+                />
+                <input
+                  type="number"
+                  placeholder="Discount"
+                  value={item.diskon}
+                  onChange={(e) =>
+                    handlePackageChange(
+                      index,
+                      "diskon",
+                      e.target.value === "" ? null : parseFloat(e.target.value)
+                    )
+                  }
+                  className="w-1/3 p-2 border rounded mr-2"
+                />
+                <button
+                  type="button"
+                  onClick={() => removePackage(index)}
+                  className="bg-red-500 text-white p-2 rounded"
+                >
+                  Hapus
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={addPackage}
+              className="bg-blue-500 text-white p-2 rounded mt-2"
+            >
+              Tambah Paket Invoice
+            </button>
           </div>
           <div className="mb-4">
             <button
