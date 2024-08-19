@@ -8,8 +8,9 @@ import ButtonWa from "@/components/elements/ButtonWa";
 export default function App({ Component, pageProps, router }) {
     const isInsideAdmin = router.pathname.startsWith("/admin");
     const isLoginPage = router.pathname === "/auth/login"; // Tambahkan kondisi untuk halaman login
+    const isLoginPelanggan = router.pathname === "/auth_pelanggan/login"; // Tambahkan kondisi untuk halaman login
 
-    if (isInsideAdmin || isLoginPage) { // Perbarui kondisi untuk mengembalikan hanya komponen
+    if (isInsideAdmin || isLoginPage || isLoginPelanggan) { // Perbarui kondisi untuk mengembalikan hanya komponen
         return <Component {...pageProps }
         />;
     }
