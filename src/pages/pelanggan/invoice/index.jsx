@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Head from "next/head";
+import PelangganLayout from "../layouts";
 
 export default function Invoice() {
   const [settingData, setSettingData] = useState(null);
@@ -129,11 +130,11 @@ export default function Invoice() {
   };
 
   return (
-    <>
+    <PelangganLayout>
       <Head>
         <title>Invoice</title>
       </Head>
-      <div className="flex flex-col overflow-hidden bg-white rounded-xl">
+      <div className="flex flex-col overflow-hidden bg-white rounded-xl md:-mt-44">
         <div className="sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
             {/* Invoice Template */}
@@ -305,23 +306,18 @@ export default function Invoice() {
               </div>
 
               <div className="flex justify-end pt-8 mx-24">
-                <div>
-                  <i
-                    className="fa-regular fa-pen-to-square mx-2"
-                    style={{ color: "#FFD43B" }}
-                    onClick={() => handleEditField("greeting")}
-                  ></i>
-                </div>
+                <span className="text-xs mx-4">
+                 Dengan Hormat,
+                </span>
               </div>
 
               <div className="flex justify-end pt-16">
                 <button className="border border-gray-700 text-gray-700 py-2 px-4 rounded-md text-sm me-20">
-                  <i class="fa-solid fa-cloud-arrow-up me-2"></i>
                   Upload Signature
                 </button>
               </div>
 
-              <div className="flex justify-end mx-14 pt-4">
+              <div className="flex justify-end mx-16 pt-4">
                 <div>
                   <span className="text-sm underline">
                     PT. Kledo Berhati Nyaman
@@ -329,7 +325,7 @@ export default function Invoice() {
                 </div>
               </div>
 
-              <div className="flex justify-end mx-24 pt-4">
+              <div className="flex justify-end mx-28 pt-4">
                 <div>
                   <span className="text-xs">Finance Dept</span>
                 </div>
@@ -339,6 +335,6 @@ export default function Invoice() {
           </div>
         </div>
       </div>
-    </>
+    </PelangganLayout>
   );
 }
