@@ -33,7 +33,7 @@ export default function Sidebar() {
       };
       await axios.post("http://localhost:5000/api/auth/logout", null, config);
       deleteCookie("token");
-      router.push("/auth/login");
+      router.push("/auth_pelanggan/login");
     } catch (error) {}
   };
 
