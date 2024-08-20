@@ -73,7 +73,7 @@ export default function Invoice() {
       <Head>
         <title>Data Invoice</title>
       </Head>
-      <div className="flex flex-col overflow-x-auto bg-white rounded-xl md:-mt-44">
+      <div className="flex flex-col bg-white rounded-xl md:-mt-44">
           <div className="sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
               <div className="overflow-x-auto">
