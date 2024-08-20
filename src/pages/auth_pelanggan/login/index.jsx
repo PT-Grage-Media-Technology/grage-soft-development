@@ -5,7 +5,6 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/router";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
 import Head from "next/head";
 export default function Login() {
   const router = useRouter();
@@ -23,7 +22,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "http://localhost:5000/api/authpelanggan/login",
         {
           email,
           password,

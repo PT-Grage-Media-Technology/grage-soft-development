@@ -311,10 +311,14 @@ export default function Invoice() {
                 </span>
               </div>
 
+              {/* Foto Tanda Tangan */}
               <div className="flex justify-end pt-16">
-                <button className="border border-gray-700 text-gray-700 py-2 px-4 rounded-md text-sm me-20">
-                  Upload Signature
-                </button>
+                <img src="" alt="" />
+              </div>
+
+              {/* Foto Cap */}
+              <div className="flex justify-end pt-16">
+                <img src="" alt="" />
               </div>
 
               <div className="flex justify-end mx-16 pt-4">

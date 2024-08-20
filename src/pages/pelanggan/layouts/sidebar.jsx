@@ -113,6 +113,16 @@ export default function Sidebar() {
                 Invoice
               </Link>
             </div>
+
+            <div className="items-center">
+                <button
+                  onClick={handleLogout}
+                  className="block py-3 text-xs font-bold uppercase "
+                >
+                  <i className="mr-2 text-sm fas fa-sign-out-alt "></i>
+                  logout
+                </button>
+              </div>
           </div>
         </div>
       </nav>
