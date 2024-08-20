@@ -1,344 +1,281 @@
-import { useState, useEffect } from "react";
+import AdminLayout from "../layouts";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Link from "next/link";
 import Head from "next/head";
-import PelangganLayout from "../layouts";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { parseCookies } from "nookies";
+import { useRouter } from "next/router";
 
-export default function Invoice() {
-  const [settingData, setSettingData] = useState(null);
-  const [customerData, setCustomerData] = useState(null);
-  const [paketData, setpaketData] = useState([]);
-  const [cartPaketData, setCartPaketData] = useState([]);
-  const [invoiceData, setInvoiceData] = useState({
-    referensi: "",
-    tanggal: "",
-    tgl_jatuh_tempo: "",
-    pelanggan_id: "",
-    subtotal: 0,
-    total_diskon: 0,
-    total: 0,
-  });
+const KategoriKlien = ({ isLoggedIn }) => {
+  const router = useRouter();
+  const [kategoriKlien, setKategoriKlien] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalCount, setTotalCount] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/kategoriKlien?page=${currentPage}`
+      );
+      console.log("rendi ganteng", response.data);
+      setKategoriKlien(response.data.data);
+      setTotalPages(response.data.totalPages);
+      setPageSize(response.data.pageSize);
+      setTotalCount(response.data.totalCount);
+    } catch (error) {
+      console.error("Error fetching data kategori klien:", error);
+      setError(error.response ? error.response.data : error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchDataByKeyword = async (keyword) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/kategoriKlien?keyword=${keyword}`
+      );
+      setKategoriKlien(response.data.data);
+      setTotalPages(response.data.totalPages);
+      setPageSize(response.data.pageSize);
+      setTotalCount(response.data.totalCount);
+    } catch (error) {
+      console.error("Error fetching data kategori klien:", error);
+      setError(error.response ? error.response.data : error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // kondisi search
   useEffect(() => {
-    fetchSettingData();
-    fetchCustomerData();
-    fetchpaketData();
-  }, []);
+    if (searchTerm !== "") {
+      fetchDataByKeyword(searchTerm);
+    } else {
+      fetchData();
+    }
+  }, [currentPage, searchTerm]);
 
-  const fetchSettingData = async () => {
+  const handleDelete = async () => {
+    const id = isDeleting;
+    setIsDeleting(true);
     try {
-      const response = await axios.get("http://localhost:5000/api/setting");
-      setSettingData(response.data.data[0]);
-      console.log("setting", response.data.data);
+      const response = await axios.delete(
+        `http://localhost:5000/api/kategoriKlien/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status != 200) {
+        throw new Error("Gagal menghapus data");
+      }
+      fetchData();
+      showToastMessage();
     } catch (error) {
-      console.error("Error fetching setting data:", error);
+      console.error("Terjadi kesalahan:", error);
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteModal(false);
     }
   };
 
-  const fetchCustomerData = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/pelanggan");
-      console.log("Pelanggan", response.data);
-      setCustomerData(response.data);
-    } catch (error) {
-      console.error("Error fetching customer data:", error);
-    }
+  const toggleModalDelete = () => {
+    setShowDeleteModal(!showDeleteModal);
   };
 
-  const fetchpaketData = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/paket");
-      setpaketData(response.data.data || []);
-    } catch (error) {
-      console.error("Error fetching available packages:", error);
-    }
+  const showToastMessage = () => {
+    toast.success("Item berhasil dihapus", {
+      position: "top-right",
+    });
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setInvoiceData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handlePackageChange = (index, field, value) => {
-    const updatedCart = [...cartPaketData];
-    updatedCart[index] = { ...updatedCart[index], [field]: value };
-    setCartPaketData(updatedCart);
-  };
-
-  const addPackage = () => {
-    setCartPaketData((prevData) => [
-      ...prevData,
-      { id_paket: "", diskon: 0, harga: 0 },
-    ]);
-  };
-
-  const removePackage = (index) => {
-    const updatedCart = cartPaketData.filter((_, i) => i !== index);
-    setCartPaketData(updatedCart);
-  };
-
-  const calculateTotals = () => {
-    const subtotal = cartPaketData.reduce((sum, item) => sum + item.harga, 0);
-    const totalDiskon = cartPaketData.reduce(
-      (sum, item) => sum + item.diskon,
-      0
+  if (error) {
+    return (
+      <div className="text-center text-red-500">
+        Error: {error.message || "Terjadi kesalahan pada server"}
+      </div>
     );
-    const total = subtotal - totalDiskon;
+  }
 
-    setInvoiceData((prevData) => ({
-      ...prevData,
-      subtotal,
-      total_diskon: totalDiskon,
-      total,
-    }));
-  };
+  const firstPage = Math.max(1, currentPage - 4); // Menghitung halaman pertama yang akan ditampilkan
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // Create the invoice first
-      const invoiceResponse = await axios.post(
-        "http://localhost:5000/api/invoices",
-        invoiceData
-      );
-
-      // Assuming invoiceResponse contains the new invoice ID
-      const invoiceId = invoiceResponse.data.id;
-
-      // Update cartPaketData with the new invoice ID
-      const updatedCart = cartPaketData.map((item) => ({
-        ...item,
-        id_invoice: invoiceId,
-      }));
-
-      // Send the updated cart data
-      await axios.post(
-        "http://localhost:5000/api/cartpaket/update",
-        updatedCart
-      );
-
-      console.log("Invoice and cart packages saved:", invoiceResponse.data);
-    } catch (error) {
-      console.error("Error creating invoice or updating cart:", error);
+  if (!isLoggedIn) {
+    if (typeof window !== "undefined") {
+      // Cek apakah kode sedang berjalan di sisi klien
+      router.push("/auth/login"); // Mengarahkan pengguna kembali ke halaman login
     }
-  };
-
-  const handlePrint = () => {
-    window.print();
-  };
-
+    return <p>Loading...</p>; // or display loading indicator
+  }
   return (
-    <PelangganLayout>
+    <>
       <Head>
-        <title>Invoice</title>
+        <title>Data Invoice</title>
       </Head>
-      <div className="flex flex-col overflow-hidden bg-white rounded-xl md:-mt-44">
-        <div className="sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-            {/* Invoice Template */}
-            <div className="invoice-container p-6 bg-white rounded-md shadow-md">
-              <div className="flex justify-between mb-6">
-                <div>
-                  <h1 className="text-xl font-bold mb-2">
-                    GMT SOFT DEVELOPMENT
-                  </h1>
-                  <img
-                    className="w-20 h-20 mx-16 mt-4"
-                    src="/images/GMT.png"
-                    alt=""
-                  />
-                </div>
-                <div className="mx-auto">
-                  <h1 className="text-xl font-bold pb-2">Invoice</h1>
-                  <div className="text-gray-600 grid grid-flow-col">
-                    <div>Referensi</div>
-                    <div className="">INV/00001</div>
-                  </div>
-                  <div className="text-gray-600 grid grid-flow-col">
-                    <div>Tanggal</div>
-                    <div className="">15/08/2024</div>
-                  </div>
-                  <div className="text-gray-600 grid grid-flow-col">
-                    <div>Tgl. Jatuh Tempo </div>
-                    <div className="">15/08/2024</div>
-                  </div>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 pt-6 pb-12">
-                <div className="">
-                  <h3 className="font-bold">Informasi Perusahaan</h3>
-                  <hr className="border-black w-3/4 mb-4" />
-                  <div className="text-gray-600">
-                    <div>
-                      <span className="font-semibold text-sm">
-                        GMT SOFT DEVELOPMENT
-                      </span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm">
-                        ALAMAT GMT NYA COY
-                      </span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm">No Telp GMT</span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm">Email GMT</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="">
-                  <h3 className="font-bold">Tagihan Kepada</h3>
-                  <hr className="border-black w-3/4 mb-4" />
-                  <div className="text-gray-600">
-                    <div>
-                      <span className="font-semibold text-sm">
-                        Nama Pelanggan
-                      </span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm">
-                        Alamat Pelanggan
-                      </span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm">
-                        No Telp Pelanggan
-                      </span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm">
-                        Email Pelanggan
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mb-6 mx-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-700 text-white">
+      <AdminLayout>
+        <ToastContainer />
+        <div className="flex flex-col overflow-x-auto bg-white rounded-xl md:-mt-44">
+          <div className="sm:-mx-6 lg:-mx-8">
+            <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+              <div className="overflow-x-auto">
+                <table className="min-w-full text-sm font-light text-left">
+                  <thead className="font-medium border-b dark:border-neutral-500">
                     <tr>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
-                        Paket
+                      <th scope="col" className="px-12 py-4">
+                        Nama Paket
                       </th>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
+                      <th scope="col" className="px-12 py-4">
                         Nama Kategori
                       </th>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
-                        Kuantitas
-                      </th>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
+                      <th scope="col" className="px-12 py-4">
                         Harga
                       </th>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
-                        Diskon
-                      </th>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
-                        Pajak
-                      </th>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
-                        Jumlah
+                      <th scope="col" className="px-12 py-4">
+                        Action
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-gray-300 divide-y divide-gray-200">
-                    <tr>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Paket
-                      </td>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Nama Kategori
-                      </td>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Kuantitas
-                      </td>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Harga
-                      </td>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Diskon
-                      </td>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Pajak
-                      </td>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Jumlah
-                      </td>
-                    </tr>
+                  <tbody>
+                    {kategoriKlien.map((item) => (
+                      <tr
+                        className="border-b dark:border-neutral-500 "
+                        key={item.id}
+                      >
+                        <td className="px-12 py-4 whitespace-nowrap">
+                          {item.nama_kategori_klien}
+                        </td>
+                        <td className="px-12 py-4 whitespace-nowrap">
+                          {item.nama_kategori_klien}
+                        </td>
+                        <td className="px-12 py-4 whitespace-nowrap">
+                          {item.nama_kategori_klien}
+                        </td>
+                        <td className="flex items-center gap-1 px-12 py-4 mt-8 whitespace-nowrap">
+                          <Link
+                            href={"/pelanggan/detail_invoice"}
+                          >
+                            <div
+                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
+                              aria-label="edit"
+                            >
+                              <i class="fa-solid fa-ellipsis"></i>
+                            </div>
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
-              </div>
 
-              <div className="grid grid-flow-col">
-                {/* Tambahkan bagian untuk Pesan dan Total */}
-                <div className="mt-6">
-                  <h3 className="font-bold">Pesan</h3>
-                  <hr className="border-black w-3/4 py-2" />
-                  <textarea
-                    className="w-3/4 border rounded-md p-2"
-                    rows="4"
-                    placeholder="Tulis pesan di sini..."
-                  ></textarea>
-                </div>
-
-                <div className="grid grid-flow-row mt-4">
-                  <div className="flex justify-between text-sm font-semibold mt-2">
-                    <div>Subtotal</div>
-                    <div>Rp 0,00</div>
+                {/* pagination */}
+                <div className="flex justify-center gap-5 my-4">
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
+                    }
+                    disabled={currentPage === 1}
+                    className="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-400"
+                  >
+                    Prev
+                  </button>
+                  <div className="flex">
+                    {Array.from(
+                      { length: Math.min(totalPages, 5) },
+                      (_, index) => (
+                        <button
+                          key={index}
+                          onClick={
+                            () => setCurrentPage(firstPage + index) // Memperbarui halaman berdasarkan indeks dan halaman pertama yang ditampilkan
+                          }
+                          className={`mx-1 px-3 py-1 rounded-md ${
+                            currentPage === firstPage + index
+                              ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white"
+                              : "bg-gray-200 hover:bg-gray-400"
+                          }`}
+                        >
+                          {firstPage + index}{" "}
+                          {/* Menggunakan halaman pertama yang ditampilkan */}
+                        </button>
+                      )
+                    )}
                   </div>
-                  <div className="flex justify-between text-sm font-semibold mt-2">
-                    <div>Total Diskon</div>
-                    <div>(Rp 0,00)</div>
-                  </div>
-                  <div className="flex justify-between text-sm font-semibold mt-2">
-                    <div>PPN</div>
-                    <div>Rp 0,00</div>
-                  </div>
-                  <div className="flex justify-between text-lg font-bold mt-2 underline">
-                    <div>Total</div>
-                    <div>Rp 0,00</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-end pt-8 mx-24">
-                <span className="text-xs mx-4">
-                 Dengan Hormat,
-                </span>
-              </div>
-
-              {/* Foto Tanda Tangan */}
-              <div className="flex justify-end pt-16">
-                <img src="" alt="" />
-              </div>
-
-              {/* Foto Cap */}
-              <div className="flex justify-end pt-16">
-                <img src="" alt="" />
-              </div>
-
-              <div className="flex justify-end mx-16 pt-4">
-                <div>
-                  <span className="text-sm underline">
-                    PT. Kledo Berhati Nyaman
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex justify-end mx-28 pt-4">
-                <div>
-                  <span className="text-xs">Finance Dept</span>
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prevPage) =>
+                        Math.min(prevPage + 1, totalPages)
+                      )
+                    }
+                    disabled={currentPage === totalPages}
+                    className="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-400"
+                  >
+                    Next
+                  </button>
                 </div>
               </div>
             </div>
-            {/* End of Invoice Template */}
           </div>
         </div>
-      </div>
-    </PelangganLayout>
+      </AdminLayout>
+
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 transition-opacity">
+            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+          </div>
+          <div className="relative w-full max-w-md transition transform bg-white rounded-lg shadow-xl">
+            <div className="px-4 py-5 sm:px-6">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Hapus Kategori Klien
+              </h3>
+              <p className="max-w-2xl mt-1 text-sm text-gray-500">
+                Apakah Anda yakin ingin menghapus kategori ini?
+              </p>
+            </div>
+            <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Hapus
+              </button>
+              <button
+                type="button"
+                onClick={toggleModalDelete}
+                className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
+};
+// middleware
+export async function getServerSideProps(context) {
+  // Mendapatkan cookies dari konteks
+  const cookies = parseCookies(context);
+
+  // Mengecek apakah token JWT ada di cookies
+  const isLoggedIn = !!cookies.token;
+
+  // Mengembalikan props untuk komponen Dashboard
+  return {
+    props: { isLoggedIn },
+  };
 }
+
+export default KategoriKlien;
