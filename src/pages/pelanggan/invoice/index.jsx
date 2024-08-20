@@ -1,7 +1,5 @@
-import AdminLayout from "../layouts";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import Link from "next/link";
 import Head from "next/head";
 import PelangganLayout from "../layouts";
 import { useCookies } from "react-cookie";
@@ -22,8 +20,6 @@ export default function Invoice() {
     total: 0,
   });
 
-
-  // kondisi search
   useEffect(() => {
     setUser(localStorage.getItem("user"));
 
@@ -34,17 +30,12 @@ export default function Invoice() {
     }
   }, [cookies.token]);
 
-  const handleDelete = async () => {
-    const id = isDeleting;
-    setIsDeleting(true);
+  const fetchSettingData = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/setting");
       setSettingData(response.data.data[0]);
     } catch (error) {
-      console.error("Terjadi kesalahan:", error);
-    } finally {
-      setIsDeleting(false);
-      setShowDeleteModal(false);
+      console.error("Error fetching setting data:", error);
     }
   };
 
@@ -78,9 +69,9 @@ export default function Invoice() {
   };
 
   return (
-    <>
+    <PelangganLayout>
       <Head>
-        <title>Data Invoice</title>
+        <title>Invoice</title>
       </Head>
       <div className="flex flex-col overflow-hidden bg-white rounded-xl md:-mt-44">
         <div className="sm:-mx-6 lg:-mx-8">
@@ -145,17 +136,23 @@ export default function Invoice() {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-700 text-white">
                     <tr>
-                      <th scope="col" className="px-12 py-4">
-                        Nama Paket
+                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
+                        Paket
                       </th>
-                      <th scope="col" className="px-12 py-4">
+                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
                         Nama Kategori
                       </th>
                       <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
                         Harga
                       </th>
-                      <th scope="col" className="px-12 py-4">
-                        Action
+                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
+                        Diskon
+                      </th>
+                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
+                        Pajak
+                      </th>
+                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
+                        Jumlah
                       </th>
                     </tr>
                   </thead>
@@ -184,6 +181,7 @@ export default function Invoice() {
                     ))}
                   </tbody>
                 </table>
+              </div>
 
               <div className="grid grid-flow-col">
                 <div className="mt-6">
@@ -227,56 +225,7 @@ export default function Invoice() {
             </div>
           </div>
         </div>
-      </AdminLayout>
-
-      {showDeleteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="fixed inset-0 transition-opacity">
-            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-          </div>
-          <div className="relative w-full max-w-md transition transform bg-white rounded-lg shadow-xl">
-            <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Hapus Kategori Klien
-              </h3>
-              <p className="max-w-2xl mt-1 text-sm text-gray-500">
-                Apakah Anda yakin ingin menghapus kategori ini?
-              </p>
-            </div>
-            <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-              <button
-                type="button"
-                onClick={handleDelete}
-                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-              >
-                Hapus
-              </button>
-              <button
-                type="button"
-                onClick={toggleModalDelete}
-                className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-              >
-                Batal
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+      </div>
+    </PelangganLayout>
   );
-};
-// middleware
-export async function getServerSideProps(context) {
-  // Mendapatkan cookies dari konteks
-  const cookies = parseCookies(context);
-
-  // Mengecek apakah token JWT ada di cookies
-  const isLoggedIn = !!cookies.token;
-
-  // Mengembalikan props untuk komponen Dashboard
-  return {
-    props: { isLoggedIn },
-  };
 }
-
-export default KategoriKlien;
