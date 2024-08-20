@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Head from "next/head";
 import PelangganLayout from "../layouts";
+import { useCookies } from "react-cookie";
 
 export default function Invoice() {
+  const [cookies] = useCookies(["token"]); // Ambil cookie
   const [settingData, setSettingData] = useState(null);
   const [customerData, setCustomerData] = useState(null);
-  const [paketData, setpaketData] = useState([]);
   const [cartPaketData, setCartPaketData] = useState([]);
+  const [user, setUser] = useState([]);
   const [invoiceData, setInvoiceData] = useState({
     referensi: "",
     tanggal: "",
@@ -19,16 +21,19 @@ export default function Invoice() {
   });
 
   useEffect(() => {
-    fetchSettingData();
-    fetchCustomerData();
-    fetchpaketData();
-  }, []);
+    setUser(localStorage.getItem("user"));
+
+    if (cookies.token) {
+      fetchSettingData();
+      fetchCustomerData();
+      // fetchCartPaketData();
+    }
+  }, [cookies.token]);
 
   const fetchSettingData = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/setting");
       setSettingData(response.data.data[0]);
-      console.log("setting", response.data.data);
     } catch (error) {
       console.error("Error fetching setting data:", error);
     }
@@ -36,94 +41,28 @@ export default function Invoice() {
 
   const fetchCustomerData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/pelanggan");
-      console.log("Pelanggan", response.data);
+      // Ganti endpoint sesuai kebutuhan atau tambahkan ID pelanggan di parameter query
+      const response = await axios.get(`http://localhost:5000/api/invoice/8`);
       setCustomerData(response.data);
+      setCartPaketData(response.data.cartPaket);
+      console.log("coba123", response.data.cartPaket);
     } catch (error) {
       console.error("Error fetching customer data:", error);
     }
   };
 
-  const fetchpaketData = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/paket");
-      setpaketData(response.data.data || []);
-    } catch (error) {
-      console.error("Error fetching available packages:", error);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setInvoiceData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handlePackageChange = (index, field, value) => {
-    const updatedCart = [...cartPaketData];
-    updatedCart[index] = { ...updatedCart[index], [field]: value };
-    setCartPaketData(updatedCart);
-  };
-
-  const addPackage = () => {
-    setCartPaketData((prevData) => [
-      ...prevData,
-      { id_paket: "", diskon: 0, harga: 0 },
-    ]);
-  };
-
-  const removePackage = (index) => {
-    const updatedCart = cartPaketData.filter((_, i) => i !== index);
-    setCartPaketData(updatedCart);
-  };
-
-  const calculateTotals = () => {
-    const subtotal = cartPaketData.reduce((sum, item) => sum + item.harga, 0);
-    const totalDiskon = cartPaketData.reduce(
-      (sum, item) => sum + item.diskon,
-      0
-    );
-    const total = subtotal - totalDiskon;
-
-    setInvoiceData((prevData) => ({
-      ...prevData,
-      subtotal,
-      total_diskon: totalDiskon,
-      total,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // Create the invoice first
-      const invoiceResponse = await axios.post(
-        "http://localhost:5000/api/invoices",
-        invoiceData
-      );
-
-      // Assuming invoiceResponse contains the new invoice ID
-      const invoiceId = invoiceResponse.data.id;
-
-      // Update cartPaketData with the new invoice ID
-      const updatedCart = cartPaketData.map((item) => ({
-        ...item,
-        id_invoice: invoiceId,
-      }));
-
-      // Send the updated cart data
-      await axios.post(
-        "http://localhost:5000/api/cartpaket/update",
-        updatedCart
-      );
-
-      console.log("Invoice and cart packages saved:", invoiceResponse.data);
-    } catch (error) {
-      console.error("Error creating invoice or updating cart:", error);
-    }
-  };
+  // const fetchCartPaketData = async () => {
+  //   try {
+  //     // Ganti endpoint sesuai kebutuhan atau tambahkan ID pelanggan di parameter query
+  //     const response = await axios.get(
+  //       `http://localhost:5000/api/cartpaket/${user.id}`
+  //     );
+  //     setCartPaketData(response.data.data);
+  //     console.log('coba aja', response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching cart paket data:", error);
+  //   }
+  // };
 
   const handlePrint = () => {
     window.print();
@@ -137,16 +76,16 @@ export default function Invoice() {
       <div className="flex flex-col overflow-hidden bg-white rounded-xl md:-mt-44">
         <div className="sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-            {/* Invoice Template */}
             <div className="invoice-container p-6 bg-white rounded-md shadow-md">
+              {/* Konten invoice */}
               <div className="flex justify-between mb-6">
                 <div>
                   <h1 className="text-xl font-bold mb-2">
-                    GMT SOFT DEVELOPMENT
+                    {settingData?.profil_perusahaan}
                   </h1>
                   <img
                     className="w-20 h-20 mx-16 mt-4"
-                    src="/images/GMT.png"
+                    src={settingData?.gambar_setting}
                     alt=""
                   />
                 </div>
@@ -166,27 +105,18 @@ export default function Invoice() {
                   </div>
                 </div>
               </div>
+
               <div className="grid grid-cols-2 pt-6 pb-12">
                 <div className="">
                   <h3 className="font-bold">Informasi Perusahaan</h3>
                   <hr className="border-black w-3/4 mb-4" />
                   <div className="text-gray-600">
                     <div>
-                      <span className="font-semibold text-sm">
-                        GMT SOFT DEVELOPMENT
-                      </span>
+                      Nama Perusahaan : {settingData?.profil_perusahaan}
                     </div>
-                    <div>
-                      <span className="font-semibold text-sm">
-                        ALAMAT GMT NYA COY
-                      </span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm">No Telp GMT</span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm">Email GMT</span>
-                    </div>
+                    <div>Alamat Perusahaan: {settingData?.alamat}</div>
+                    <div>Telefon Perusahaan : {settingData?.telp}</div>
+                    <div>Email: Perusahaan : {settingData?.email}</div>
                   </div>
                 </div>
 
@@ -194,26 +124,10 @@ export default function Invoice() {
                   <h3 className="font-bold">Tagihan Kepada</h3>
                   <hr className="border-black w-3/4 mb-4" />
                   <div className="text-gray-600">
-                    <div>
-                      <span className="font-semibold text-sm">
-                        Nama Pelanggan
-                      </span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm">
-                        Alamat Pelanggan
-                      </span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm">
-                        No Telp Pelanggan
-                      </span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm">
-                        Email Pelanggan
-                      </span>
-                    </div>
+                    <div>{customerData?.nama}</div>
+                    <div>{customerData?.alamat}</div>
+                    <div>{customerData?.no_telp}</div>
+                    <div>{customerData?.email}</div>
                   </div>
                 </div>
               </div>
@@ -227,9 +141,6 @@ export default function Invoice() {
                       </th>
                       <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
                         Nama Kategori
-                      </th>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
-                        Kuantitas
                       </th>
                       <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
                         Harga
@@ -246,35 +157,33 @@ export default function Invoice() {
                     </tr>
                   </thead>
                   <tbody className="bg-gray-300 divide-y divide-gray-200">
-                    <tr>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Paket
-                      </td>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Nama Kategori
-                      </td>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Kuantitas
-                      </td>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Harga
-                      </td>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Diskon
-                      </td>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Pajak
-                      </td>
-                      <td className="mx-auto text-sm py-4 text-center">
-                        Jumlah
-                      </td>
-                    </tr>
+                    {cartPaketData.map((item, index) => (
+                      <tr key={index}>
+                        <td className="mx-auto text-sm py-4 text-center">
+                          {item.pakets.nama_paket}
+                        </td>
+                        <td className="mx-auto text-sm py-4 text-center">
+                          {item.pakets.kategoriWebsite.nama_kategori}
+                        </td>
+                        <td className="mx-auto text-sm py-4 text-center">
+                          Rp {item.harga},00
+                        </td>
+                        <td className="mx-auto text-sm py-4 text-center">
+                          Rp {item.diskon},00
+                        </td>
+                        <td className="mx-auto text-sm py-4 text-center">
+                          Rp {item.pajak},00
+                        </td>
+                        <td className="mx-auto text-sm py-4 text-center">
+                          Rp {item.total},00
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
 
               <div className="grid grid-flow-col">
-                {/* Tambahkan bagian untuk Pesan dan Total */}
                 <div className="mt-6">
                   <h3 className="font-bold">Pesan</h3>
                   <hr className="border-black w-3/4 py-2" />
@@ -288,54 +197,32 @@ export default function Invoice() {
                 <div className="grid grid-flow-row mt-4">
                   <div className="flex justify-between text-sm font-semibold mt-2">
                     <div>Subtotal</div>
-                    <div>Rp 0,00</div>
+                    <div>Rp {invoiceData.subtotal},00</div>
                   </div>
                   <div className="flex justify-between text-sm font-semibold mt-2">
                     <div>Total Diskon</div>
-                    <div>(Rp 0,00)</div>
+                    <div>(Rp {invoiceData.total_diskon},00)</div>
                   </div>
                   <div className="flex justify-between text-sm font-semibold mt-2">
                     <div>PPN</div>
-                    <div>Rp 0,00</div>
+                    <div>Rp {invoiceData.total_pajak},00</div>
                   </div>
                   <div className="flex justify-between text-lg font-bold mt-2 underline">
                     <div>Total</div>
-                    <div>Rp 0,00</div>
+                    <div>Rp {invoiceData.total},00</div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-end pt-8 mx-24">
-                <span className="text-xs mx-4">
-                 Dengan Hormat,
-                </span>
-              </div>
-
-              {/* Foto Tanda Tangan */}
-              <div className="flex justify-end pt-16">
-                <img src="" alt="" />
-              </div>
-
-              {/* Foto Cap */}
-              <div className="flex justify-end pt-16">
-                <img src="" alt="" />
-              </div>
-
-              <div className="flex justify-end mx-16 pt-4">
-                <div>
-                  <span className="text-sm underline">
-                    PT. Kledo Berhati Nyaman
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex justify-end mx-28 pt-4">
-                <div>
-                  <span className="text-xs">Finance Dept</span>
-                </div>
+              <div className="flex justify-end mt-6">
+                <button
+                  onClick={handlePrint}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none"
+                >
+                  Cetak Invoice
+                </button>
               </div>
             </div>
-            {/* End of Invoice Template */}
           </div>
         </div>
       </div>
