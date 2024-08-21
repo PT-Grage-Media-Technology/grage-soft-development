@@ -3,30 +3,24 @@ import axios from "axios";
 import Head from "next/head";
 import PelangganLayout from "../layouts";
 import { useCookies } from "react-cookie";
+import Link from "next/link";
 
 export default function Invoice() {
-  const [cookies] = useCookies(["token"]); // Ambil cookie
+  const [cookies] = useCookies(["token"]);
   const [settingData, setSettingData] = useState(null);
   const [customerData, setCustomerData] = useState(null);
   const [cartPaketData, setCartPaketData] = useState([]);
-  const [user, setUser] = useState([]);
-  const [invoiceData, setInvoiceData] = useState({
-    referensi: "",
-    tanggal: "",
-    tgl_jatuh_tempo: "",
-    pelanggan_id: "",
-    subtotal: 0,
-    total_diskon: 0,
-    total: 0,
-  });
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setUser(localStorage.getItem("user"));
+    const userData = JSON.parse(localStorage.getItem("user"));
+    setUser(userData);
 
-    if (cookies.token) {
+    if (cookies.token && userData) {
       fetchSettingData();
-      fetchCustomerData();
-      // fetchCartPaketData();
+      fetchCustomerData(userData.id);
     }
   }, [cookies.token]);
 
@@ -36,37 +30,59 @@ export default function Invoice() {
       setSettingData(response.data.data[0]);
     } catch (error) {
       console.error("Error fetching setting data:", error);
+      setError("Failed to fetch setting data.");
     }
   };
 
-  const fetchCustomerData = async () => {
+  const fetchCustomerData = async (userId) => {
+    setLoading(true);
+    setError(null);
     try {
-      // Ganti endpoint sesuai kebutuhan atau tambahkan ID pelanggan di parameter query
-      const response = await axios.get(`http://localhost:5000/api/invoice/8`);
-      setCustomerData(response.data);
-      setCartPaketData(response.data.cartPaket);
-      console.log("coba123", response.data.cartPaket);
+      const response = await axios.get(
+        // `http://localhost:5000/api/invoice/user/${userId}`
+        `http://localhost:5000/api/invoice/user/1`
+      );
+        console.log("data", response.data)
+        console.log("coba", userId)
+        setCustomerData(response.data);
+        // setCartPaketData(response.data.cartPaket);
+
+      // if (
+      //   response.data &&
+      //   response.data.cartPaket &&
+      //   response.data.cartPaket.length > 0
+      // ) {
+      //   console.log("data", response.data)
+      //   setCustomerData(response.data);
+      //   setCartPaketData(response.data.cartPaket);
+      // } else {
+      //   setCartPaketData([]);
+      //   setError("No invoice data found for this user.");
+      // }
     } catch (error) {
       console.error("Error fetching customer data:", error);
+      setError("Failed to fetch invoice data.");
+      setCartPaketData([]);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // const fetchCartPaketData = async () => {
-  //   try {
-  //     // Ganti endpoint sesuai kebutuhan atau tambahkan ID pelanggan di parameter query
-  //     const response = await axios.get(
-  //       `http://localhost:5000/api/cartpaket/${user.id}`
-  //     );
-  //     setCartPaketData(response.data.data);
-  //     console.log('coba aja', response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching cart paket data:", error);
-  //   }
-  // };
+  if (loading) {
+    return (
+      <PelangganLayout>
+        <div>Loading...</div>
+      </PelangganLayout>
+    );
+  }
 
-  const handlePrint = () => {
-    window.print();
-  };
+  if (error) {
+    return (
+      <PelangganLayout>
+        <div>{error}</div>
+      </PelangganLayout>
+    );
+  }
 
   return (
     <PelangganLayout>
@@ -74,9 +90,10 @@ export default function Invoice() {
         <title>Data Invoice</title>
       </Head>
       <div className="flex flex-col bg-white rounded-xl md:-mt-44">
-          <div className="sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-              <div className="overflow-x-auto">
+        <div className="sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+            <div className="overflow-x-auto">
+              {cartPaketData && cartPaketData.length > 0 ? (
                 <table className="min-w-full text-sm font-light text-left">
                   <thead className="font-medium border-b dark:border-neutral-500">
                     <tr>
@@ -95,21 +112,19 @@ export default function Invoice() {
                     </tr>
                   </thead>
                   <tbody>
-                  {cartPaketData.map((item, index) => (
+                    {cartPaketData.map((item, index) => (
                       <tr key={index}>
                         <td className="px-12 py-4 whitespace-nowrap">
-                        {item.pakets.nama_paket}
+                          {item.pakets.nama_paket}
                         </td>
                         <td className="px-12 py-4 whitespace-nowrap">
-                        {item.pakets.kategoriWebsite.nama_kategori}
+                          {item.pakets.kategoriWebsite.nama_kategori}
                         </td>
                         <td className="px-12 py-4 whitespace-nowrap">
-                        Rp {item.harga},00
+                          Rp {item.harga},00
                         </td>
                         <td className="flex items-center gap-1 px-12 py-4 mt-8 whitespace-nowrap">
-                          <Link
-                            href={"/pelanggan/detail_invoice"}
-                          >
+                          <Link href="/pelanggan/detail_invoice">
                             <div
                               className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white font-semibold rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                               aria-label="edit"
@@ -122,10 +137,13 @@ export default function Invoice() {
                     ))}
                   </tbody>
                 </table>
-              </div>
+              ) : (
+                <div>No invoice data available.</div>
+              )}
             </div>
           </div>
         </div>
+      </div>
     </PelangganLayout>
   );
 }
