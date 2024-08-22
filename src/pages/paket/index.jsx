@@ -3,6 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import LoadingLayanan from "@/components/elements/LoadingLayanan";
 import styles from "@/components/Layanan.module.css"; // Import CSS module
+import { BASE_URL } from '../../components/layoutsAdmin/apiConfig';
 
 export default function Layanan() {
   const [paket, setPaket] = useState([]);
@@ -14,9 +15,13 @@ export default function Layanan() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const paketResponse = await axios.get("http://localhost:5000/api/paket");
-        const benefitResponse = await axios.get("http://localhost:5000/api/benefitPaket");
-        
+        const paketResponse = await axios.get(
+          `${BASE_URL}/api/paket`
+        );
+        const benefitResponse = await axios.get(
+          `${BASE_URL}/api/benefitPaket`
+        );
+
         setPaket(paketResponse.data.data);
         setBenefitPaket(benefitResponse.data.data);
       } catch (error) {
@@ -31,7 +36,9 @@ export default function Layanan() {
   }, []);
 
   if (error) {
-    return <div className="text-center text-red-500">Error: {error.message}</div>;
+    return (
+      <div className="text-center text-red-500">Error: {error.message}</div>
+    );
   }
 
   if (loading) {
@@ -62,11 +69,16 @@ export default function Layanan() {
     <section className="relative -mt-5 bg-transparent">
       {Object.keys(groupedByCategory).map((category) => (
         <div key={category}>
-          <h2 className="text-3xl text-center font-semibold mt-10 mb-6">{category}</h2>
+          <h2 className="text-3xl text-center font-semibold mt-10 mb-6">
+            {category}
+          </h2>
           <div className="relative flex flex-col items-center px-6 py-2 justify-center lg:px-24">
             <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-3 xl:grid-cols-3 w-full">
               {groupedByCategory[category].map((item) => (
-                <div className={`shadow-2xl rounded-2xl ${styles.paketCard} w-full`} key={item.id}>
+                <div
+                  className={`shadow-2xl rounded-2xl ${styles.paketCard} w-full`}
+                  key={item.id}
+                >
                   <h2 className="flex justify-center font-bold h-16 pt-4 bg-green-400 text-xl text-white">
                     {item.nama_paket}
                   </h2>
@@ -81,7 +93,10 @@ export default function Layanan() {
 
                   <span className="bg-white text-center h-16 pt-4 font-semibold px-auto text-lg">
                     {item.jumlah_pilihan_desain} Pilihan Desain.{" "}
-                    <a href={`/contoh_desain/${item.id}`} className="text-blue-500">
+                    <a
+                      href={`/contoh_desain/${item.id}`}
+                      className="text-blue-500"
+                    >
                       Lihat klik disini
                     </a>
                   </span>

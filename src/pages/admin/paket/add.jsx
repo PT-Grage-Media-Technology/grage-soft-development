@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Add() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function Add() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/kategoriWebsite`
+        `${BASE_URL}/api/kategoriWebsite`
       );
       console.log(response);
       setKategoriWebsite(response.data);
@@ -57,7 +58,7 @@ export default function Add() {
       console.log("id", formData.status_website);
 
       const response = await axios.post(
-        "http://localhost:5000/api/paket",
+        "${BASE_URL}/api/paket",
         formDataToSend,
         {
           headers: {

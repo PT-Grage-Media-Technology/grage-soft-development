@@ -4,6 +4,7 @@ import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Edit() {
   const router = useRouter();
@@ -27,15 +28,15 @@ export default function Edit() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/klien/${id}`
+          `${BASE_URL}/api/klien/${id}`
         );
 
         const data = response.data.data;
-
+        // console.log('coba', data);
         setFormData((prevData) => ({
           ...prevData,
           id_kategori_klien: data.kategori_klien_id || "",
-          id_paket: data.paket_id || "",
+          id_paket: data.paket_Id || "",
           nama_klien: data.nama_klien || "",
           url_klien: data.url_klien || "",
           logo_klien: data.logo_klien || null,
@@ -57,7 +58,7 @@ export default function Edit() {
   const fetchDataKategori = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/kategoriKlien`
+        `${BASE_URL}/api/kategoriKlien`
       );
       console.log("kategori klien", response.data);
       setKategoriKlien(response.data.data);
@@ -71,7 +72,7 @@ export default function Edit() {
 
   const fetchDataPaket = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/paket`);
+      const response = await axios.get(`${BASE_URL}/api/paket`);
       console.log("tes", response.data.data);
       setPaket(response.data.data);
       // setTotalPages(response.data.totalPages);
@@ -114,7 +115,7 @@ export default function Edit() {
       }
 
       const response = await axios.put(
-        `http://localhost:5000/api/klien/${id}`,
+        `${BASE_URL}/api/klien/${id}`,
         formDataToSend,
         {
           headers: {
@@ -164,9 +165,13 @@ export default function Edit() {
                 onChange={handleInputChange}
                 required
               >
-                <option value="">Pilih Paket</option>
                 {paket.map((item) => (
-                  <option value={item.id}>{item.nama_paket}</option>
+                  <option
+                    value={item.id}
+                    selected={formData.id_paket == item.id ? true : false}
+                  >
+                    {item.nama_paket}
+                  </option>
                 ))}
               </select>
             </div>
@@ -186,19 +191,25 @@ export default function Edit() {
                 onChange={handleInputChange}
                 required
               >
-                <option value="">Pilih Kategori Klien</option>
                 {kategoriKlien.map((item) => (
-                  <option value={item.id}>{item.nama_kategori_klien}</option>
+                  <option
+                    value={item.id}
+                    selected={
+                      formData.id_kategori_klien == item.id ? true : false
+                    }
+                  >
+                    {item.nama_kategori_klien}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div className="mt-4 mb-5">
               <label
-                htmlFor="url_klien"
+                htmlFor="nama_klien"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                URL Klien
+                Nama Klien
               </label>
               <input
                 type="text"

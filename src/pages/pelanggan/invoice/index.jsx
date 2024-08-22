@@ -4,29 +4,45 @@ import Head from "next/head";
 import PelangganLayout from "../layouts";
 import { useCookies } from "react-cookie";
 import Link from "next/link";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Invoice() {
   const [cookies] = useCookies(["token"]);
   const [settingData, setSettingData] = useState(null);
-  const [customerData, setCustomerData] = useState(null);
-  const [cartPaketData, setCartPaketData] = useState([]);
+  const [invoices, setInvoices] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("user"));
-    setUser(userData);
-
-    if (cookies.token && userData) {
-      fetchSettingData();
-      fetchCustomerData(userData.id);
+    if (cookies.token) {
+      fetchInvoiceData(), fetchSettingData();
     }
   }, [cookies.token]);
 
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/api/authpelanggan/me`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+      setUser(response.data);
+      fetchSettingData();
+      fetchInvoiceData(response.data.id);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setError("Failed to fetch user data.");
+      setLoading(false);
+    }
+  };
+
   const fetchSettingData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/setting");
+      const response = await axios.get(`${BASE_URL}/api/setting`);
       setSettingData(response.data.data[0]);
     } catch (error) {
       console.error("Error fetching setting data:", error);
@@ -34,35 +50,18 @@ export default function Invoice() {
     }
   };
 
-  const fetchCustomerData = async (userId) => {
+  const fetchInvoiceData = async (userId) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(
-        // `http://localhost:5000/api/invoice/user/${userId}`
-        `http://localhost:5000/api/invoice/user/1`
-      );
-        console.log("data", response.data)
-        console.log("coba", userId)
-        setCustomerData(response.data);
-        // setCartPaketData(response.data.cartPaket);
-
-      // if (
-      //   response.data &&
-      //   response.data.cartPaket &&
-      //   response.data.cartPaket.length > 0
-      // ) {
-      //   console.log("data", response.data)
-      //   setCustomerData(response.data);
-      //   setCartPaketData(response.data.cartPaket);
-      // } else {
-      //   setCartPaketData([]);
-      //   setError("No invoice data found for this user.");
-      // }
+      const response = await axios.get(`${BASE_URL}/api/invoice`, {
+        params: { userId },
+      });
+      console.log("invoice", response.data);
+      setInvoices(response.data);
     } catch (error) {
-      console.error("Error fetching customer data:", error);
+      console.error("Error fetching invoice data:", error);
       setError("Failed to fetch invoice data.");
-      setCartPaketData([]);
     } finally {
       setLoading(false);
     }
@@ -93,7 +92,7 @@ export default function Invoice() {
         <div className="sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
             <div className="overflow-x-auto">
-              {cartPaketData && cartPaketData.length > 0 ? (
+              {invoices.length > 0 ? (
                 <table className="min-w-full text-sm font-light text-left">
                   <thead className="font-medium border-b dark:border-neutral-500">
                     <tr>
@@ -112,29 +111,35 @@ export default function Invoice() {
                     </tr>
                   </thead>
                   <tbody>
-                    {cartPaketData.map((item, index) => (
-                      <tr key={index}>
-                        <td className="px-12 py-4 whitespace-nowrap">
-                          {item.pakets.nama_paket}
-                        </td>
-                        <td className="px-12 py-4 whitespace-nowrap">
-                          {item.pakets.kategoriWebsite.nama_kategori}
-                        </td>
-                        <td className="px-12 py-4 whitespace-nowrap">
-                          Rp {item.harga},00
-                        </td>
-                        <td className="flex items-center gap-1 px-12 py-4 mt-8 whitespace-nowrap">
-                          <Link href="/pelanggan/detail_invoice">
-                            <div
-                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white font-semibold rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
-                              aria-label="edit"
+                    {invoices.map((invoice, index) =>
+                      invoice.cartPaket?.map((item, subIndex) => (
+                        <tr key={`${index}-${subIndex}`}>
+                          <td className="px-12 py-4 whitespace-nowrap">
+                            {item.paket?.nama_paket ||
+                              "Nama paket tidak di temukan"}
+                          </td>
+                          <td className="px-12 py-4 whitespace-nowrap">
+                            {item.paket?.kategoriWebsite?.nama_kategori ||
+                              "Nama Kategori tidak di temukan"}
+                          </td>
+                          <td className="px-12 py-4 whitespace-nowrap">
+                            Rp {item.harga.toLocaleString() || "Harga tidak di temukan"},00
+                          </td>
+                          <td className="flex items-center gap-1 px-12 py-4 mt-8 whitespace-nowrap">
+                            <Link
+                              href={`/pelanggan/detail_invoice?id=${invoice.id}`}
                             >
-                              Detail
-                            </div>
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
+                              <div
+                                className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white font-semibold rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
+                                aria-label="edit"
+                              >
+                                Detail
+                              </div>
+                            </Link>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               ) : (

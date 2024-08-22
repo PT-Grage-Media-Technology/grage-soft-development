@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { BASE_URL } from '../../components/layoutsAdmin/apiConfig';
 
 function ButtonWa() {
   const [setting, setSetting] = useState(""); // State untuk menyimpan nomor WA
@@ -9,10 +10,10 @@ function ButtonWa() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/setting`
+          `${BASE_URL}/api/setting`
         );
-        setSetting(response.data.data.data[0]);
-        console.log(response.data.data.data[0]);
+        setSetting(response.data.data[0]);
+        console.log(response.data.data[0]);
       } catch (error) {
         console.error("Error fetching data layanan:", error);
         setError(error);
@@ -23,7 +24,7 @@ function ButtonWa() {
   }, []);
 
   const handleSubmit = () => {
-    window.location.href = `https://wa.me/62${ setting.attributes.wa }`;
+    window.location.href = `https://wa.me/62${ setting.wa }`;
   };
 
   return (

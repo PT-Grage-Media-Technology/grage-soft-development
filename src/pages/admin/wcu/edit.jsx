@@ -4,6 +4,7 @@ import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Edit() {
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function Edit() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/wcu/${id}`);
+        const response = await axios.get(`${BASE_URL}/api/wcu/${id}`);
         // console.log("API response:", response); // Log the entire API response
         if (!response.data.data || !response.data.data.attributes) {
           throw new Error("Data tidak lengkap.");
@@ -68,7 +69,7 @@ export default function Edit() {
       formDataToSend.append("isi", formData.isi); // Pastikan key ini sesuai dengan yang diharapkan oleh backend
 
       const response = await axios.patch(
-        `http://localhost:5000/api/wcu/${id}`,
+        `${BASE_URL}/api/wcu/${id}`,
         formDataToSend,
         {
           headers: {

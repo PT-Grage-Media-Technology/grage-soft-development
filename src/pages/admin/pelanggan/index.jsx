@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { auto } from "@popperjs/core";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 const Pelanggan = ({ isLoggedIn }) => {
   const router = useRouter();
   const [pelanggan, setPelanggan] = useState([]);
@@ -44,7 +45,7 @@ const Pelanggan = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/pelanggan?page=${currentPage}`
+        `${BASE_URL}/api/pelanggan?page=${currentPage}`
       );
       setPelanggan(response.data);
       setTotalPages(response.data.totalPages);
@@ -61,7 +62,7 @@ const Pelanggan = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/pelanggan?keyword=${keyword}`
+        `${BASE_URL}/api/pelanggan?keyword=${keyword}`
       );
       setPelanggan(response.data);
       setTotalPages(response.data.totalPages);
@@ -104,7 +105,7 @@ const Pelanggan = ({ isLoggedIn }) => {
     const id = itemIdToDelete;
     try {
       const response = await fetch(
-        `http://localhost:5000/api/pelanggan/${id}`,
+        `${BASE_URL}/api/pelanggan/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -153,7 +154,7 @@ const Pelanggan = ({ isLoggedIn }) => {
         password: formData.password,
       };
 
-      const response = await fetch("http://localhost:5000/api/pelanggan", {
+      const response = await fetch("${BASE_URL}/api/pelanggan", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -200,7 +201,7 @@ const Pelanggan = ({ isLoggedIn }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/pelanggan/${updateData.id}`,
+        `${BASE_URL}/api/pelanggan/${updateData.id}`,
         {
           method: "PATCH",
           headers: {

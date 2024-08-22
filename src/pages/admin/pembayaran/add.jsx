@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Add() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function Add() {
       formDataToSend.append("atas_nama", formData.atas_nama);
       formDataToSend.append("image_bank", formData.image_bank);
       const response = await axios.post(
-        "http://localhost:5000/api/bank",
+        `${BASE_URL}/api/bank`,
         formDataToSend,
         {
           headers: {

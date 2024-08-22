@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
 import LoadingLayanan from "@/components/elements/LoadingLayanan";
 import { IoCallOutline } from "react-icons/io5";
+import { BASE_URL } from '../../components/layoutsAdmin/apiConfig';
 
 export default function Layanan() {
   const [testimoni, setTestimoni] = useState([]);
@@ -18,7 +19,7 @@ export default function Layanan() {
       try {
         const response = await axios.get(
           // `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
-          "http://localhost:5000/api/testimoni/"
+          `${BASE_URL}/api/testimoni/`
         );
         setTestimoni(response.data.data);
         setTotalPages(response.data.totalPages);
@@ -74,7 +75,10 @@ export default function Layanan() {
       <div className="grid grid-cols-1 gap-8 mt-8 px-8 md:grid-cols-3 xl:grid-cols-2">
         {testimoni.map((item) =>
           item.jenis_testimoni === "wa" ? (
-            <div key={item.id} className="p-4 bg-white rounded-lg shadow-xl text-center">
+            <div
+              key={item.id}
+              className="p-4 bg-white rounded-lg shadow-xl text-center"
+            >
               <p className="text-lg font-semibold">{item.judul_testimoni}</p>
               <p className="text-gray-600">{item.deskripsi_testimoni}</p>
               <img
@@ -94,7 +98,10 @@ export default function Layanan() {
       <div className="grid grid-cols-1 gap-8 px-8 mt-8 md:grid-cols-2 xl:grid-cols-2">
         {testimoni.map((item) =>
           item.jenis_testimoni === "email" ? (
-            <div key={item.id} className="p-4 bg-white rounded-lg shadow-md text-center">
+            <div
+              key={item.id}
+              className="p-4 bg-white rounded-lg shadow-md text-center"
+            >
               <p className="text-lg font-semibold">{item.judul_testimoni}</p>
               <p className="text-gray-600">{item.deskripsi_testimoni}</p>
               <img

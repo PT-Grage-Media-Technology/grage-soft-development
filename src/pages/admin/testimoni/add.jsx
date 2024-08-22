@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Add() {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function Add() {
       formDataToSend.append("gambar_testimoni", formData.gambar_testimoni);
 
       const response = await axios.post(
-        "http://localhost:5000/api/testimoni/",
+        `${BASE_URL}/api/testimoni/`,
           formDataToSend,
         {
           headers: {

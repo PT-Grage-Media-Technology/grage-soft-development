@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
 import LoadingLayanan from "@/components/elements/LoadingLayanan";
 import { IoCallOutline } from "react-icons/io5";
+import { BASE_URL } from '../../components/layoutsAdmin/apiConfig';
 
 export default function Layanan() {
   const [setting, setSetting] = useState([]);
@@ -15,9 +16,9 @@ export default function Layanan() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/setting`);
-        setSetting(response.data.data.data[0]);
-        console.log(response.data.data.data[0]);
+        const response = await axios.get(`${BASE_URL}/api/setting`);
+        setSetting(response.data.data[0]);
+        console.log(response.data.data[0]);
       } catch (error) {
         console.error("Error fetching data kontak:", error);
         setError(error);
@@ -60,7 +61,7 @@ export default function Layanan() {
         </div>
       </div>
 
-      <img src={setting.attributes.gambar_setting} alt="" />
+      <img src={setting.gambar_setting} alt="" />
 
       <div className="grid grid-5 justify-start pt-9">
         <div className="flex ps-8">
@@ -68,7 +69,7 @@ export default function Layanan() {
             Alamat :
           </span>
           <span className="ps-2 text-center  text-lg">
-            {setting.attributes.alamat}
+            {setting.alamat}
           </span>
         </div>
 
@@ -77,14 +78,14 @@ export default function Layanan() {
             WA/Telpon :
           </span>
           <span className="ps-2 text-center text-lg">
-            0{setting.attributes.wa}
+            0{setting.wa}
           </span>
         </div>
 
         <div className="flex ps-8">
           <span className=" text-center text-lg font-semibold">Email :</span>
           <span className="ps-2 text-center text-lg">
-            {setting.attributes.email}
+            {setting.email}
           </span>
         </div>
       </div>

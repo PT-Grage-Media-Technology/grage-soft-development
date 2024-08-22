@@ -4,6 +4,7 @@ import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Edit() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function Edit() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/kategoriKlien/${id}`
+          `${BASE_URL}/api/kategoriKlien/${id}`
         );
 
         const data = response.data.data;
@@ -62,7 +63,7 @@ export default function Edit() {
       formDataToSend.append("nama_kategori_klien", formData.nama_kategori_klien); // Pastikan key ini sesuai dengan yang diharapkan oleh backend
 
       const response = await axios.patch(
-        `http://localhost:5000/api/kategoriKlien/${id}`,
+        `${BASE_URL}/api/kategoriKlien/${id}`,
         formDataToSend,
         {
           headers: {

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const Setting = () => {
   const [setting, setSetting] = useState([]);
@@ -26,7 +27,7 @@ const Setting = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/setting?page=${currentPage}&search=${searchTerm}`
+        `http://192.168.30.40:5000/api/setting?page=${currentPage}&search=${searchTerm}`
       );
       //console.log("data:", response.data.data);
       setSetting(response.data.data);
@@ -54,7 +55,7 @@ const Setting = () => {
     setIsDeleting(true);
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/setting/${itemToDelete}`,
+        `http://192.168.30.40:5000/api/setting/${itemToDelete}`,
         {
           headers: {
             "Content-Type": "application/json",

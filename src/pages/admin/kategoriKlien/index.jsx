@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const KategoriKlien = ({ isLoggedIn }) => {
   const router = useRouter();
@@ -24,7 +25,7 @@ const KategoriKlien = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/kategoriKlien?page=${currentPage}`
+        `${BASE_URL}/api/kategoriKlien?page=${currentPage}`
       );
       console.log("rendi ganteng", response.data);
       setKategoriKlien(response.data.data);
@@ -42,7 +43,7 @@ const KategoriKlien = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/kategoriKlien?keyword=${keyword}`
+        `${BASE_URL}/api/kategoriKlien?keyword=${keyword}`
       );
       setKategoriKlien(response.data.data);
       setTotalPages(response.data.totalPages);
@@ -70,7 +71,7 @@ const KategoriKlien = ({ isLoggedIn }) => {
     setIsDeleting(true);
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/kategoriKlien/${id}`,
+        `${BASE_URL}/api/kategoriKlien/${id}`,
         {
           headers: {
             "Content-Type": "application/json",

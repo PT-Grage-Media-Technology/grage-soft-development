@@ -5,6 +5,7 @@ import Link from "next/link";
 import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify"; // Tambahkan import ini
 import "react-toastify/dist/ReactToastify.css"; // Pastikan ini ada
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const KategoriWebsite = () => {
   const [kategoriWebsite, setKategoriWebsite] = useState([]);
@@ -25,7 +26,7 @@ const KategoriWebsite = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/kategoriWebsite?page=${currentPage}&search=${searchTerm}`
+        `${BASE_URL}/api/kategoriWebsite?page=${currentPage}&search=${searchTerm}`
       );
       // console.log('masuk',response);
       setKategoriWebsite(response.data);
@@ -48,7 +49,7 @@ const KategoriWebsite = () => {
   const confirmDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/kategoriWebsite/${isDeleting}`,
+        `${BASE_URL}/api/kategoriWebsite/${isDeleting}`,
         {
           headers: {
             "Content-Type": "application/json",

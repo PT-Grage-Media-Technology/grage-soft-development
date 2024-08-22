@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Login() {
   const router = useRouter();
@@ -28,7 +29,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/authpelanggan/login",
+        `${BASE_URL}/api/authpelanggan/login`,
         {
           email,
           password,

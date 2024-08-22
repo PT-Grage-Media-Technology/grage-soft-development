@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
 import LoadingLayanan from "@/components/elements/LoadingLayanan";
 import { IoCallOutline } from "react-icons/io5";
+import { BASE_URL } from '../../components/layoutsAdmin/apiConfig';
 
 export default function Layanan() {
   const [klien, setKlien] = useState([]);
@@ -14,7 +15,7 @@ export default function Layanan() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/klien/");
+        const response = await axios.get(`${BASE_URL}/api/klien/`);
         setKlien(response.data.data);
       } catch (error) {
         console.error("Error fetching data layanan:", error);

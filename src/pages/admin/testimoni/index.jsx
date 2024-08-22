@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const Testimoni = () => {
   const [testimoni, setTestimoni] = useState([]);
@@ -24,7 +25,7 @@ const Testimoni = () => {
     try {
       const response = await axios.get(
         //`https://api.ngurusizin.online/api/testimoni?page=${currentPage}&search=${searchTerm}`
-        "http://localhost:5000/api/testimoni/"
+        `${BASE_URL}/api/testimoni/`
       );
       setTestimoni(response.data.data);
       setTotalPages(response.data.totalPages);
@@ -48,7 +49,7 @@ const Testimoni = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/testimoni/${id}`,
+        `${BASE_URL}/api/testimoni/${id}`,
         {
           headers: {
             "Content-Type": "application/json",

@@ -5,33 +5,33 @@ export default function Footer() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://api.ngurusizin.online/api/tentang");
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-        setTentang(data.data.data);
-      } catch (error) {
-        console.error("Error fetching data Tentang:", error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch("https://192.168.30.40:5000/api/tentang");
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch data");
+  //       }
+  //       const data = await response.json();
+  //       setTentang(data.data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data Tentang:", error);
+  //       setError(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
   return (
     <>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -45,7 +45,7 @@ export default function Footer() {
       <footer className="bg-blue-500">
         <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            {[Tentang[0]].map((item, index) => (
+            {/* {[Tentang[0]].map((item, index) => (
               <div key={item.id}>
                 <p className="font-bold text-white">TENTANG KAMI</p>
                 <p className="max-w-xs mt-4 text-sm text-white">
@@ -55,7 +55,7 @@ export default function Footer() {
                   </Link>
                 </p>
               </div>
-            ))}
+            ))} */}
 
             <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
               <div>

@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const Wcu = ({ isLoggedIn }) => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const Wcu = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/wcu?page=${currentPage}`
+        `${BASE_URL}/api/wcu?page=${currentPage}`
       );
       setWcu(response.data.data);
       // setWcu(response.data.data);
@@ -43,7 +44,7 @@ const Wcu = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/wcu?keyword=${keyword}`
+        `${BASE_URL}/api/wcu?keyword=${keyword}`
       );
       setWcu(response.data.data);
       setTotalPages(response.data.totalPages);
@@ -78,7 +79,7 @@ const Wcu = ({ isLoggedIn }) => {
   const handleDeleteItem = async () => {
     setIsDeleting(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/wcu/${itemToDelete}`, {
+      const response = await fetch(`${BASE_URL}/api/wcu/${itemToDelete}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

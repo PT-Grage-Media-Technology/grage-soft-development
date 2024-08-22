@@ -4,6 +4,7 @@ import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Edit() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function Edit() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/benefitpaket/${id}`
+          `${BASE_URL}/api/benefitpaket/${id}`
         );
         if (!response.data.data || !response.data) {
           throw new Error("Data tidak lengkap.");
@@ -41,7 +42,7 @@ export default function Edit() {
       }
 
       try {
-        const response = await axios.get(`http://localhost:5000/api/paket`);
+        const response = await axios.get(`${BASE_URL}/api/paket`);
         setPaket(response.data.data);
       } catch (error) {
         console.error("Error fetching data benefit paket:", error);
@@ -70,7 +71,7 @@ export default function Edit() {
       formDataToSend.append("paket_id", formData.paket_id);
 
       const response = await axios.put(
-        `http://localhost:5000/api/benefitpaket/${id}`,
+        `${BASE_URL}/api/benefitpaket/${id}`,
         formDataToSend,
         {
           headers: {

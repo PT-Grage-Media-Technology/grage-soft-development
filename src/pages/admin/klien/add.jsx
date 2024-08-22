@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import KategoriKlien from "../kategoriKlien";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Add() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function Add() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/kategoriKlien`
+        `${BASE_URL}/api/kategoriKlien`
       );
       setKategoriKlien(response.data.data);
       setTotalPages(response.data.totalPages);
@@ -37,7 +38,7 @@ export default function Add() {
 
   const fetchDataPaket = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/paket`);
+      const response = await axios.get(`${BASE_URL}/api/paket`);
       console.log("rendi ganteng", response.data.data);
       setPaket(response.data.data);
       setTotalPages(response.data.totalPages);
@@ -66,7 +67,7 @@ export default function Add() {
       formDataToSend.append("logo_klien", formData.logo_klien);
 
       const response = await axios.post(
-        "http://localhost:5000/api/klien/",
+        "${BASE_URL}/api/klien/",
         formDataToSend,
         {
           headers: {

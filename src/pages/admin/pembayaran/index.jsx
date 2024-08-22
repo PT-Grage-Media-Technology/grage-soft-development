@@ -7,6 +7,7 @@ import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify"; // Tambahkan import ini
 import "react-toastify/dist/ReactToastify.css"; // Pastikan ini ada
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const Pembayaran = ({ isLoggedIn }) => {
   const router = useRouter();
@@ -28,7 +29,7 @@ const Pembayaran = ({ isLoggedIn }) => {
     try {
       const response = await axios.get(
         //`https://api.ngurusizin.online/api/tentang?page=${currentPage}&search=${searchTerm}`
-        "http://localhost:5000/api/bank/"
+        `${BASE_URL}/api/bank/`
       );
       //console.log(response.data)
       setBank(response.data.data);
@@ -49,7 +50,7 @@ const Pembayaran = ({ isLoggedIn }) => {
     const id = isDeleting;
     try {
       const response = await fetch(
-        `http://localhost:5000/api/bank/${id}`,
+        `${BASE_URL}/api/bank/${id}`,
         {
           method: "DELETE",
           headers: {

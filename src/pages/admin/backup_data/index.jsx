@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const BackupData = ({ isLoggedIn }) => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const BackupData = ({ isLoggedIn }) => {
 
   const handleBackup = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/backupdb", {
+      const response = await axios.get("${BASE_URL}/api/backupdb", {
         responseType: "blob",
       });
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Edit() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function Edit() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/contohdesain/${id}`
+          `${BASE_URL}/api/contohdesain/${id}`
         );
         const data = response.data;
         // Update formData state with data from the API response
@@ -103,7 +104,7 @@ export default function Edit() {
 
 
       const response = await axios.patch(
-        `http://localhost:5000/api/contohdesain/${id}`,
+        `${BASE_URL}/api/contohdesain/${id}`,
         formDataToSend,
         {
           headers: {

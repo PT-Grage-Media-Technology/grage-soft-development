@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
 import LoadingLayanan from "@/components/elements/LoadingLayanan";
 import { IoCallOutline } from "react-icons/io5";
+import { BASE_URL } from '../../components/layoutsAdmin/apiConfig';
 
 export default function Pembayaran() {
   const [pembayaran, setPembayaran] = useState([]);
@@ -18,7 +19,7 @@ export default function Pembayaran() {
       try {
         const response = await axios.get(
           // `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
-          "http://localhost:5000/api/bank/"
+          `${BASE_URL}/api/bank/`
         );
         //console.log("Response data:", response.data); // Tambahkan log ini
         if (response.data && Array.isArray(response.data.data)) {
@@ -84,6 +85,7 @@ export default function Pembayaran() {
               alt={item.image_bank}
               className="mb-4 w-32 h-32 object-contain mx-auto aspect-square"
             />
+            {item.url_image_bank}
             <h2 className="text-xl font-semibold mb-2 text-center">
               {item.nama_rek}
             </h2>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Edit() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function Edit() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/bank/${id}`
+          `${BASE_URL}/api/bank/${id}`
         );
         // console.log("API response:", response.data); // Log the entire API response
         const data = response.data;
@@ -80,7 +81,7 @@ export default function Edit() {
       }
 
       const response = await axios.patch(
-        `http://localhost:5000/api/bank/${id}`,
+        `${BASE_URL}/api/bank/${id}`,
         formDataToSend,
         {
           headers: {

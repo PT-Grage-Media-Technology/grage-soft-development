@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 const Paket = ({ isLoggedIn }) => {
   const router = useRouter();
   const [paket, setPaket] = useState([]);
@@ -24,7 +25,7 @@ const Paket = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/paket?page=${currentPage}`
+        `${BASE_URL}/api/paket?page=${currentPage}`
       );
       console.log("paket", response.data.data);
       setPaket(response.data.data);
@@ -42,7 +43,7 @@ const Paket = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/paket?keyword=${keyword}`
+        `${BASE_URL}/api/paket?keyword=${keyword}`
       );
       setPaket(response.data.data);
       setTotalPages(response.data.totalPages);
@@ -78,7 +79,7 @@ const Paket = ({ isLoggedIn }) => {
     setIsDeleting(true);
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/paket/${itemToDelete}`,
+        `${BASE_URL}/api/paket/${itemToDelete}`,
         {
           headers: {
             "Content-Type": "application/json",

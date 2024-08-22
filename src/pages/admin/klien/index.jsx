@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const Klien = ({ isLoggedIn }) => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const Klien = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/klien?page=${currentPage}`
+        `${BASE_URL}/api/klien?page=${currentPage}`
       );
       console.log("Data", response.data.data);
       setKlien(response.data.data);
@@ -41,7 +42,7 @@ const Klien = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/klien?keyword=${keyword}`
+        `${BASE_URL}/api/klien?keyword=${keyword}`
       );
       setKlien(response.data.data);
       setTotalPages(response.data.totalPages);
@@ -75,7 +76,7 @@ const Klien = ({ isLoggedIn }) => {
     }
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/klien/${id}`,
+        `${BASE_URL}/api/klien/${id}`,
         {
           headers: {
             "Content-Type": "application/json",

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
+import { BASE_URL } from '../../components/layoutsAdmin/apiConfig';
 
 export default function Layanan() {
   const [contohDesain, setContohDesain] = useState([]);
@@ -15,8 +16,8 @@ export default function Layanan() {
     const fetchData = async () => {
       try {
         const [desainResponse, paketResponse] = await Promise.all([
-          axios.get("http://localhost:5000/api/contohDesain"),
-          axios.get(`http://localhost:5000/api/paket/${id}`),
+          axios.get(`${BASE_URL}/api/contohDesain`),
+          axios.get(`${BASE_URL}/api/paket/${id}`),
         ]);
 
         console.log("contoh desain", desainResponse.data);

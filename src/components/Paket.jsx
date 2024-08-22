@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import LoadingLayanan from "./elements/LoadingLayanan";
-import styles from './Layanan.module.css'; // Import CSS module
+import styles from "./Layanan.module.css"; // Import CSS module
 
 export default function Paket() {
   const [paket, setPaket] = useState([]);
@@ -10,12 +10,12 @@ export default function Paket() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => { 
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const [paketResponse, benefitResponse] = await Promise.all([
-          axios.get("http://localhost:5000/api/paket"),
-          axios.get("http://localhost:5000/api/benefitPaket")
+          axios.get("http://192.168.30.40:5000/api/paket"),
+          axios.get("http://192.168.30.40:5000/api/benefitPaket"),
         ]);
         setPaket(paketResponse.data.data);
         setBenefitPaket(benefitResponse.data.data);
@@ -68,58 +68,66 @@ export default function Paket() {
       </div>
       <div className="relative flex flex-col items-center px-6 py-2 justify-center lg:px-24">
         <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-3 xl:grid-cols-3 w-full">
-          {paket.slice(0, 3).map((item) => ( // Hanya menampilkan 3 data
-            <div
-              className={`shadow-2xl rounded-2xl ${styles.paketCard} w-full`}
-              key={item.id}
-            >
-              <h2 className="flex justify-center font-bold h-16 pt-4 bg-green-400 text-xl text-white">
-                {item["nama_paket"]}
-              </h2>
+          {paket.slice(0, 3).map(
+            (
+              item // Hanya menampilkan 3 data
+            ) => (
+              <div
+                className={`shadow-2xl rounded-2xl ${styles.paketCard} w-full`}
+                key={item.id}
+              >
+                <h2 className="flex justify-center font-bold h-16 pt-4 bg-green-400 text-xl text-white">
+                  {item["nama_paket"]}
+                </h2>
 
-              <span className="flex justify-center bg-gray-100 text-center h-16 pt-3 text-3xl font-semibold px-auto">
-                Rp {item["harga"]}
-              </span>
+                <span className="flex justify-center bg-gray-100 text-center h-16 pt-3 text-3xl font-semibold px-auto">
+                  Rp {item["harga"]}
+                </span>
 
-              <span className="bg-gray-100 text-center h-16 pt-4 flex justify-center text-lg">
-                {item["status_website"]}
-              </span>
+                <span className="bg-gray-100 text-center h-16 pt-4 flex justify-center text-lg">
+                  {item["status_website"]}
+                </span>
 
-              <span className="bg-white text-center h-16 pt-4 font-semibold flex justify-center text-lg">
-                {item["jumlah_pilihan_desain"]} Pilihan Desain.{" "}
-                <a
-                  href={`/contoh_desain/${item.id}`}
-                  className="text-blue-500"
-                >
-                  Lihat klik disini
-                </a>
-              </span>
-
-              {benefitPaket
-                .filter(benefit => benefit.paket_id === item.id)
-                .map((benefit, index) => {
-                  const bgColor = index % 2 === 0 ? 'bg-gray-100' : 'bg-white';
-                  return (
-                    <div key={benefit.id} className={`text-center h-auto pb-5 pt-4 px-18 lg:flex justify-center text-lg w-full ${bgColor}`}>
-                       {benefit.nama_benefit}
-                    </div>
-                  );
-                })}
-
-              <div className="flex-auto text-center bg-gray-100">
-                <div className="flex justify-center text-sm font-medium pt-4 pb-9">
-                  <Link
-                    href={`/pesan_web`}
-                    className="px-8 py-2 mb-2 tracking-wider text-lg text-white rounded-full shadow-sm md:mb-0 bg-blue-400 hover:bg-blue-900"
-                    type="button"
-                    aria-label="like"
+                <span className="bg-white text-center h-16 pt-4 font-semibold flex justify-center text-lg">
+                  {item["jumlah_pilihan_desain"]} Pilihan Desain.{" "}
+                  <a
+                    href={`/contoh_desain/${item.id}`}
+                    className="text-blue-500"
                   >
-                    Beli
-                  </Link>
+                    Lihat klik disini
+                  </a>
+                </span>
+
+                {benefitPaket
+                  .filter((benefit) => benefit.paket_id === item.id)
+                  .map((benefit, index) => {
+                    const bgColor =
+                      index % 2 === 0 ? "bg-gray-100" : "bg-white";
+                    return (
+                      <div
+                        key={benefit.id}
+                        className={`text-center h-auto pb-5 pt-4 px-18 lg:flex justify-center text-lg w-full ${bgColor}`}
+                      >
+                        {benefit.nama_benefit}
+                      </div>
+                    );
+                  })}
+
+                <div className="flex-auto text-center bg-gray-100">
+                  <div className="flex justify-center text-sm font-medium pt-4 pb-9">
+                    <Link
+                      href={`/pesan_web`}
+                      className="px-8 py-2 mb-2 tracking-wider text-lg text-white rounded-full shadow-sm md:mb-0 bg-blue-400 hover:bg-blue-900"
+                      type="button"
+                      aria-label="like"
+                    >
+                      Beli
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          )}
         </div>
       </div>
       <div className="flex justify-center">

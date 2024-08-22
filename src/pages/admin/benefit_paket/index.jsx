@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const BenefitPaket = ({ isLoggedIn }) => {
   const router = useRouter();
@@ -24,8 +25,9 @@ const BenefitPaket = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/benefitpaket?page=${currentPage}`
+        `${BASE_URL}/api/benefitpaket?page=${currentPage}`
       );
+      console.log("Respon", response.data.data);
       setBenefitPaket(response.data.data);
       // setbenefitPaket(response.data.data);
       setTotalPages(response.data.totalPages);
@@ -42,7 +44,7 @@ const BenefitPaket = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/benefitpaket=${keyword}`
+        `${BASE_URL}/api/benefitpaket=${keyword}`
       );
       setBenefitPaket(response.data);
       setTotalPages(response.data.totalPages);
@@ -72,7 +74,9 @@ const BenefitPaket = ({ isLoggedIn }) => {
 
   const handleConfirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/benefitpaket/${isDeleting}`); // Hapus data
+      await axios.delete(
+        `${BASE_URL}/api/benefitpaket/${isDeleting}`
+      ); // Hapus data
       setBenefitPaket(benefitPaket.filter((item) => item.id !== isDeleting)); // Hapus dari state
       showToastMessage(); // Tampilkan pesan sukses
     } catch (error) {
@@ -146,6 +150,9 @@ const BenefitPaket = ({ isLoggedIn }) => {
                       <th scope="col" className="px-32 py-4">
                         Benefit
                       </th>
+                      <th scope="col" className="px-32 py-4">
+                        Paket
+                      </th>
                       <th scope="col" className="px-14 py-4">
                         Action
                       </th>
@@ -171,6 +178,9 @@ const BenefitPaket = ({ isLoggedIn }) => {
                       >
                         <td className="px-24 py-4 whitespace-nowrap">
                           {item.nama_benefit}
+                        </td>
+                        <td className="px-24 py-4 whitespace-nowrap">
+                          {item.paket.nama_paket}
                         </td>
                         {/* <td className="px-6 py-4 whitespace-nowrap">
                           {item.attributes.jumlah_pilihan_desain}
@@ -222,9 +232,7 @@ const BenefitPaket = ({ isLoggedIn }) => {
                             className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                             aria-label="delete"
                           >
-                          
-                              <i className="fa-solid fa-trash"></i>
-                            
+                            <i className="fa-solid fa-trash"></i>
                           </button>
                         </td>
                       </tr>

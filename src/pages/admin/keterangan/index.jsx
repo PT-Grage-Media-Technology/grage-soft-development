@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const Keterangan = ({ isLoggedIn }) => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const Keterangan = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/keterangan?page=${currentPage}`
+        `${BASE_URL}/api/keterangan?page=${currentPage}`
       );
       setKeterangan(response.data.data);
       // setKeterangan(response.data.data);
@@ -41,7 +42,7 @@ const Keterangan = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/keterangan?keyword=${keyword}`
+        `${BASE_URL}/api/keterangan?keyword=${keyword}`
       );
       setKeterangan(response.data.data);
       setTotalPages(response.data.totalPages);
@@ -74,7 +75,7 @@ const Keterangan = ({ isLoggedIn }) => {
       return;
     }
     try {
-      const response = await axios.delete(`http://localhost:5000/api/keterangan/${id}`, {
+      const response = await axios.delete(`${BASE_URL}/api/keterangan/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },

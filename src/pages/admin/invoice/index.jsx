@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Head from "next/head";
 import AdminLayout from "../layouts";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Invoice() {
   const [settingData, setSettingData] = useState(null);
@@ -26,7 +27,7 @@ export default function Invoice() {
 
   const fetchSettingData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/setting");
+      const response = await axios.get(`${BASE_URL}/api/setting`);
       setSettingData(response.data.data[0]);
       console.log("setting", response.data.data);
     } catch (error) {
@@ -36,7 +37,7 @@ export default function Invoice() {
 
   const fetchCustomerData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/pelanggan");
+      const response = await axios.get(`${BASE_URL}/api/pelanggan`);
       console.log("Pelanggan", response.data);
       setCustomerData(response.data);
     } catch (error) {
@@ -46,7 +47,7 @@ export default function Invoice() {
 
   const fetchpaketData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/paket");
+      const response = await axios.get("${BASE_URL}/api/paket");
       setpaketData(response.data.data || []);
     } catch (error) {
       console.error("Error fetching available packages:", error);
@@ -94,7 +95,7 @@ export default function Invoice() {
     const subtotal = cartPaketData.reduce((sum, item) => sum + item.harga, 0);
     const totalDiskon = cartPaketData.reduce(
       (sum, item) => sum + item.diskon,
-      0
+      0,
     );
     const total = subtotal - totalDiskon;
 
@@ -115,7 +116,7 @@ export default function Invoice() {
       }
 
       const invoiceResponse = await axios.post(
-        "http://localhost:5000/api/invoice",
+        "${BASE_URL}/api/invoice",
         invoiceData
       );
 
@@ -128,7 +129,7 @@ export default function Invoice() {
         harga: parseFloat(item.harga) || 0,
       }));
 
-      await axios.post("http://localhost:5000/api/cartpaket/", updatedCart, {
+      await axios.post("${BASE_URL}/api/cartpaket/", updatedCart, {
         headers: {
           "Content-Type": "application/json",
         },

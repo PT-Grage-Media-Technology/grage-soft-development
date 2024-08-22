@@ -14,7 +14,9 @@ const Testimoni = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/testimoni");
+        const response = await axios.get(
+          "http://192.168.30.40:5000/api/testimoni"
+        );
 
         setTestimoni(response.data.data);
       } catch (error) {

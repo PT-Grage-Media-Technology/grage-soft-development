@@ -10,7 +10,7 @@ function Kontak_Kami() {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await axios.get("http://localhost:5000/api/wcu");
+          const response = await axios.get("http://192.168.30.40:5000/api/wcu");
           setWcu(response.data.data);
         } catch (error) {
           console.error("Error fetching data wcu:", error);

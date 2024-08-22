@@ -6,6 +6,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Register() {
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function Register() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/pelanggan", {
+      const response = await axios.post(`${BASE_URL}/api/pelanggan`, {
         nama,
         telp,
         email,

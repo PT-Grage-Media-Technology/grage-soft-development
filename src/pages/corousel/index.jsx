@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
 import axios from "axios";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const Carousel = () => {
   const [slides, setSlides] = useState([]);
@@ -9,7 +10,7 @@ const Carousel = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://example.com/api/slides");
+        const response = await axios.get(`https://example.com/api/slides`);
         setSlides(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);

@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaWhatsapp } from "react-icons/fa";
 import { IoCallOutline } from "react-icons/io5";
 import LoadingLayanan from "@/components/elements/LoadingLayanan";
+import { BASE_URL } from '../../components/layoutsAdmin/apiConfig';
 
 export default function Layanan() {
   const [loading, setLoading] = useState(true);
@@ -13,10 +14,10 @@ export default function Layanan() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/setting`
+          `${BASE_URL}/api/setting`
         );
-        setSetting(response.data.data.data[0]);
-        console.log(response.data.data.data[0]);
+        setSetting(response.data.data[0]);
+        console.log(response.data.data[0]);
       } catch (error) {
         console.error("Error fetching data layanan:", error);
         setError(error);
@@ -44,10 +45,10 @@ export default function Layanan() {
   }
 
   const buttonWA = () => {
-    window.location.href = `https://wa.me/62${ setting.attributes.wa }`;
+    window.location.href = `https://wa.me/62${ setting.wa }`;
   };
   const buttonTelepon = () => {
-    window.location.href = `tel:0${ setting.attributes.wa }`;
+    window.location.href = `tel:0${ setting.wa }`;
   };
 
   return (
@@ -68,7 +69,7 @@ export default function Layanan() {
           className="bg-green-500 py-3 px-5 flex justify-center rounded-lg text-white"
         >
           <FaWhatsapp className="me-3 mt-0" size={22} />
-          <p className="me-2">0{ setting.attributes.wa }</p>
+          <p className="me-2">0{ setting.wa }</p>
         </button>
       </div>
       <p className="text-center font-semibold text-4xl pt-16">Telepon</p>
@@ -79,7 +80,7 @@ export default function Layanan() {
           className="bg-green-500 py-3 px-5 flex justify-center rounded-lg text-white"
         >
           <IoCallOutline className="me-3 mt-0" size={22} />
-          <p className="me-2">0{ setting.attributes.telp }</p>
+          <p className="me-2">0{ setting.telp }</p>
         </button>
       </div>
     </section>

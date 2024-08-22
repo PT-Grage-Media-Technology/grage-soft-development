@@ -15,7 +15,7 @@ export default function Rating() {
     try {
       const response = await axios.get(
         // `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
-        "http://localhost:5000/api/klien/"
+        "http://192.168.30.40:5000/api/klien/"
       );
       setKlien(response.data.data);
       // console.log("respon", response.data.data);

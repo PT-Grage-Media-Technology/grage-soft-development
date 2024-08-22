@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Add() {
   const router = useRouter();
@@ -19,7 +20,7 @@ export default function Add() {
       const formDataToSend = new FormData; 
       formDataToSend.append("nama_kategori_klien", formData.nama_kategori_klien);
    
-      const response = await axios.post("http://localhost:5000/api/kategoriKlien/", formDataToSend, {
+      const response = await axios.post(`${BASE_URL}/api/kategoriKlien/`, formDataToSend, {
         headers: {
             "Content-Type": "application/json",
         }

@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Add() {
   const router = useRouter();
@@ -35,7 +36,7 @@ export default function Add() {
       formDataToSend.append("deskripsi", formData.deskripsi);
 
       const response = await axios.post(
-        "http://localhost:5000/api/contohdesain",
+        "${BASE_URL}/api/contohdesain",
         formDataToSend,
         {
           headers: {

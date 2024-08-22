@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 const Syaratketentuan = ({ isLoggedIn }) => {
   const router = useRouter();
   const [syaratketentuan, setSyaratketentuan] = useState([]);
@@ -23,7 +24,7 @@ const Syaratketentuan = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/syaratketentuan?page=${currentPage}`
+        `${BASE_URL}/api/syaratketentuan?page=${currentPage}`
       );
       setSyaratketentuan(response.data);
       setTotalPages(response.data.totalPages);
@@ -40,7 +41,7 @@ const Syaratketentuan = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/syaratketentuan?keyword=${keyword}`
+        `${BASE_URL}/api/syaratketentuan?keyword=${keyword}`
       );
       setSyaratketentuan(response.data);
       setTotalPages(response.data.totalPages);
@@ -70,7 +71,7 @@ const Syaratketentuan = ({ isLoggedIn }) => {
 
   const deleteData = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/syaratketentuan/${id}`, {
+      const response = await fetch(`${BASE_URL}/api/syaratketentuan/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

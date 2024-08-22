@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { auto } from "@popperjs/core";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+
 const Administrators = ({ isLoggedIn }) => {
   const router = useRouter();
   const [administrators, setAdministrators] = useState([]);
@@ -46,7 +48,7 @@ const Administrators = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/administrators?page=${currentPage}`
+        `${BASE_URL}/api/administrators?page=${currentPage}`
       );
       setAdministrators(response.data.data.data);
       setTotalPages(response.data.totalPages);
@@ -63,7 +65,7 @@ const Administrators = ({ isLoggedIn }) => {
   const fetchDataByKeyword = async (keyword) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/administrators?keyword=${keyword}`
+        `${BASE_URL}/api/administrators?keyword=${keyword}`
       );
       setAdministrators(response.data.data.data);
       setTotalPages(response.data.totalPages);
@@ -106,7 +108,7 @@ const Administrators = ({ isLoggedIn }) => {
     const id = itemIdToDelete;
     try {
       const response = await fetch(
-        `http://localhost:5000/api/administrators/${id}`,
+        `${BASE_URL}/api/administrators/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -157,7 +159,7 @@ const Administrators = ({ isLoggedIn }) => {
       };
 
       const response = await fetch(
-        "http://localhost:5000/api/administrators",
+        "${BASE_URL}/api/administrators",
         {
           method: "POST",
           headers: {
@@ -208,7 +210,7 @@ const Administrators = ({ isLoggedIn }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/administrators/${updateData.id}`,
+        `${BASE_URL}/api/administrators/${updateData.id}`,
         {
           method: "PUT",
           headers: {

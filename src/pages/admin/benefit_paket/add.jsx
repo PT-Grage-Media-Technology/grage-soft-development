@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 export default function Add() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function Add() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/paket`);
+      const response = await axios.get(`${BASE_URL}/api/paket`);
 
       setPaket(response.data.data);
     } catch (error) {
@@ -39,7 +40,7 @@ export default function Add() {
       formDataToSend.append("paket_id", formData.paket_id);
 
       const response = await axios.post(
-        "http://localhost:5000/api/benefitpaket/",
+        "${BASE_URL}/api/benefitpaket/",
         formDataToSend,
         {
           headers: {

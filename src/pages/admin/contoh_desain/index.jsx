@@ -7,6 +7,7 @@ import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const ConntohDesain = ({ isLoggedIn }) => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const ConntohDesain = ({ isLoggedIn }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/contohDesain"
+          `${BASE_URL}/api/contohDesain`
         );
         setContohDesain(response.data);
       } catch (error) {
@@ -42,7 +43,7 @@ const ConntohDesain = ({ isLoggedIn }) => {
     const id = isDeleting;
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/contohdesain/${id}`,
+        `${BASE_URL}/api/contohdesain/${id}`,
         {
           headers: {
             "Content-Type": "application/json",
