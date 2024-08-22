@@ -14,7 +14,7 @@ const BackupData = ({ isLoggedIn }) => {
 
   const handleBackup = async () => {
     try {
-      const response = await axios.get("${BASE_URL}/api/backupdb", {
+      const response = await axios.get(`${BASE_URL}/api/backupdb`, {
         responseType: "blob",
       });
 

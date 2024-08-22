@@ -4,7 +4,7 @@ import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
 import Head from "next/head";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 
 export default function Edit() {
   const router = useRouter();
@@ -23,9 +23,7 @@ export default function Edit() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/api/benefitpaket/${id}`
-        );
+        const response = await axios.get(`${BASE_URL}/api/benefitpaket/${id}`);
         if (!response.data.data || !response.data) {
           throw new Error("Data tidak lengkap.");
         }
@@ -99,10 +97,7 @@ export default function Edit() {
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
           <div className="flex justify-end pt-4 px-4">
-            <Link
-              href={"/admin/benefit_paket"}
-              className="relative"
-            >
+            <Link href={"/admin/benefit_paket"} className="relative">
               <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
                 <i className="fas fa-arrow-left"></i>
                 <span>Kembali</span>

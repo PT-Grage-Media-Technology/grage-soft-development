@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 
 export default function Add() {
   const router = useRouter();
@@ -23,9 +23,7 @@ export default function Add() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/api/kategoriWebsite`
-      );
+      const response = await axios.get(`${BASE_URL}/api/kategoriWebsite`);
       console.log(response);
       setKategoriWebsite(response.data);
     } catch (error) {
@@ -58,7 +56,7 @@ export default function Add() {
       console.log("id", formData.status_website);
 
       const response = await axios.post(
-        "${BASE_URL}/api/paket",
+        `${BASE_URL}/api/paket`,
         formDataToSend,
         {
           headers: {
@@ -101,18 +99,15 @@ export default function Add() {
       <AdminLayout>
         <ToastContainer />
         <div className="flex items-center justify-center p-12">
-        <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
-          <div className="flex justify-end pt-4 px-4">
-            <Link
-              href={"/admin/paket"}
-              className="relative"
-            >
-              <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
-                <i className="fas fa-arrow-left"></i>
-                <span>Kembali</span>
-              </div>
-            </Link>
-          </div>
+          <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
+            <div className="flex justify-end pt-4 px-4">
+              <Link href={"/admin/paket"} className="relative">
+                <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
+                  <i className="fas fa-arrow-left"></i>
+                  <span>Kembali</span>
+                </div>
+              </Link>
+            </div>
             <form className="bg-white px-9" onSubmit={handleSubmit}>
               <div className="mb-5">
                 <label

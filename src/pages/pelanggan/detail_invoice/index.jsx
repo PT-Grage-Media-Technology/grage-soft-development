@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
 import Head from "next/head";
 import PelangganLayout from "../layouts";
 import { useCookies } from "react-cookie";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 
 export default function Invoice() {
+  const router = useRouter();
+  const { id } = router.query;
   const [cookies] = useCookies(["token"]); // Ambil cookie
   const [settingData, setSettingData] = useState(null);
   const [customerData, setCustomerData] = useState(null);
@@ -33,7 +36,7 @@ export default function Invoice() {
 
   const fetchSettingData = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/setting`);
+      const response = await axios.get(`${BASE_URL}/api/setting/`);
       setSettingData(response.data.data[0]);
     } catch (error) {
       console.error("Error fetching setting data:", error);
@@ -43,7 +46,7 @@ export default function Invoice() {
   const fetchCustomerData = async () => {
     try {
       // Ganti endpoint sesuai kebutuhan atau tambahkan ID pelanggan di parameter query
-      const response = await axios.get(`${BASE_URL}/api/invoice/8`);
+      const response = await axios.get(`${BASE_URL}/api/invoice/${id}`);
       setCustomerData(response.data);
       setCartPaketData(response.data.cartPaket);
       console.log("coba123", response.data.cartPaket);

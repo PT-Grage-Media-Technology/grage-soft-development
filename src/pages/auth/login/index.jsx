@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import Head from "next/head";
-import { BASE_URL } from "../../components/layoutsAdmin/apiConfig";
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 
 export default function Login() {
   const router = useRouter();
