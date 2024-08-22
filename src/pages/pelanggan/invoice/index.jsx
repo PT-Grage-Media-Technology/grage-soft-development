@@ -33,6 +33,7 @@ export default function Invoice() {
       setUser(response.data);
       fetchSettingData();
       fetchInvoiceData(response.data.id);
+      console.log('coba', response.data.id);
     } catch (error) {
       console.error("Error fetching user data:", error);
       setError("Failed to fetch user data.");
@@ -127,7 +128,7 @@ export default function Invoice() {
                           </td>
                           <td className="flex items-center gap-1 px-12 py-4 mt-8 whitespace-nowrap">
                             <Link
-                              href={`/pelanggan/detail_invoice?id=${invoice.id}`}
+                              href={`/pelanggan/detail_invoice/${invoice.id}`}
                             >
                               <div
                                 className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white font-semibold rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"

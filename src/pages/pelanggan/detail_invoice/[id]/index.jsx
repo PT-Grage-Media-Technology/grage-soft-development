@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Head from "next/head";
-import PelangganLayout from "../layouts";
+import PelangganLayout from "../../layouts";
 import { useCookies } from "react-cookie";
-import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
+import { BASE_URL } from "../../../../components/layoutsAdmin/apiConfig";
 
 export default function Invoice() {
   const router = useRouter();
@@ -13,7 +13,7 @@ export default function Invoice() {
   const [settingData, setSettingData] = useState(null);
   const [customerData, setCustomerData] = useState(null);
   const [cartPaketData, setCartPaketData] = useState([]);
-  const [user, setUser] = useState([]);
+  // const user = localStorage.getItem("user");
   const [invoiceData, setInvoiceData] = useState({
     referensi: "",
     tanggal: "",
@@ -24,15 +24,6 @@ export default function Invoice() {
     total: 0,
   });
 
-  useEffect(() => {
-    setUser(localStorage.getItem("user"));
-
-    if (cookies.token) {
-      fetchSettingData();
-      fetchCustomerData();
-      // fetchCartPaketData();
-    }
-  }, [cookies.token]);
 
   const fetchSettingData = async () => {
     try {
@@ -45,15 +36,24 @@ export default function Invoice() {
 
   const fetchCustomerData = async () => {
     try {
+      console.log(id); 
+
       // Ganti endpoint sesuai kebutuhan atau tambahkan ID pelanggan di parameter query
       const response = await axios.get(`${BASE_URL}/api/invoice/${id}`);
-      setCustomerData(response.data);
+      setCustomerData(response.data.pelanggas);
       setCartPaketData(response.data.cartPaket);
-      console.log("coba123", response.data.cartPaket);
+      console.log("coba123", response.data.pelanggas);
     } catch (error) {
       console.error("Error fetching customer data:", error);
     }
   };
+
+  useEffect(() => {
+    if (id) {  // Pastikan id sudah tersedia
+      fetchSettingData();
+      fetchCustomerData();
+    }
+  }, [id]); // Tambahkan id sebagai dependency
 
   // const fetchCartPaketData = async () => {
   //   try {
@@ -130,7 +130,7 @@ export default function Invoice() {
                   <div className="text-gray-600">
                     <div>{customerData?.nama}</div>
                     <div>{customerData?.alamat}</div>
-                    <div>{customerData?.no_telp}</div>
+                    <div>{customerData?.telp}</div>
                     <div>{customerData?.email}</div>
                   </div>
                 </div>
@@ -153,9 +153,6 @@ export default function Invoice() {
                         Diskon
                       </th>
                       <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
-                        Pajak
-                      </th>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
                         Jumlah
                       </th>
                     </tr>
@@ -176,10 +173,7 @@ export default function Invoice() {
                           Rp {item.diskon},00
                         </td>
                         <td className="mx-auto text-sm py-4 text-center">
-                          Rp {item.pajak},00
-                        </td>
-                        <td className="mx-auto text-sm py-4 text-center">
-                          Rp {item.total},00
+                          Rp {item.harga},00
                         </td>
                       </tr>
                     ))}
