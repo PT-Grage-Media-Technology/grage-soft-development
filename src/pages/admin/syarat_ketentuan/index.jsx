@@ -138,7 +138,7 @@ const Syaratketentuan = ({ isLoggedIn }) => {
             Syarat & Ketentuan
           </Link>
         </div>
-        <div className="flex flex-col overflow-x-auto bg-white rounded-xl">
+        <div className="flex flex-col overflow-x-auto lg:overflow-x-hidden bg-white rounded-xl">
           <div className="sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
               <div className="overflow-x-auto">
