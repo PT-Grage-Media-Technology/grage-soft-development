@@ -4,7 +4,7 @@ import Head from "next/head";
 import PelangganLayout from "../layouts";
 import { useCookies } from "react-cookie";
 import Link from "next/link";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 
 export default function Invoice() {
   const [cookies] = useCookies(["token"]);
@@ -22,18 +22,15 @@ export default function Invoice() {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/api/authpelanggan/me`,
-        {
-          headers: {
-            Authorization: `Bearer ${cookies.token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${BASE_URL}/api/authpelanggan/me`, {
+        headers: {
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      });
       setUser(response.data);
       fetchSettingData();
       fetchInvoiceData(response.data.id);
-      console.log('coba', response.data.id);
+      console.log("coba", response.data.id);
     } catch (error) {
       console.error("Error fetching user data:", error);
       setError("Failed to fetch user data.");
@@ -124,7 +121,10 @@ export default function Invoice() {
                               "Nama Kategori tidak di temukan"}
                           </td>
                           <td className="px-12 py-4 whitespace-nowrap">
-                            Rp {item.harga.toLocaleString() || "Harga tidak di temukan"},00
+                            Rp{" "}
+                            {item.harga.toLocaleString() ||
+                              "Harga tidak di temukan"}
+                            ,00
                           </td>
                           <td className="flex items-center gap-1 px-12 py-4 mt-8 whitespace-nowrap">
                             <Link
