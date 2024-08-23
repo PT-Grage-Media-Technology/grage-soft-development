@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const Wcu = ({ isLoggedIn }) => {
+  const [allwcu, setAllWcu] = useState([]); // State untuk menyimpan semua data
   const router = useRouter();
   const [wcu, setWcu] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,48 +25,45 @@ const Wcu = ({ isLoggedIn }) => {
   const [itemToDelete, setItemToDelete] = useState(null); // Tambahkan state untuk menyimpan item yang akan dihapus
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `${BASE_URL}/api/wcu?page=${currentPage}`
+      // Ambil semua data sekali saja
+      const response = await axios.get(`${BASE_URL}/api/wcu`);
+      setAllWcu(response.data.data);
+  
+      // Filter data berdasarkan pencarian dan pagination
+      const filteredData = response.data.data.filter((item) =>
+        item.attributes.isi && item.attributes.isi.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setWcu(response.data.data);
-      // setWcu(response.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
+  
+      // Update data untuk ditampilkan berdasarkan pagination
+      const paginatedData = filteredData.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+      );
+  
+      setWcu(paginatedData);
+      setTotalCount(filteredData.length);
+      setTotalPages(Math.ceil(filteredData.length / pageSize));
     } catch (error) {
-      console.error("Error fetching data wcu:", error);
+      console.error("Error fetching data paket:", error);
       setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
     }
   };
-
-  const fetchDataByKeyword = async (keyword) => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/api/wcu?keyword=${keyword}`
-      );
-      setWcu(response.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
-    } catch (error) {
-      console.error("Error fetching data wcu:", error);
-      setError(error.response ? error.response.data : error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  
 
   // kondisi search
   useEffect(() => {
-    if (searchTerm !== "") {
-      fetchDataByKeyword(searchTerm);
-    } else {
-      fetchData();
-    }
+    fetchData(); // Pastikan fetchData dipanggil saat currentPage atau searchTerm berubah
   }, [currentPage, searchTerm]);
+   
+
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset ke halaman pertama saat pencarian dilakukan
+  };
 
   const handleDelete = (id) => {
     setItemToDelete(id); // Simpan id yang akan dihapus
@@ -134,7 +132,7 @@ const Wcu = ({ isLoggedIn }) => {
         <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
         <input
                   type="text"
-                  placeholder="Cari wcu..."
+                  placeholder="Cari WCU..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -265,7 +263,7 @@ const Wcu = ({ isLoggedIn }) => {
                           }
                           className={`mx-1 px-3 py-1 rounded-md ${
                             currentPage === firstPage + index
-                              ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white"
+                              ? "bg-orange-400 text-white"
                               : "bg-gray-200 hover:bg-gray-400"
                           }`}
                         >

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const Setting = () => {
+  const [allsetting, setAllSetting] = useState([]); // State untuk menyimpan semua data
   const [setting, setSetting] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,26 +21,44 @@ const Setting = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
 
-  useEffect(() => {
-    fetchData();
-  }, [currentPage]); // Fetch data when currentPage changes
-
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `http://192.168.30.40:5000/api/setting?page=${currentPage}&search=${searchTerm}`
+      // Ambil semua data sekali saja
+      const response = await axios.get(`${BASE_URL}/api/setting`);
+      setAllSetting(response.data.data);
+
+      // Filter data berdasarkan pencarian dan pagination
+      const filteredData = response.data.data.filter((item) =>
+        item.telp.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      //console.log("data:", response.data.data);
-      setSetting(response.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
+
+      // Update data untuk ditampilkan berdasarkan pagination
+      const paginatedData = filteredData.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+      );
+
+      setSetting(paginatedData);
+      setTotalCount(filteredData.length);
+      setTotalPages(Math.ceil(filteredData.length / pageSize));
     } catch (error) {
-      console.error("Error fetching data setting:", error);
-      setError(error);
+      console.error("Error fetching data paket:", error);
+      setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
     }
+  };
+
+  // kondisi search
+  useEffect(() => {
+    fetchData(); // Pastikan fetchData dipanggil saat currentPage atau searchTerm berubah
+  }, [currentPage, searchTerm]);
+   
+
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset ke halaman pertama saat pencarian dilakukan
   };
 
   const handleDelete = (id) => {
@@ -96,7 +115,7 @@ const Setting = () => {
         <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
           <input
             type="text"
-            placeholder="Cari administrators..."
+            placeholder="Cari Setting..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
