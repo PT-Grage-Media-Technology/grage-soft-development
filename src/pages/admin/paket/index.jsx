@@ -7,8 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 const Paket = ({ isLoggedIn }) => {
+  const [allPaket, setAllPaket] = useState([]); // State untuk menyimpan semua data
   const router = useRouter();
   const [paket, setPaket] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,32 +24,26 @@ const Paket = ({ isLoggedIn }) => {
   const [itemToDelete, setItemToDelete] = useState(null); // Tambahkan state untuk menyimpan item yang akan dihapus
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `${BASE_URL}/api/paket?page=${currentPage}`
-      );
-      console.log("paket", response.data.data);
-      setPaket(response.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
-    } catch (error) {
-      console.error("Error fetching data paket:", error);
-      setError(error.response ? error.response.data : error);
-    } finally {
-      setLoading(false);
-    }
-  };
+      // Ambil semua data sekali saja
+      const response = await axios.get(`${BASE_URL}/api/paket`);
+      setAllPaket(response.data.data);
 
-  const fetchDataByKeyword = async (keyword) => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/api/paket?keyword=${keyword}`
+      // Filter data berdasarkan pencarian dan pagination
+      const filteredData = response.data.data.filter((item) =>
+        item.nama_paket.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setPaket(response.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
+
+      // Update data untuk ditampilkan berdasarkan pagination
+      const paginatedData = filteredData.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+      );
+
+      setPaket(paginatedData);
+      setTotalCount(filteredData.length);
+      setTotalPages(Math.ceil(filteredData.length / pageSize));
     } catch (error) {
       console.error("Error fetching data paket:", error);
       setError(error.response ? error.response.data : error);
@@ -59,12 +54,14 @@ const Paket = ({ isLoggedIn }) => {
 
   // kondisi search
   useEffect(() => {
-    if (searchTerm !== "") {
-      fetchDataByKeyword(searchTerm);
-    } else {
-      fetchData();
-    }
+    fetchData(); // Pastikan fetchData dipanggil saat currentPage atau searchTerm berubah
   }, [currentPage, searchTerm]);
+   
+
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset ke halaman pertama saat pencarian dilakukan
+  };
 
   const handleDelete = (id) => {
     setItemToDelete(id); // Simpan id yang akan dihapus
@@ -116,7 +113,7 @@ const Paket = ({ isLoggedIn }) => {
     );
   }
 
-  const firstPage = Math.max(1, currentPage - 4); // Menghitung halaman pertama yang akan ditampilkan
+  const firstPage = Math.max(1, Math.min(currentPage - 2, totalPages - 4));
 
   if (!isLoggedIn) {
     if (typeof window !== "undefined") {
@@ -137,7 +134,7 @@ const Paket = ({ isLoggedIn }) => {
             type="text"
             placeholder="Cari paket..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchInputChange}
             className="w-48 md:w-56 lg:w-72 rounded-lg border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
           />
           <Link
@@ -224,7 +221,7 @@ const Paket = ({ isLoggedIn }) => {
                   </tbody>
                 </table>
 
-                {/* pagination */}
+                {/* Pagination */}
                 <div className="flex justify-center gap-5 my-4">
                   <button
                     onClick={() =>
@@ -241,17 +238,14 @@ const Paket = ({ isLoggedIn }) => {
                       (_, index) => (
                         <button
                           key={index}
-                          onClick={
-                            () => setCurrentPage(firstPage + index) // Memperbarui halaman berdasarkan indeks dan halaman pertama yang ditampilkan
-                          }
+                          onClick={() => setCurrentPage(firstPage + index)}
                           className={`mx-1 px-3 py-1 rounded-md ${
                             currentPage === firstPage + index
-                              ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white"
+                              ? "bg-orange-400 text-white"
                               : "bg-gray-200 hover:bg-gray-400"
                           }`}
                         >
-                          {firstPage + index}{" "}
-                          {/* Menggunakan halaman pertama yang ditampilkan */}
+                          {firstPage + index}
                         </button>
                       )
                     )}
