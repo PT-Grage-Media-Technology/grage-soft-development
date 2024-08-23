@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const Klien = ({ isLoggedIn }) => {
+  const [allKlien, setAllKlien] = useState([]); // State untuk menyimpan semua data
   const router = useRouter();
   const [klien, setKlien] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,34 +23,28 @@ const Klien = ({ isLoggedIn }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `${BASE_URL}/api/klien?page=${currentPage}`
-      );
-      console.log("Data", response.data.data);
-      setKlien(response.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
-    } catch (error) {
-      console.error("Error fetching data klien:", error);
-      setError(error.response ? error.response.data : error);
-    } finally {
-      setLoading(false);
-    }
-  };
+      // Ambil semua data sekali saja
+      const response = await axios.get(`${BASE_URL}/api/klien`);
+      setAllKlien(response.data.data);
 
-  const fetchDataByKeyword = async (keyword) => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/api/klien?keyword=${keyword}`
+      // Filter data berdasarkan pencarian dan pagination
+      const filteredData = response.data.data.filter((item) =>
+        item.nama_klien.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setKlien(response.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
+
+      // Update data untuk ditampilkan berdasarkan pagination
+      const paginatedData = filteredData.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+      );
+
+      setKlien(paginatedData);
+      setTotalCount(filteredData.length);
+      setTotalPages(Math.ceil(filteredData.length / pageSize));
     } catch (error) {
-      console.error("Error fetching data klien:", error);
+      console.error("Error fetching data paket:", error);
       setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
@@ -58,12 +53,14 @@ const Klien = ({ isLoggedIn }) => {
 
   // kondisi search
   useEffect(() => {
-    if (searchTerm !== "") {
-      fetchDataByKeyword(searchTerm);
-    } else {
-      fetchData();
-    }
+    fetchData(); // Pastikan fetchData dipanggil saat currentPage atau searchTerm berubah
   }, [currentPage, searchTerm]);
+   
+
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset ke halaman pertama saat pencarian dilakukan
+  };
 
   const handleDelete = async (id) => {
     setIsDeleting(true);
@@ -129,12 +126,12 @@ const Klien = ({ isLoggedIn }) => {
         <ToastContainer />
 
         <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
-          <input
+        <input
             type="text"
             placeholder="Cari klien..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+            onChange={handleSearchInputChange}
+            className="w-48 md:w-56 lg:w-72 rounded-lg border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
           />
           <Link
             href={"/admin/klien/add"}
@@ -226,7 +223,7 @@ const Klien = ({ isLoggedIn }) => {
                   </tbody>
                 </table>
 
-                {/* pagination */}
+                {/* Pagination */}
                 <div className="flex justify-center gap-5 my-4">
                   <button
                     onClick={() =>
@@ -243,17 +240,14 @@ const Klien = ({ isLoggedIn }) => {
                       (_, index) => (
                         <button
                           key={index}
-                          onClick={
-                            () => setCurrentPage(firstPage + index) // Memperbarui halaman berdasarkan indeks dan halaman pertama yang ditampilkan
-                          }
+                          onClick={() => setCurrentPage(firstPage + index)}
                           className={`mx-1 px-3 py-1 rounded-md ${
                             currentPage === firstPage + index
-                              ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white"
+                              ? "bg-orange-400 text-white"
                               : "bg-gray-200 hover:bg-gray-400"
                           }`}
                         >
-                          {firstPage + index}{" "}
-                          {/* Menggunakan halaman pertama yang ditampilkan */}
+                          {firstPage + index}
                         </button>
                       )
                     )}

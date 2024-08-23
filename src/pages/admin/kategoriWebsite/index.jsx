@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css"; // Pastikan ini ada
 import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const KategoriWebsite = () => {
+  const [allkategoriWebsite, setAllKategoriWebsite] = useState([]); // State untuk menyimpan semua data
   const [kategoriWebsite, setKategoriWebsite] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,26 +20,44 @@ const KategoriWebsite = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Tambahkan state untuk modal
 
-  useEffect(() => {
-    fetchData();
-  }, [currentPage]); // Fetch data when currentPage changes
-
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `${BASE_URL}/api/kategoriWebsite?page=${currentPage}&search=${searchTerm}`
+      // Ambil semua data sekali saja
+      const response = await axios.get(`${BASE_URL}/api/kategoriwebsite`);
+      setAllKategoriWebsite(response.data);
+
+      // Filter data berdasarkan pencarian dan pagination
+      const filteredData = response.data.filter((item) =>
+        item.nama_kategori.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      // console.log('masuk',response);
-      setKategoriWebsite(response.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
+
+      // Update data untuk ditampilkan berdasarkan pagination
+      const paginatedData = filteredData.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+      );
+
+      setKategoriWebsite(paginatedData);
+      setTotalCount(filteredData.length);
+      setTotalPages(Math.ceil(filteredData.length / pageSize));
     } catch (error) {
-      console.error("Error fetching data kategori webstie:", error);
-      setError(error);
+      console.error("Error fetching data paket:", error);
+      setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
     }
+  };
+
+  // kondisi search
+  useEffect(() => {
+    fetchData(); // Pastikan fetchData dipanggil saat currentPage atau searchTerm berubah
+  }, [currentPage, searchTerm]);
+   
+
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset ke halaman pertama saat pencarian dilakukan
   };
 
   const handleDelete = async (id) => {
@@ -76,6 +95,8 @@ const KategoriWebsite = () => {
     }
   };
 
+  const firstPage = Math.max(1, currentPage - 4); // Menghitung halaman pertama yang akan ditampilkan
+
   if (error) {
     return (
       <div className="text-center text-red-500">Error: {error.message}</div>
@@ -89,12 +110,12 @@ const KategoriWebsite = () => {
       </Head>
       <AdminLayout>
         <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
-          <input
+        <input
             type="text"
-            placeholder="Cari benefit paket..."
+            placeholder="Cari kategori website..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+            onChange={handleSearchInputChange}
+            className="w-48 md:w-56 lg:w-72 rounded-lg border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
           />
           <Link
             href={"/admin/kategoriWebsite/add"}
@@ -168,7 +189,8 @@ const KategoriWebsite = () => {
                     ))}
                   </tbody>
                 </table>
-                {/* pagination */}
+
+                {/* Pagination */}
                 <div className="flex justify-center gap-5 my-4">
                   <button
                     onClick={() =>
@@ -180,19 +202,22 @@ const KategoriWebsite = () => {
                     Prev
                   </button>
                   <div className="flex">
-                    {Array.from({ length: totalPages }, (_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentPage(index + 1)}
-                        className={`mx-1 px-3 py-1 rounded-md ${
-                          currentPage === index + 1
-                            ? "bg-gray-300"
-                            : "bg-gray-200 hover:bg-gray-400"
-                        }`}
-                      >
-                        {index + 1}
-                      </button>
-                    ))}
+                    {Array.from(
+                      { length: Math.min(totalPages, 5) },
+                      (_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentPage(firstPage + index)}
+                          className={`mx-1 px-3 py-1 rounded-md ${
+                            currentPage === firstPage + index
+                              ? "bg-orange-400 text-white"
+                              : "bg-gray-200 hover:bg-gray-400"
+                          }`}
+                        >
+                          {firstPage + index}
+                        </button>
+                      )
+                    )}
                   </div>
                   <button
                     onClick={() =>

@@ -124,7 +124,7 @@ const BenefitPaket = ({ isLoggedIn }) => {
         <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
         <input
             type="text"
-            placeholder="Cari paket..."
+            placeholder="Cari benefit paket..."
             value={searchTerm}
             onChange={handleSearchInputChange}
             className="w-48 md:w-56 lg:w-72 rounded-lg border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"

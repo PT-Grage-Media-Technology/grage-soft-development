@@ -9,6 +9,7 @@ import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 const Syaratketentuan = ({ isLoggedIn }) => {
+  const [allsyaratKetentuan, setAllSyaratKetentuan] = useState([]); // State untuk menyimpan semua data
   const router = useRouter();
   const [syaratketentuan, setSyaratketentuan] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,31 +23,26 @@ const Syaratketentuan = ({ isLoggedIn }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Tambahkan state untuk modal
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `${BASE_URL}/api/syaratketentuan?page=${currentPage}`
-      );
-      setSyaratketentuan(response.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
-    } catch (error) {
-      console.error("Error fetching data paket:", error);
-      setError(error.response ? error.response.data : error);
-    } finally {
-      setLoading(false);
-    }
-  };
+      // Ambil semua data sekali saja
+      const response = await axios.get(`${BASE_URL}/api/syaratketentuan`);
+      setAllSyaratKetentuan(response.data);
 
-  const fetchDataByKeyword = async (keyword) => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/api/syaratketentuan?keyword=${keyword}`
+      // Filter data berdasarkan pencarian dan pagination
+      const filteredData = response.data.filter((item) =>
+        item.nama_syarat_ketentuan.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setSyaratketentuan(response.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
+
+      // Update data untuk ditampilkan berdasarkan pagination
+      const paginatedData = filteredData.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+      );
+
+      setSyaratketentuan(paginatedData);
+      setTotalCount(filteredData.length);
+      setTotalPages(Math.ceil(filteredData.length / pageSize));
     } catch (error) {
       console.error("Error fetching data paket:", error);
       setError(error.response ? error.response.data : error);
@@ -57,12 +53,14 @@ const Syaratketentuan = ({ isLoggedIn }) => {
 
   // kondisi search
   useEffect(() => {
-    if (searchTerm !== "") {
-      fetchDataByKeyword(searchTerm);
-    } else {
-      fetchData();
-    }
+    fetchData(); // Pastikan fetchData dipanggil saat currentPage atau searchTerm berubah
   }, [currentPage, searchTerm]);
+   
+
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset ke halaman pertama saat pencarian dilakukan
+  };
 
   const handleDelete = (id) => {
     setIsDeleting(id); // Simpan ID yang akan dihapus
@@ -207,7 +205,7 @@ const Syaratketentuan = ({ isLoggedIn }) => {
                           }
                           className={`mx-1 px-3 py-1 rounded-md ${
                             currentPage === firstPage + index
-                              ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white"
+                              ? "bg-orange-400 text-white"
                               : "bg-gray-200 hover:bg-gray-400"
                           }`}
                         >
