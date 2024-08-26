@@ -77,19 +77,19 @@ export default function Paket() {
                 className={`shadow-2xl rounded-2xl ${styles.paketCard} w-full`}
                 key={item.id}
               >
-                <h2 className="flex justify-center font-bold h-16 pt-4 bg-green-400 text-xl text-white">
+                <h2 className="flex justify-center font-bold h-16 py-4 bg-green-400 text-xl text-white">
                   {item["nama_paket"]}
                 </h2>
 
-                <span className="flex justify-center bg-gray-100 text-center h-16 pt-3 text-3xl font-semibold px-auto">
-                  Rp {parseFloat(item.harga).toLocaleString("id-ID")},00
+                <span className="flex justify-center bg-gray-100 text-center h-16 md:h-auto py-3 md:text-2xl lg:text-3xl text-3xl font-semibold px-auto">
+                  Rp {parseFloat(item.harga).toLocaleString("id-ID")}
                 </span>
 
-                <span className="bg-gray-100 text-center h-16 pt-4 flex justify-center text-lg">
+                <span className="bg-gray-100 text-center h-16 py-4 flex justify-center text-lg">
                   {item["status_website"]}
                 </span>
 
-                <span className="bg-white text-center h-16 pt-4 font-semibold flex justify-center text-lg">
+                <span className="bg-white text-center md:h-auto my-4 font-semibold flex justify-center text-lg">
                   {item["jumlah_pilihan_desain"]} Pilihan Desain.{" "}
                   <a
                     href={`/contoh_desain/${item.id}`}
@@ -107,7 +107,7 @@ export default function Paket() {
                     return (
                       <div
                         key={benefit.id}
-                        className={`text-center h-auto pb-5 pt-4 px-18 lg:flex justify-center text-lg w-full ${bgColor}`}
+                        className={`text-center h-auto pb-5 py-4 px-18 lg:flex justify-center text-lg w-full ${bgColor}`}
                       >
                         {benefit.nama_benefit}
                       </div>

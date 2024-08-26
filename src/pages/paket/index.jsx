@@ -75,19 +75,19 @@ export default function Layanan() {
                   className={`shadow-2xl rounded-2xl ${styles.paketCard} w-full`}
                   key={item.id}
                 >
-                  <h2 className="flex justify-center font-bold h-16 pt-4 bg-green-400 text-xl text-white">
+                  <h2 className="flex justify-center font-bold h-16 py-4 bg-green-400 text-xl text-white">
                     {item.nama_paket}
                   </h2>
 
-                  <span className="bg-gray-100 text-center h-16 pt-3 text-3xl font-semibold px-auto">
-                    Rp {parseFloat(item.harga).toLocaleString("id-ID")},00
+                  <span className="bg-gray-100 text-center h-auto py-3 text-3xl lg:text-3xl md:text-2xl font-semibold px-auto">
+                    Rp {parseFloat(item.harga).toLocaleString("id-ID")}
                   </span>
 
-                  <span className="bg-gray-100 text-center h-16 pt-4 px-16 text-lg">
+                  <span className="bg-gray-100 text-center h-16 py-4 px-auto text-lg">
                     {item.status_website}
                   </span>
 
-                  <span className="bg-white text-center h-16 pt-4 font-semibold px-auto text-lg">
+                  <span className="bg-white text-center md:h-auto my-4 font-semibold flex justify-center text-lg">
                     {item.jumlah_pilihan_desain} Pilihan Desain.{" "}
                     <a
                       href={`/contoh_desain/${item.id}`}
@@ -105,7 +105,7 @@ export default function Layanan() {
                       return (
                         <div
                           key={benefit.id}
-                          className={`text-center h-auto pb-5 pt-4 px-auto text-lg w-full ${bgColor}`}
+                          className={`text-center h-auto pb-5 py-4 px-auto text-lg w-full ${bgColor}`}
                         >
                           {benefit.nama_benefit}
                         </div>
@@ -113,7 +113,7 @@ export default function Layanan() {
                     })}
 
                   <div className="flex-auto text-center bg-gray-100">
-                    <div className="flex justify-center text-sm font-medium pt-4 pb-9">
+                    <div className="flex justify-center text-sm font-medium py-4 pb-9">
                       <Link
                         href={`/pesan_web`}
                         className="px-8 py-2 mb-2 tracking-wider text-lg text-white rounded-full shadow-sm md:mb-0 bg-blue-400 hover:bg-blue-900"
