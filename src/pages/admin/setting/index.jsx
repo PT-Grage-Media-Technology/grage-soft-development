@@ -30,7 +30,7 @@ const Setting = () => {
 
       // Filter data berdasarkan pencarian dan pagination
       const filteredData = response.data.data.filter((item) =>
-        item.telp.toLowerCase().includes(searchTerm.toLowerCase())
+        item.email.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
       // Update data untuk ditampilkan berdasarkan pagination
