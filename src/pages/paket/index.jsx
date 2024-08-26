@@ -3,7 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import LoadingLayanan from "@/components/elements/LoadingLayanan";
 import styles from "@/components/Layanan.module.css"; // Import CSS module
-import { BASE_URL } from '../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../components/layoutsAdmin/apiConfig";
 
 export default function Layanan() {
   const [paket, setPaket] = useState([]);
@@ -15,12 +15,8 @@ export default function Layanan() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const paketResponse = await axios.get(
-          `${BASE_URL}/api/paket`
-        );
-        const benefitResponse = await axios.get(
-          `${BASE_URL}/api/benefitPaket`
-        );
+        const paketResponse = await axios.get(`${BASE_URL}/api/paket`);
+        const benefitResponse = await axios.get(`${BASE_URL}/api/benefitPaket`);
 
         setPaket(paketResponse.data.data);
         setBenefitPaket(benefitResponse.data.data);
@@ -84,7 +80,7 @@ export default function Layanan() {
                   </h2>
 
                   <span className="bg-gray-100 text-center h-16 pt-3 text-3xl font-semibold px-auto">
-                    Rp {item.harga}
+                    Rp {parseFloat(item.harga).toLocaleString("id-ID")},00
                   </span>
 
                   <span className="bg-gray-100 text-center h-16 pt-4 px-16 text-lg">
