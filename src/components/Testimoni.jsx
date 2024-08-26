@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
 import axios from "axios";
+import { BASE_URL } from "./layoutsAdmin/apiConfig";
 
 const Testimoni = () => {
   const [testimoni, setTestimoni] = useState([]);
@@ -14,9 +15,7 @@ const Testimoni = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://192.168.30.40:5000/api/testimoni"
-        );
+        const response = await axios.get(`${BASE_URL}/api/testimoni`);
 
         setTestimoni(response.data.data);
       } catch (error) {

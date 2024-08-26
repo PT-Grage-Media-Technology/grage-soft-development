@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/router";
+import { BASE_URL } from "./layoutsAdmin/apiConfig";
 
 const CekRole = () => {
   const [cookies] = useCookies(["token"]);
@@ -20,7 +21,7 @@ const CekRole = () => {
 
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/auth/cekToken/",
+          `${BASE_URL}/api/auth/cekToken/`,
           config
         );
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { BASE_URL } from "./layoutsAdmin/apiConfig";
 
 export default function Rating() {
   const [klien, setKlien] = useState([]);
@@ -15,7 +16,7 @@ export default function Rating() {
     try {
       const response = await axios.get(
         // `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
-        "http://192.168.30.40:5000/api/klien/"
+        `${BASE_URL}/api/klien/`
       );
       setKlien(response.data.data);
       // console.log("respon", response.data.data);

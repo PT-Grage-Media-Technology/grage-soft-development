@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"; // Tambahkan impor axios
+import { BASE_URL } from './layoutsAdmin/apiConfig';
 
 
 function Kontak_Kami() {
@@ -10,7 +11,7 @@ function Kontak_Kami() {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await axios.get("http://192.168.30.40:5000/api/wcu");
+          const response = await axios.get(`${BASE_URL}/api/wcu`);
           setWcu(response.data.data);
         } catch (error) {
           console.error("Error fetching data wcu:", error);
