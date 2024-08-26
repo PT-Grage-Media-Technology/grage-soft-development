@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Head from "next/head";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 
 const Testimoni = () => {
+  const [alltestimoni, setAllTestimoni] = useState([]); // State untuk menyimpan semua data
   const [testimoni, setTestimoni] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,26 +18,43 @@ const Testimoni = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  useEffect(() => {
-    fetchData();
-  }, [currentPage]); // Fetch data when currentPage changes
-
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        //`https://api.ngurusizin.online/api/testimoni?page=${currentPage}&search=${searchTerm}`
-        `${BASE_URL}/api/testimoni/`
+      // Ambil semua data sekali saja
+      const response = await axios.get(`${BASE_URL}/api/testimoni`);
+      setAllTestimoni(response.data.data);
+
+      // Filter data berdasarkan pencarian dan pagination
+      const filteredData = response.data.data.filter((item) =>
+        item.judul_testimoni.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setTestimoni(response.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
+
+      // Update data untuk ditampilkan berdasarkan pagination
+      const paginatedData = filteredData.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+      );
+
+      setTestimoni(paginatedData);
+      setTotalCount(filteredData.length);
+      setTotalPages(Math.ceil(filteredData.length / pageSize));
     } catch (error) {
-      console.error("Error fetching data testimoni:", error);
-      setError(error);
+      console.error("Error fetching data paket:", error);
+      setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
     }
+  };
+
+  // kondisi search
+  useEffect(() => {
+    fetchData(); // Pastikan fetchData dipanggil saat currentPage atau searchTerm berubah
+  }, [currentPage, searchTerm]);
+
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset ke halaman pertama saat pencarian dilakukan
   };
 
   const toggleModalDelete = () => {
@@ -48,14 +66,11 @@ const Testimoni = () => {
     const id = isDeleting;
 
     try {
-      const response = await axios.delete(
-        `${BASE_URL}/api/testimoni/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.delete(`${BASE_URL}/api/testimoni/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.status !== 200) {
         throw new Error("Gagal menghapus data");
@@ -69,6 +84,8 @@ const Testimoni = () => {
       setShowDeleteModal(false);
     }
   };
+
+  const firstPage = Math.max(1, currentPage - 4); // Menghitung halaman pertama yang akan ditampilkan
 
   if (error) {
     return (
@@ -85,7 +102,7 @@ const Testimoni = () => {
         <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
           <input
             type="text"
-            placeholder="Cari klien..."
+            placeholder="Cari Testimoni..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-48 md:w-56 lg:w-72 rounded-l-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -208,19 +225,25 @@ const Testimoni = () => {
                     Prev
                   </button>
                   <div className="flex">
-                    {Array.from({ length: totalPages }, (_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentPage(index + 1)}
-                        className={`mx-1 px-3 py-1 rounded-md ${
-                          currentPage === index + 1
-                            ? "bg-gray-300"
-                            : "bg-gray-200 hover:bg-gray-400"
-                        }`}
-                      >
-                        {index + 1}
-                      </button>
-                    ))}
+                    {Array.from(
+                      { length: Math.min(totalPages, 5) },
+                      (_, index) => (
+                        <button
+                          key={index}
+                          onClick={
+                            () => setCurrentPage(firstPage + index) // Memperbarui halaman berdasarkan indeks dan halaman pertama yang ditampilkan
+                          }
+                          className={`mx-1 px-3 py-1 rounded-md ${
+                            currentPage === firstPage + index
+                              ? "bg-orange-400 text-white"
+                              : "bg-gray-200 hover:bg-gray-400"
+                          }`}
+                        >
+                          {firstPage + index}{" "}
+                          {/* Menggunakan halaman pertama yang ditampilkan */}
+                        </button>
+                      )
+                    )}
                   </div>
                   <button
                     onClick={() =>

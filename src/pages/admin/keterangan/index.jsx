@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const Keterangan = ({ isLoggedIn }) => {
+  const [allKeterangan, setAllKeterangan] = useState([]); // State untuk menyimpan semua data
   const router = useRouter();
   const [keterangan, setKeterangan] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,34 +23,28 @@ const Keterangan = ({ isLoggedIn }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `${BASE_URL}/api/keterangan?page=${currentPage}`
-      );
-      setKeterangan(response.data.data);
-      // setKeterangan(response.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
-    } catch (error) {
-      console.error("Error fetching data keterangan:", error);
-      setError(error.response ? error.response.data : error);
-    } finally {
-      setLoading(false);
-    }
-  };
+      // Ambil semua data sekali saja
+      const response = await axios.get(`${BASE_URL}/api/keterangan`);
+      setAllKeterangan(response.data.data);
 
-  const fetchDataByKeyword = async (keyword) => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/api/keterangan?keyword=${keyword}`
+      // Filter data berdasarkan pencarian dan pagination
+      const filteredData = response.data.data.filter((item) =>
+        item.attributes.isi.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setKeterangan(response.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
+
+      // Update data untuk ditampilkan berdasarkan pagination
+      const paginatedData = filteredData.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+      );
+
+      setKeterangan(paginatedData);
+      setTotalCount(filteredData.length);
+      setTotalPages(Math.ceil(filteredData.length / pageSize));
     } catch (error) {
-      console.error("Error fetching data keterangan:", error);
+      console.error("Error fetching data paket:", error);
       setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
@@ -58,12 +53,14 @@ const Keterangan = ({ isLoggedIn }) => {
 
   // kondisi search
   useEffect(() => {
-    if (searchTerm !== "") {
-      fetchDataByKeyword(searchTerm);
-    } else {
-      fetchData();
-    }
+    fetchData(); // Pastikan fetchData dipanggil saat currentPage atau searchTerm berubah
   }, [currentPage, searchTerm]);
+   
+
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset ke halaman pertama saat pencarian dilakukan
+  };
 
   const handleDelete = async (id) => {
     setIsDeleting(true);
@@ -127,7 +124,7 @@ const Keterangan = ({ isLoggedIn }) => {
         <div className="flex items-center justify-between mb-4 lg:-mt-48 md:-mt-48">
         <input
                   type="text"
-                  placeholder="Cari keterangan..."
+                  placeholder="Cari Keterangan..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-48 md:w-56 lg:w-72 rounded-xl border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -140,7 +137,7 @@ const Keterangan = ({ isLoggedIn }) => {
             Keterangan
           </Link>
         </div>
-        <div className="flex flex-col overflow-x-auto bg-white rounded-xl">
+        <div className="flex flex-col overflow-x-auto lg:overflow-x-hidden bg-white rounded-xl">
           <div className="sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
               <div className="overflow-x-auto">
@@ -236,7 +233,7 @@ const Keterangan = ({ isLoggedIn }) => {
                   </tbody>
                 </table>
 
-                {/* pagination */}
+                {/* Pagination */}
                 <div className="flex justify-center gap-5 my-4">
                   <button
                     onClick={() =>
@@ -253,17 +250,14 @@ const Keterangan = ({ isLoggedIn }) => {
                       (_, index) => (
                         <button
                           key={index}
-                          onClick={
-                            () => setCurrentPage(firstPage + index) // Memperbarui halaman berdasarkan indeks dan halaman pertama yang ditampilkan
-                          }
+                          onClick={() => setCurrentPage(firstPage + index)}
                           className={`mx-1 px-3 py-1 rounded-md ${
                             currentPage === firstPage + index
-                              ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white"
+                              ? "bg-orange-400 text-white"
                               : "bg-gray-200 hover:bg-gray-400"
                           }`}
                         >
-                          {firstPage + index}{" "}
-                          {/* Menggunakan halaman pertama yang ditampilkan */}
+                          {firstPage + index}
                         </button>
                       )
                     )}

@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
 
 const KategoriKlien = ({ isLoggedIn }) => {
+  const [allkategoriklien, setAllKategoriKlien] = useState([]); // State untuk menyimpan semua data
   const router = useRouter();
   const [kategoriKlien, setKategoriKlien] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,34 +24,28 @@ const KategoriKlien = ({ isLoggedIn }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `${BASE_URL}/api/kategoriKlien?page=${currentPage}`
-      );
-      console.log("rendi ganteng", response.data);
-      setKategoriKlien(response.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
-    } catch (error) {
-      console.error("Error fetching data kategori klien:", error);
-      setError(error.response ? error.response.data : error);
-    } finally {
-      setLoading(false);
-    }
-  };
+      // Ambil semua data sekali saja
+      const response = await axios.get(`${BASE_URL}/api/kategoriKlien`);
+      setAllKategoriKlien(response.data.data);
 
-  const fetchDataByKeyword = async (keyword) => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/api/kategoriKlien?keyword=${keyword}`
+      // Filter data berdasarkan pencarian dan pagination
+      const filteredData = response.data.data.filter((item) =>
+        item.nama_kategori_klien.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setKategoriKlien(response.data.data);
-      setTotalPages(response.data.totalPages);
-      setPageSize(response.data.pageSize);
-      setTotalCount(response.data.totalCount);
+
+      // Update data untuk ditampilkan berdasarkan pagination
+      const paginatedData = filteredData.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+      );
+
+      setKategoriKlien(paginatedData);
+      setTotalCount(filteredData.length);
+      setTotalPages(Math.ceil(filteredData.length / pageSize));
     } catch (error) {
-      console.error("Error fetching data kategori klien:", error);
+      console.error("Error fetching data paket:", error);
       setError(error.response ? error.response.data : error);
     } finally {
       setLoading(false);
@@ -59,12 +54,14 @@ const KategoriKlien = ({ isLoggedIn }) => {
 
   // kondisi search
   useEffect(() => {
-    if (searchTerm !== "") {
-      fetchDataByKeyword(searchTerm);
-    } else {
-      fetchData();
-    }
+    fetchData(); // Pastikan fetchData dipanggil saat currentPage atau searchTerm berubah
   }, [currentPage, searchTerm]);
+   
+
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset ke halaman pertama saat pencarian dilakukan
+  };
 
   const handleDelete = async () => {
     const id = isDeleting;
@@ -195,7 +192,7 @@ const KategoriKlien = ({ isLoggedIn }) => {
                   </tbody>
                 </table>
 
-                {/* pagination */}
+                {/* Pagination */}
                 <div className="flex justify-center gap-5 my-4">
                   <button
                     onClick={() =>
@@ -212,17 +209,14 @@ const KategoriKlien = ({ isLoggedIn }) => {
                       (_, index) => (
                         <button
                           key={index}
-                          onClick={
-                            () => setCurrentPage(firstPage + index) // Memperbarui halaman berdasarkan indeks dan halaman pertama yang ditampilkan
-                          }
+                          onClick={() => setCurrentPage(firstPage + index)}
                           className={`mx-1 px-3 py-1 rounded-md ${
                             currentPage === firstPage + index
-                              ? "bg-gradient-to-r from-indigo-400 to-gray-600 text-white"
+                              ? "bg-orange-400 text-white"
                               : "bg-gray-200 hover:bg-gray-400"
                           }`}
                         >
-                          {firstPage + index}{" "}
-                          {/* Menggunakan halaman pertama yang ditampilkan */}
+                          {firstPage + index}
                         </button>
                       )
                     )}
