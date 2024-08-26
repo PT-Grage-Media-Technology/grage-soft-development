@@ -3,6 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import LoadingLayanan from "./elements/LoadingLayanan";
 import styles from "./Layanan.module.css"; // Import CSS module
+import { BASE_URL } from "./layoutsAdmin/apiConfig";
 
 export default function Paket() {
   const [paket, setPaket] = useState([]);
@@ -14,8 +15,8 @@ export default function Paket() {
     const fetchData = async () => {
       try {
         const [paketResponse, benefitResponse] = await Promise.all([
-          axios.get("http://192.168.30.40:5000/api/paket"),
-          axios.get("http://192.168.30.40:5000/api/benefitPaket"),
+          axios.get(`${BASE_URL}/api/paket`),
+          axios.get(`${BASE_URL}/api/benefitPaket`),
         ]);
         setPaket(paketResponse.data.data);
         setBenefitPaket(benefitResponse.data.data);
