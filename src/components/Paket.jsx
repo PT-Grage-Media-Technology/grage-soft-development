@@ -82,7 +82,7 @@ export default function Paket() {
                 </h2>
 
                 <span className="flex justify-center bg-gray-100 text-center h-16 pt-3 text-3xl font-semibold px-auto">
-                  Rp {item["harga"]}
+                  Rp {parseFloat(item.harga).toLocaleString("id-ID")},00
                 </span>
 
                 <span className="bg-gray-100 text-center h-16 pt-4 flex justify-center text-lg">

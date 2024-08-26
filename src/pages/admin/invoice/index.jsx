@@ -47,7 +47,7 @@ export default function Invoice() {
 
   const fetchpaketData = async () => {
     try {
-      const response = await axios.get("${BASE_URL}/api/paket");
+      const response = await axios.get(`${BASE_URL}/api/paket`);
       setpaketData(response.data.data || []);
     } catch (error) {
       console.error("Error fetching available packages:", error);
@@ -116,7 +116,7 @@ export default function Invoice() {
       }
 
       const invoiceResponse = await axios.post(
-        "${BASE_URL}/api/invoice",
+        `${BASE_URL}/api/invoice`,
         invoiceData
       );
 
@@ -129,7 +129,7 @@ export default function Invoice() {
         harga: parseFloat(item.harga) || 0,
       }));
 
-      await axios.post("${BASE_URL}/api/cartpaket/", updatedCart, {
+      await axios.post(`${BASE_URL}/api/cartpaket/`, updatedCart, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -231,7 +231,7 @@ export default function Invoice() {
                   ))}
                 </select>
                 <p className="w-1/4 p-2 bg-gray-100 rounded mr-2">
-                  Harga: Rp {item.harga.toLocaleString()}
+                  Harga: Rp {parseFloat(item.harga).toLocaleString("id-ID")},00
                 </p>
                 <input
                   type="number"

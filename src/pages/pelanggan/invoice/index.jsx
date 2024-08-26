@@ -101,9 +101,6 @@ export default function Invoice() {
                         Nama Kategori
                       </th>
                       <th scope="col" className="px-12 py-4">
-                        Harga
-                      </th>
-                      <th scope="col" className="px-12 py-4">
                         Action
                       </th>
                     </tr>
@@ -119,12 +116,6 @@ export default function Invoice() {
                           <td className="px-12 py-4 whitespace-nowrap">
                             {item.paket?.kategoriWebsite?.nama_kategori ||
                               "Nama Kategori tidak di temukan"}
-                          </td>
-                          <td className="px-12 py-4 whitespace-nowrap">
-                            Rp{" "}
-                            {item.harga.toLocaleString() ||
-                              "Harga tidak di temukan"}
-                            ,00
                           </td>
                           <td className="flex items-center gap-1 px-12 py-4 mt-8 whitespace-nowrap">
                             <Link

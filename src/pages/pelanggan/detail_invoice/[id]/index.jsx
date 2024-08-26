@@ -13,9 +13,8 @@ export default function Invoice() {
   const [settingData, setSettingData] = useState(null);
   const [customerData, setCustomerData] = useState(null);
   const [cartPaketData, setCartPaketData] = useState([]);
-  // const user = localStorage.getItem("user");
   const [invoiceData, setInvoiceData] = useState({
-    referensi: "",
+    refrensi: "",
     tanggal: "",
     tgl_jatuh_tempo: "",
     pelanggan_id: "",
@@ -23,7 +22,6 @@ export default function Invoice() {
     total_diskon: 0,
     total: 0,
   });
-
 
   const fetchSettingData = async () => {
     try {
@@ -36,10 +34,12 @@ export default function Invoice() {
 
   const fetchCustomerData = async () => {
     try {
-      console.log(id); 
+      console.log(id);
 
       // Ganti endpoint sesuai kebutuhan atau tambahkan ID pelanggan di parameter query
       const response = await axios.get(`${BASE_URL}/api/invoice/${id}`);
+      console.log("tes", response.data);
+      setInvoiceData(response.data);
       setCustomerData(response.data.pelanggas);
       setCartPaketData(response.data.cartPaket);
       console.log("coba123", response.data.pelanggas);
@@ -49,24 +49,12 @@ export default function Invoice() {
   };
 
   useEffect(() => {
-    if (id) {  // Pastikan id sudah tersedia
+    if (id) {
+      // Pastikan id sudah tersedia
       fetchSettingData();
       fetchCustomerData();
     }
   }, [id]); // Tambahkan id sebagai dependency
-
-  // const fetchCartPaketData = async () => {
-  //   try {
-  //     // Ganti endpoint sesuai kebutuhan atau tambahkan ID pelanggan di parameter query
-  //     const response = await axios.get(
-  //       `http://localhost:5000/api/cartpaket/${user.id}`
-  //     );
-  //     setCartPaketData(response.data.data);
-  //     console.log('coba aja', response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching cart paket data:", error);
-  //   }
-  // };
 
   const handlePrint = () => {
     window.print();
@@ -77,6 +65,21 @@ export default function Invoice() {
       <Head>
         <title>Invoice</title>
       </Head>
+      <style jsx global>{`
+        @media print {
+          .navbar,
+          .sidebar,
+          .no-print {
+            display: none !important;
+          }
+          .invoice-container {
+            margin: 0;
+            padding: 0;
+            box-shadow: none;
+            width: 100%;
+          }
+        }
+      `}</style>
       <div className="flex flex-col overflow-hidden bg-white rounded-xl md:-mt-44">
         <div className="sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -97,15 +100,15 @@ export default function Invoice() {
                   <h1 className="text-xl font-bold pb-2">Invoice</h1>
                   <div className="text-gray-600 grid grid-flow-col">
                     <div>Referensi</div>
-                    <div className="">INV/00001</div>
+                    <div className="">{invoiceData?.refrensi}</div>
                   </div>
                   <div className="text-gray-600 grid grid-flow-col">
                     <div>Tanggal</div>
-                    <div className="">15/08/2024</div>
+                    <div className="">{invoiceData?.tanggal}</div>
                   </div>
                   <div className="text-gray-600 grid grid-flow-col">
                     <div>Tgl. Jatuh Tempo </div>
-                    <div className="">15/08/2024</div>
+                    <div className="">{invoiceData?.tgl_jatuh_tempo}</div>
                   </div>
                 </div>
               </div>
@@ -152,9 +155,6 @@ export default function Invoice() {
                       <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
                         Diskon
                       </th>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
-                        Jumlah
-                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-gray-300 divide-y divide-gray-200">
@@ -167,13 +167,11 @@ export default function Invoice() {
                           {item.pakets.kategoriWebsite.nama_kategori}
                         </td>
                         <td className="mx-auto text-sm py-4 text-center">
-                          Rp {item.harga},00
+                          Rp {parseFloat(item.harga).toLocaleString("id-ID")},00
                         </td>
                         <td className="mx-auto text-sm py-4 text-center">
-                          Rp {item.diskon},00
-                        </td>
-                        <td className="mx-auto text-sm py-4 text-center">
-                          Rp {item.harga},00
+                          Rp {parseFloat(item.diskon).toLocaleString("id-ID")}
+                          ,00
                         </td>
                       </tr>
                     ))}
@@ -195,11 +193,13 @@ export default function Invoice() {
                 <div className="grid grid-flow-row mt-4">
                   <div className="flex justify-between text-sm font-semibold mt-2">
                     <div>Subtotal</div>
-                    <div>Rp {invoiceData.subtotal},00</div>
+                    <div>Rp {invoiceData.subtotal.toLocaleString()},00</div>
                   </div>
                   <div className="flex justify-between text-sm font-semibold mt-2">
                     <div>Total Diskon</div>
-                    <div>(Rp {invoiceData.total_diskon},00)</div>
+                    <div>
+                      (Rp {invoiceData.total_diskon.toLocaleString()},00)
+                    </div>
                   </div>
                   <div className="flex justify-between text-sm font-semibold mt-2">
                     <div>PPN</div>
@@ -207,12 +207,12 @@ export default function Invoice() {
                   </div>
                   <div className="flex justify-between text-lg font-bold mt-2 underline">
                     <div>Total</div>
-                    <div>Rp {invoiceData.total},00</div>
+                    <div>Rp {invoiceData.total.toLocaleString()},00</div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-end mt-6">
+              <div className="flex justify-end mt-6 no-print">
                 <button
                   onClick={handlePrint}
                   className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none"

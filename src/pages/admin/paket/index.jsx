@@ -182,7 +182,7 @@ const Paket = ({ isLoggedIn }) => {
                           {item.nama_paket}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item["harga"]}
+                        Rp {parseFloat(item.harga).toLocaleString("id-ID")},00
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {item["jumlah_pilihan_desain"]}
