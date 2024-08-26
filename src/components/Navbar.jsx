@@ -54,7 +54,7 @@ export default function Navbar() {
                 router.pathname === "/"
                   ? "font-bold text-white"
                   : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
             >
               HOME
             </Link>
@@ -64,7 +64,7 @@ export default function Navbar() {
                 router.pathname === "/paket"
                   ? "font-bold text-white"
                   : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
             >
               HARGA WEB
             </Link>
@@ -74,7 +74,7 @@ export default function Navbar() {
                 router.pathname === "/pesan_web"
                   ? "font-bold text-white"
                   : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
             >
               CARA PESAN WEB
             </Link>
@@ -84,7 +84,7 @@ export default function Navbar() {
                 router.pathname === "/klien"
                   ? "font-bold text-white"
                   : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
             >
               KLIEN KAMI
             </Link>
@@ -94,7 +94,7 @@ export default function Navbar() {
                 router.pathname === "/pembayaran"
                   ? "font-bold text-white"
                   : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
             >
               PEMBAYARAN
             </Link>
@@ -104,7 +104,7 @@ export default function Navbar() {
                 router.pathname === "/testimoni_klien"
                   ? "font-bold text-white"
                   : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
             >
               TESTIMONI KLIEN
             </Link>
@@ -114,7 +114,7 @@ export default function Navbar() {
                 router.pathname === "/kontak_kami"
                   ? "font-bold text-white"
                   : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:text-white focus focus:outline-none focus:shadow-outline`}
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
             >
               KONTAK KAMI
             </Link>
