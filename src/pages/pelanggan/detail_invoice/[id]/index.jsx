@@ -184,15 +184,13 @@ export default function Invoice() {
               </div>
 
               <div className="grid md:grid-flow-row lg:grid-flow-col">
-                <div className="mt-6">
-                  <h3 className="font-bold">Pesan</h3>
-                  <hr className="border-black w-5/6 md:w-5/6 lg:w-3/4 py-2" />
-                  <textarea
-                    className="w-5/6 md:w-5/6 lg:w-3/4 border rounded-md p-2"
-                    rows="4"
-                    placeholder="Tulis pesan di sini..."
-                  ></textarea>
-                </div>
+              <div className="flex justify-center lg:mt-8">
+                      <img
+                        className="h-28 w-auto"
+                        src={settingData?.url_foto_cap}
+                        alt=""
+                      />
+                    </div>
 
                 <div className="grid grid-flow-row mt-4">
                   <div className="flex justify-between text-sm font-semibold mt-2">
@@ -214,13 +212,6 @@ export default function Invoice() {
                     <div>Rp {invoiceData.total.toLocaleString()},00</div>
                   </div>
                   <div className="my-12">
-                  <div className="flex justify-center">
-                      <img
-                        className="h-28 w-auto"
-                        src={settingData?.url_foto_cap}
-                        alt=""
-                      />
-                    </div>
                     <div>
                       <h3 className="text-center mx-auto text-sm mt-8">
                         Dengan Hormat, {settingData?.profil_perusahaan}
