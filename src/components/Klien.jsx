@@ -54,7 +54,7 @@ export default function Rating() {
             </div>
           ) : null
         )}
-        <button className="flex py-12 bg-blue-400 hover:bg-blue-900 text-white rounded-full mb-8 px-4 sm:ms-4">
+        <button className="flex px-4 py-3 bg-blue-400 hover:bg-blue-900 text-white rounded-lg font-semibold mb-8 sm:ms-4">
           <Link href="/klien">
             <p>Lihat Semua Klien</p>
           </Link>

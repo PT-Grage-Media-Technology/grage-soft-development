@@ -56,7 +56,7 @@ export default function Paket() {
     <section className="relative -mt-5 bg-transparent">
       <div className="mt-10">
         <h1 className="font-extrabold text-3xl lg:text-3xl text-center bg-clip-text text-gray-800">
-          Layanan dan Harga
+          Paket dan Harga
         </h1>
       </div>
       <div className="relative flex flex-col items-center px-6 justify-center px-auto mt-4">
@@ -137,7 +137,7 @@ export default function Paket() {
           type="submit"
           className="block px-4 py-3 mt-6 font-semibold text-center text-white rounded-lg w-52 bg-blue-400 hover:bg-blue-900"
         >
-          Lihat Semua Layanan
+          Lihat Semua Paket
         </Link>
       </div>
     </section>

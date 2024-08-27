@@ -1,9 +1,31 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Link from "next/link";
+import { BASE_URL } from '../components/layoutsAdmin/apiConfig';
+
 export default function Footer() {
-  const [Tentang, setTentang] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [setting, setSetting] = useState(""); // State untuk menyimpan nomor WA
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/api/setting`
+        );
+        setSetting(response.data.data[0]);
+        console.log(response.data.data[0]);
+      } catch (error) {
+        console.error("Error fetching data layanan:", error);
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -44,7 +66,7 @@ export default function Footer() {
 
       <footer className="bg-blue-500">
         <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
             {/* {[Tentang[0]].map((item, index) => (
               <div key={item.id}>
                 <p className="font-bold text-white">TENTANG KAMI</p>
@@ -57,7 +79,7 @@ export default function Footer() {
               </div>
             ))} */}
 
-            <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-8 lg:col-span-2 md:grid-cols-2 ">
               <div>
                 <p className="font-bold text-white">MENU</p>
                 <nav className="flex flex-col mt-4 space-y-2 text-sm text-white">
@@ -77,38 +99,23 @@ export default function Footer() {
                     {" "}
                     Pembayaran{" "}
                   </Link>
+                  <Link href={"/testimoni_klien"} className="hover:opacity-75">
+                    {" "}
+                    Testimoni Klien{" "}
+                  </Link>
+                  <Link href={"/kontak_kami"} className="hover:opacity-75">
+                    {" "}
+                    Kontak Kami{" "}
+                  </Link>
                 </nav>
               </div>
 
               <div>
-                <p className="font-bold text-white">LAYANAN</p>
+                <p className="font-bold text-white">Contact Us</p>
                 <nav className="flex flex-col mt-4 space-y-2 text-sm text-white">
-                  <p className="hover:opacity-75"> Pendirian PT PMA </p>
-                  <p className="hover:opacity-75"> Perubahan PT </p>
-                  <p className="hover:opacity-75"> Perubahan CV </p>
-                  <p className="hover:opacity-75"> Upgrade NIB </p>
-                  <p className="hover:opacity-75"> SKK Jenjang 4,6,7,8,9 </p>
-                </nav>
-              </div>
-              <div>
-                <nav className="flex flex-col mt-4 space-y-2 text-sm text-white">
-                  <p className="hover:opacity-75"> Pendirian SBU-KK </p>
-                  <p className="hover:opacity-75"> PKP Badan Usaha </p>
-                  <p className="hover:opacity-75"> Pembuatan NPWP </p>
-                  <p className="hover:opacity-75"> Pelaporan Pajak </p>
-                  <p className="hover:opacity-75"> LKPM </p>
-                </nav>
-              </div>
-              <div>
-                <nav className="flex flex-col mt-4 space-y-2 text-sm text-white">
-                  <p className="hover:opacity-75"> Pendaftaran HAKI </p>
-                  <p className="hover:opacity-75"> Pendaftaran Hak Cipta </p>
-                  <p className="hover:opacity-75"> Pembuatan Sertifikat ISO </p>
-                  <p className="hover:opacity-75"> Pembuatan IMB </p>
-                  <p className="hover:opacity-75">
-                    {" "}
-                    Pembuatan Sertifikat K3 & SMK3{" "}
-                  </p>
+                  <p className="hover:opacity-75"> Alamat : { setting.alamat } </p>
+                  <p className="hover:opacity-75"> Email: { setting.email }  </p>
+                  <p className="hover:opacity-75"> Telp : { setting.telp } </p>
                 </nav>
               </div>
             </div>
