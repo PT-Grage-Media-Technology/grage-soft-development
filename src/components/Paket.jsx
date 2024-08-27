@@ -61,10 +61,11 @@ export default function Paket() {
       </div>
       <div className="relative flex flex-col items-center px-6 justify-center px-auto mt-4">
         <span className="flex text-center text-gray-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Error magnam
-          beatae assumenda consequuntur numquam iure ad cumque, ut non hic porro
-          dignissimos quod obcaecati debitis culpa eligendi explicabo magni!
-          Perferendis!
+          Paket ini menawarkan layanan lengkap dengan harga yang kompetitif.
+          Setiap paket dirancang untuk memberikan solusi yang sesuai dengan
+          kebutuhan pelanggan, mulai dari layanan dasar hingga yang lebih
+          premium, dengan harga yang variatif tergantung pada jenis dan fitur
+          yang disertakan.
         </span>
       </div>
       <div className="relative flex flex-col items-center px-6 py-2 justify-center lg:px-24">

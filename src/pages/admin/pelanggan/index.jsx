@@ -274,9 +274,6 @@ const Pelanggan = ({ isLoggedIn }) => {
                         Email
                       </th>
                       <th scope="col" className="px-6 py-4">
-                        Password
-                      </th>
-                      <th scope="col" className="px-6 py-4">
                         Action
                       </th>
                     </tr>
@@ -299,9 +296,6 @@ const Pelanggan = ({ isLoggedIn }) => {
 
                         <td className="px-6 py-4 whitespace-nowrap">
                           {item["email"]}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {item["password"]}
                         </td>
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
                           {/* button update */}

@@ -26,6 +26,7 @@ const Setting = () => {
     try {
       // Ambil semua data sekali saja
       const response = await axios.get(`${BASE_URL}/api/setting`);
+     // console.log("tes", response.data.data)
       setAllSetting(response.data.data);
 
       // Filter data berdasarkan pencarian dan pagination
@@ -189,7 +190,7 @@ const Setting = () => {
                           {index + 1}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.settingWarna}
+                          {item.setting_warna}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {item.wa}
@@ -201,7 +202,7 @@ const Setting = () => {
                           {item.email}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {item.profilPerusahaan}
+                          {item.profil_perusahaan}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {item.alamat}
