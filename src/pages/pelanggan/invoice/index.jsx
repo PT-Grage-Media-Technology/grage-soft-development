@@ -86,10 +86,10 @@ export default function Invoice() {
       <Head>
         <title>Data Invoice</title>
       </Head>
-      <div className="flex flex-col bg-white rounded-xl md:-mt-44">
+      <div className="flex flex-col bg-white overflow-x-auto lg:overflow-x-hidden rounded-xl md:-mt-44">
         <div className="sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto lg:overflow-x-hidden">
               {invoices.length > 0 ? (
                 <table className="min-w-full text-sm font-light text-left">
                   <thead className="font-medium border-b dark:border-neutral-500">

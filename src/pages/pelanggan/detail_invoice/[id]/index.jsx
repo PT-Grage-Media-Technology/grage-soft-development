@@ -85,36 +85,40 @@ export default function Invoice() {
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
             <div className="invoice-container p-6 bg-white rounded-md shadow-md">
               {/* Konten invoice */}
+              <div className="grid grid-flow-col">
               <div className="flex justify-between mb-6">
-                <div>
+                <div className="mx-auto lg:mx-12">
                   <h1 className="text-xl font-bold mb-2">
                     {settingData?.profil_perusahaan}
                   </h1>
                   <img
-                    className="w-20 h-20 mx-16 mt-4"
+                    className="w-20 h-20 mx-auto mt-4"
                     src={settingData?.gambar_setting}
                     alt=""
                   />
                 </div>
-                <div className="mx-auto">
+
+                <div className="mx-auto lg:mx-44">
                   <h1 className="text-xl font-bold pb-2">Invoice</h1>
-                  <div className="text-gray-600 grid grid-flow-col">
+                  <div className="text-gray-600 grid grid-cols-2">
                     <div>Referensi</div>
                     <div className="">{invoiceData?.refrensi}</div>
                   </div>
-                  <div className="text-gray-600 grid grid-flow-col">
+                  <div className="text-gray-600 grid grid-cols-2">
                     <div>Tanggal</div>
                     <div className="">{invoiceData?.tanggal}</div>
                   </div>
-                  <div className="text-gray-600 grid grid-flow-col">
-                    <div>Tgl. Jatuh Tempo </div>
+                  <div className="text-gray-600 grid grid-cols-2">
+                    <div>Jatuh Tempo </div>
                     <div className="">{invoiceData?.tgl_jatuh_tempo}</div>
                   </div>
                 </div>
               </div>
+              </div>
+              
 
-              <div className="grid grid-cols-2 pt-6 pb-12">
-                <div className="">
+              <div className="grid grid-flow-row md:grid-flow-row lg:grid-cols-2  pt-6 pb-12">
+                <div className="mt-6 md:mt-6 lg:mt-0 ">
                   <h3 className="font-bold">Informasi Perusahaan</h3>
                   <hr className="border-black w-3/4 mb-4" />
                   <div className="text-gray-600">
@@ -127,7 +131,7 @@ export default function Invoice() {
                   </div>
                 </div>
 
-                <div className="">
+                <div className="mt-6 md:mt-6 lg:mt-0">
                   <h3 className="font-bold">Tagihan Kepada</h3>
                   <hr className="border-black w-3/4 mb-4" />
                   <div className="text-gray-600">
@@ -139,7 +143,7 @@ export default function Invoice() {
                 </div>
               </div>
 
-              <div className="mb-6 mx-auto">
+              <div className="mb-6">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-700 text-white">
                     <tr>
@@ -179,12 +183,12 @@ export default function Invoice() {
                 </table>
               </div>
 
-              <div className="grid grid-flow-col">
+              <div className="grid md:grid-flow-row lg:grid-flow-col">
                 <div className="mt-6">
                   <h3 className="font-bold">Pesan</h3>
-                  <hr className="border-black w-3/4 py-2" />
+                  <hr className="border-black w-5/6 md:w-5/6 lg:w-3/4 py-2" />
                   <textarea
-                    className="w-3/4 border rounded-md p-2"
+                    className="w-5/6 md:w-5/6 lg:w-3/4 border rounded-md p-2"
                     rows="4"
                     placeholder="Tulis pesan di sini..."
                   ></textarea>
