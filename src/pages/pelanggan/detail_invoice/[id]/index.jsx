@@ -122,8 +122,8 @@ export default function Invoice() {
                       Nama Perusahaan : {settingData?.profil_perusahaan}
                     </div>
                     <div>Alamat Perusahaan: {settingData?.alamat}</div>
-                    <div>Telefon Perusahaan : {settingData?.telp}</div>
-                    <div>Email: Perusahaan : {settingData?.email}</div>
+                    <div>Telepon Perusahaan : {settingData?.telp}</div>
+                    <div>Email Perusahaan : {settingData?.email}</div>
                   </div>
                 </div>
 
@@ -131,10 +131,10 @@ export default function Invoice() {
                   <h3 className="font-bold">Tagihan Kepada</h3>
                   <hr className="border-black w-3/4 mb-4" />
                   <div className="text-gray-600">
-                    <div>{customerData?.nama}</div>
-                    <div>{customerData?.alamat}</div>
-                    <div>{customerData?.telp}</div>
-                    <div>{customerData?.email}</div>
+                    <div>Nama Pelanggan : {customerData?.nama}</div>
+                    <div>Alamat Pelanggan : {customerData?.alamat}</div>
+                    <div>Telepon Pelanggan : {customerData?.telp}</div>
+                    <div>Email Pelanggan : {customerData?.email}</div>
                   </div>
                 </div>
               </div>
@@ -208,6 +208,37 @@ export default function Invoice() {
                   <div className="flex justify-between text-lg font-bold mt-2 underline">
                     <div>Total</div>
                     <div>Rp {invoiceData.total.toLocaleString()},00</div>
+                  </div>
+                  <div className="my-12">
+                  <div className="flex justify-center">
+                      <img
+                        className="h-28 w-auto"
+                        src={settingData?.url_foto_cap}
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-center mx-auto text-sm mt-8">
+                        Dengan Hormat, {settingData?.profil_perusahaan}
+                      </h3>
+                    </div>
+                    <div className="flex justify-center mt-12">
+                      <img
+                        className="h-28 w-auto"
+                        src={settingData?.url_foto_ttd}
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-center mx-auto text-md mt-2.5 underline underline-offset-auto">
+                        {settingData?.profil_perusahaan}
+                      </h3>
+                    </div>
+                    <div>
+                      <h3 className="text-center mx-auto text-md mt-1.5">
+                        {settingData?.bidang_perusahaan}
+                      </h3>
+                    </div>
                   </div>
                 </div>
               </div>
