@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Head from "next/head";
 import AdminLayout from "../layouts";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 
 export default function Invoice() {
   const [settingData, setSettingData] = useState(null);
@@ -92,12 +92,22 @@ export default function Invoice() {
   };
 
   const calculateTotals = () => {
-    const subtotal = cartPaketData.reduce((sum, item) => sum + item.harga, 0);
-    const totalDiskon = cartPaketData.reduce(
-      (sum, item) => sum + item.diskon,
-      0,
+    console.log("Cart Paket Data:", cartPaketData);
+
+    const subtotal = cartPaketData.reduce(
+      (sum, item) => sum + (item.harga || 0),
+      0
     );
+    console.log("Subtotal:", subtotal);
+
+    const totalDiskon = cartPaketData.reduce(
+      (sum, item) => sum + ((item.harga || 0) * (item.diskon || 0)) / 100,
+      0
+    );
+    console.log("Total Diskon:", totalDiskon);
+
     const total = subtotal - totalDiskon;
+    console.log("Total:", total);
 
     setInvoiceData((prevData) => ({
       ...prevData,
@@ -235,7 +245,7 @@ export default function Invoice() {
                 </p>
                 <input
                   type="number"
-                  placeholder="Diskon"
+                  placeholder="Diskon (%)"
                   value={item.diskon || 0}
                   onChange={(e) =>
                     handlePackageChange(
@@ -258,41 +268,48 @@ export default function Invoice() {
             <button
               type="button"
               onClick={addPackage}
-              className="bg-blue-500 text-white p-2 rounded mt-2"
+              className="bg-blue-500 text-white p-2 rounded"
             >
-              Tambah Paket Invoice
+              Tambah Paket
             </button>
           </div>
           <div className="mb-4">
             <button
               type="button"
               onClick={calculateTotals}
-              className="bg-green-500 text-white p-2 rounded mr-2"
+              className="bg-green-500 text-white p-2 rounded"
             >
               Hitung Total
             </button>
-            <span className="mr-4">
-              Subtotal: Rp {invoiceData.subtotal.toLocaleString()}
-            </span>
-            <span className="mr-4">
-              Total Diskon: Rp {invoiceData.total_diskon.toLocaleString()}
-            </span>
-            <span>Total: Rp {invoiceData.total.toLocaleString()}</span>
           </div>
-          <div>
+          <div className="mb-4">
+            <p>
+              Subtotal: Rp{" "}
+              {parseFloat(invoiceData.subtotal).toLocaleString("id-ID")},00
+            </p>
+            <p>
+              Diskon: Rp{" "}
+              {parseFloat(invoiceData.total_diskon).toLocaleString("id-ID")},00
+            </p>
+            <p>
+              Total: Rp {parseFloat(invoiceData.total).toLocaleString("id-ID")}
+              ,00
+            </p>
+          </div>
+          <div className="flex gap-4">
             <button
               type="submit"
-              className="bg-blue-500 text-white p-2 rounded mr-2"
+              className="bg-blue-500 text-white p-2 rounded"
             >
               Simpan Invoice
             </button>
-            <button
+            {/* <button
               type="button"
               onClick={handlePrint}
               className="bg-gray-500 text-white p-2 rounded"
             >
-              Print Invoice
-            </button>
+              Cetak
+            </button> */}
           </div>
         </form>
       </div>
