@@ -18,18 +18,25 @@ export default function Invoice() {
     total_diskon: 0,
     total: 0,
   });
+  const [currentReferenceNumber, setCurrentReferenceNumber] = useState(1);
 
   useEffect(() => {
     fetchSettingData();
     fetchCustomerData();
     fetchpaketData();
+    generateNewReference();
   }, []);
+
+  const generateNewReference = () => {
+    const paddedNumber = String(currentReferenceNumber).padStart(3, "0");
+    const newReference = `GMT ENV ${paddedNumber}`;
+    setInvoiceData((prevData) => ({ ...prevData, refrensi: newReference }));
+  };
 
   const fetchSettingData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/api/setting`);
       setSettingData(response.data.data[0]);
-      console.log("setting", response.data.data);
     } catch (error) {
       console.error("Error fetching setting data:", error);
     }
@@ -38,7 +45,6 @@ export default function Invoice() {
   const fetchCustomerData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/api/pelanggan`);
-      console.log("Pelanggan", response.data);
       setCustomerData(response.data);
     } catch (error) {
       console.error("Error fetching customer data:", error);
@@ -92,22 +98,17 @@ export default function Invoice() {
   };
 
   const calculateTotals = () => {
-    console.log("Cart Paket Data:", cartPaketData);
-
     const subtotal = cartPaketData.reduce(
       (sum, item) => sum + (item.harga || 0),
       0
     );
-    console.log("Subtotal:", subtotal);
 
     const totalDiskon = cartPaketData.reduce(
       (sum, item) => sum + ((item.harga || 0) * (item.diskon || 0)) / 100,
       0
     );
-    console.log("Total Diskon:", totalDiskon);
 
     const total = subtotal - totalDiskon;
-    console.log("Total:", total);
 
     setInvoiceData((prevData) => ({
       ...prevData,
@@ -147,14 +148,14 @@ export default function Invoice() {
 
       console.log("Invoice and cart packages saved:", invoiceResponse.data);
       alert("Invoice berhasil disimpan");
+
+      // Increment the reference number for the next invoice
+      setCurrentReferenceNumber((prevNumber) => prevNumber + 1);
+      generateNewReference();
     } catch (error) {
       console.error("Error creating invoice or updating cart:", error);
       alert("Terjadi kesalahan saat menyimpan invoice: " + error.message);
     }
-  };
-
-  const handlePrint = () => {
-    window.print();
   };
 
   return (
@@ -193,13 +194,13 @@ export default function Invoice() {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block mb-2">Referensi</label>
+            <label className="block mb-2">Refrensi</label>
             <input
               type="text"
               name="refrensi"
               value={invoiceData.refrensi}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
+              readOnly
+              className="w-full p-2 border rounded bg-gray-100"
             />
           </div>
           <div className="mb-4">
@@ -303,13 +304,6 @@ export default function Invoice() {
             >
               Simpan Invoice
             </button>
-            {/* <button
-              type="button"
-              onClick={handlePrint}
-              className="bg-gray-500 text-white p-2 rounded"
-            >
-              Cetak
-            </button> */}
           </div>
         </form>
       </div>
