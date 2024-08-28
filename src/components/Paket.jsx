@@ -59,7 +59,7 @@ export default function Paket() {
           Paket dan Harga
         </h1>
       </div>
-      <div className="relative flex flex-col items-center px-6 justify-center px-auto mt-4">
+      <div className="relative flex flex-col items-center px-6 justify-center mx-auto mt-4">
         <span className="flex text-center text-gray-500">
           Paket ini menawarkan layanan lengkap dengan harga yang kompetitif.
           Setiap paket dirancang untuk memberikan solusi yang sesuai dengan

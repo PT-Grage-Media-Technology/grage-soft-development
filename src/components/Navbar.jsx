@@ -39,10 +39,7 @@ export default function Navbar() {
                 alt=""
               />
             </Link>
-            <button
-              onClick={toggleNavbar}
-              className="rounded-lg lg:hidden focus:outline-none focus:shadow-outline"
-            >
+            <button onClick={toggleNavbar} className="rounded-lg lg:hidden ">
               <svg fill="currentColor" viewBox="0 0 20 20" className="w-6 h-6">
                 {isOpen ? (
                   <path
@@ -68,40 +65,48 @@ export default function Navbar() {
             <Link
               href={"/"}
               className={`nav-link ${
-                router.pathname === "/" ? "font-bold text-white" : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
+                router.pathname === "/" ? "font-bold text-white underline" : ""
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus `}
             >
               HOME
             </Link>
             <Link
               href={"/paket"}
               className={`nav-link ${
-                router.pathname === "/paket" ? "font-bold text-white" : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
+                router.pathname === "/paket"
+                  ? "font-bold text-white underline"
+                  : ""
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus `}
             >
               HARGA WEB
             </Link>
             <Link
               href={"/pesan_web"}
               className={`nav-link ${
-                router.pathname === "/pesan_web" ? "font-bold text-white" : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
+                router.pathname === "/pesan_web"
+                  ? "font-bold text-white underline"
+                  : ""
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus `}
             >
               CARA PESAN WEB
             </Link>
             <Link
               href={"/klien"}
               className={`nav-link ${
-                router.pathname === "/klien" ? "font-bold text-white" : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
+                router.pathname === "/klien"
+                  ? "font-bold text-white underline"
+                  : ""
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus `}
             >
               KLIEN KAMI
             </Link>
             <Link
               href={"/pembayaran"}
               className={`nav-link ${
-                router.pathname === "/pembayaran" ? "font-bold text-white" : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
+                router.pathname === "/pembayaran"
+                  ? "font-bold text-white underline"
+                  : ""
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus `}
             >
               PEMBAYARAN
             </Link>
@@ -109,17 +114,19 @@ export default function Navbar() {
               href={"/testimoni_klien"}
               className={`nav-link ${
                 router.pathname === "/testimoni_klien"
-                  ? "font-bold text-white"
+                  ? "font-bold text-white underline"
                   : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus `}
             >
               TESTIMONI KLIEN
             </Link>
             <Link
               href={"/kontak_kami"}
               className={`nav-link ${
-                router.pathname === "/kontak_kami" ? "font-bold text-white" : ""
-              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus focus:outline-none focus:shadow-outline`}
+                router.pathname === "/kontak_kami"
+                  ? "font-bold text-white underline"
+                  : ""
+              } px-1 py-2 mt-2 text-sm font-bold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-white focus:underline underline-offset-8 focus:text-white focus `}
             >
               KONTAK KAMI
             </Link>
