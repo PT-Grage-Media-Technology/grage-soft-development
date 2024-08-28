@@ -5,61 +5,43 @@ import PelangganLayout from "../layouts";
 import { useCookies } from "react-cookie";
 import Link from "next/link";
 import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
+import CekRole from "@/components/CekRole";
 
 export default function Invoice() {
   const [cookies] = useCookies(["token"]);
-  const [settingData, setSettingData] = useState(null);
   const [invoices, setInvoices] = useState([]);
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [noInvoicesMessage, setNoInvoicesMessage] = useState("");
+
+  const roleId = CekRole(); // Pastikan CekRole mengembalikan ID yang valid
 
   useEffect(() => {
-    if (cookies.token) {
-      fetchInvoiceData(), fetchSettingData();
+    if (cookies.token && roleId) {
+      fetchInvoiceData(); // Panggil fungsi untuk mengambil data invoice
     }
-  }, [cookies.token]);
+  }, [cookies.token, roleId]);
 
-  const fetchUserData = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/api/authpelanggan/me`, {
-        headers: {
-          Authorization: `Bearer ${cookies.token}`,
-        },
-      });
-      setUser(response.data);
-      fetchSettingData();
-      fetchInvoiceData(response.data.id);
-      console.log("coba", response.data.id);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      setError("Failed to fetch user data.");
-      setLoading(false);
-    }
-  };
-
-  const fetchSettingData = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/api/setting`);
-      setSettingData(response.data.data[0]);
-    } catch (error) {
-      console.error("Error fetching setting data:", error);
-      setError("Failed to fetch setting data.");
-    }
-  };
-
-  const fetchInvoiceData = async (userId) => {
+  const fetchInvoiceData = async () => {
     setLoading(true);
     setError(null);
+    setNoInvoicesMessage(""); // Reset pesan tidak ada invoice
     try {
-      const response = await axios.get(`${BASE_URL}/api/invoice`, {
-        params: { userId },
-      });
+      const response = await axios.get(
+        `${BASE_URL}/api/invoice/user/${roleId}`
+      );
       console.log("invoice", response.data);
-      setInvoices(response.data);
+
+      // Jika respons mengandung pesan bahwa tidak ada invoice
+      if (response.data.message === "No invoices found for this user") {
+        setNoInvoicesMessage("Tidak ada data invoice untuk pengguna ini.");
+        setInvoices([]);
+      } else {
+        setInvoices(response.data);
+      }
     } catch (error) {
       console.error("Error fetching invoice data:", error);
-      setError("Failed to fetch invoice data.");
+      setError("Anda tidak memiliki invoice");
     } finally {
       setLoading(false);
     }
@@ -90,7 +72,9 @@ export default function Invoice() {
         <div className="sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
             <div className="overflow-x-auto lg:overflow-x-hidden">
-              {invoices.length > 0 ? (
+              {noInvoicesMessage ? (
+                <div>{noInvoicesMessage}</div>
+              ) : invoices.length > 0 ? (
                 <table className="min-w-full text-sm font-light text-left">
                   <thead className="font-medium border-b dark:border-neutral-500">
                     <tr>

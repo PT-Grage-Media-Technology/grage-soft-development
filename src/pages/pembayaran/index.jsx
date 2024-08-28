@@ -85,7 +85,6 @@ export default function Pembayaran() {
               alt={item.image_bank}
               className="mb-4 w-32 h-32 object-contain mx-auto aspect-square"
             />
-            {item.url_image_bank}
             <h2 className="text-xl font-semibold mb-2 text-center">
               {item.nama_rek}
             </h2>

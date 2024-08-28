@@ -22,7 +22,7 @@ export default function Login() {
 
     if (!email) return; // Jika email tidak diisi, jangan melanjutkan pengiriman formulir
     if (!password) return; // Jika password tidak diisi, jangan melanjutkan pengiriman formulir
-
+    
     try {
       const response = await axios.post(`${BASE_URL}/api/auth/login`, {
         email,

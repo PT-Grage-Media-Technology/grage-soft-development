@@ -13,27 +13,39 @@ const CekRole = () => {
     const fetchDataRole = async () => {
       const token = cookies.token;
 
+      if (!token) {
+        router.push("/auth/login");
+        return;
+      }
+
       const config = {
         headers: {
           Authorization: `${token}`,
         },
       };
 
-      try {
-        const response = await axios.get(
-          `${BASE_URL}/api/auth/cekToken/`,
-          config
-        );
+      // Tentukan endpoint berdasarkan URL saat ini
+      const currentUrl = window.location.href;
+      const endpoint = router.pathname === "/pelanggan/invoice"
+        ? `${BASE_URL}/api/authpelanggan/cekToken/`
+        : `${BASE_URL}/api/auth/cekToken/`;
 
-        if (response.status === 200) {
-          console.log("cekRole", response.data.role);
-          setRole(response.data.role);
+
+      try {
+        const response = await axios.get(endpoint, config);
+
+           // Log seluruh respons untuk melihat data yang dikembalikan
+           console.log("Full Response:", response);
+
+        if (response.status === 200 && response.data.id ) {
+          console.log("cekRole", response.data.id);
+          setRole(response.data.id);
         } else {
-          // console.error(response);
+          console.error("Unexpected response status:", response.status);
+          router.push("/auth/login");
         }
       } catch (error) {
-        // console.error(error);
-        // error karena ngambil dari JWT lain
+        console.error("Error checking token:", error);
         if (
           error.response &&
           error.response.data &&
@@ -42,7 +54,7 @@ const CekRole = () => {
           router.push("/auth/login");
         } else {
           console.error("Unexpected error:", error);
-          // Anda bisa menambahkan penanganan error lainnya di sini
+          // Tambahkan penanganan error lainnya jika diperlukan
         }
       }
     };
