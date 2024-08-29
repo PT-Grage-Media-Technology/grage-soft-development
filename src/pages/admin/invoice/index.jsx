@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Head from "next/head";
 import AdminLayout from "../layouts";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 
 export default function Invoice() {
   const [settingData, setSettingData] = useState(null);
@@ -18,18 +18,25 @@ export default function Invoice() {
     total_diskon: 0,
     total: 0,
   });
+  const [currentReferenceNumber, setCurrentReferenceNumber] = useState(1);
 
   useEffect(() => {
     fetchSettingData();
     fetchCustomerData();
     fetchpaketData();
+    generateNewReference();
   }, []);
+
+  const generateNewReference = () => {
+    const paddedNumber = String(currentReferenceNumber).padStart(3, "0");
+    const newReference = `GMT ENV ${paddedNumber}`;
+    setInvoiceData((prevData) => ({ ...prevData, refrensi: newReference }));
+  };
 
   const fetchSettingData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/api/setting`);
       setSettingData(response.data.data[0]);
-      console.log("setting", response.data.data);
     } catch (error) {
       console.error("Error fetching setting data:", error);
     }
@@ -38,7 +45,6 @@ export default function Invoice() {
   const fetchCustomerData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/api/pelanggan`);
-      console.log("Pelanggan", response.data);
       setCustomerData(response.data);
     } catch (error) {
       console.error("Error fetching customer data:", error);
@@ -92,11 +98,16 @@ export default function Invoice() {
   };
 
   const calculateTotals = () => {
-    const subtotal = cartPaketData.reduce((sum, item) => sum + item.harga, 0);
-    const totalDiskon = cartPaketData.reduce(
-      (sum, item) => sum + item.diskon,
-      0,
+    const subtotal = cartPaketData.reduce(
+      (sum, item) => sum + (item.harga || 0),
+      0
     );
+
+    const totalDiskon = cartPaketData.reduce(
+      (sum, item) => sum + ((item.harga || 0) * (item.diskon || 0)) / 100,
+      0
+    );
+
     const total = subtotal - totalDiskon;
 
     setInvoiceData((prevData) => ({
@@ -137,14 +148,14 @@ export default function Invoice() {
 
       console.log("Invoice and cart packages saved:", invoiceResponse.data);
       alert("Invoice berhasil disimpan");
+
+      // Increment the reference number for the next invoice
+      setCurrentReferenceNumber((prevNumber) => prevNumber + 1);
+      generateNewReference();
     } catch (error) {
       console.error("Error creating invoice or updating cart:", error);
       alert("Terjadi kesalahan saat menyimpan invoice: " + error.message);
     }
-  };
-
-  const handlePrint = () => {
-    window.print();
   };
 
   return (
@@ -183,13 +194,13 @@ export default function Invoice() {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block mb-2">Referensi</label>
+            <label className="block mb-2">Refrensi</label>
             <input
               type="text"
               name="refrensi"
               value={invoiceData.refrensi}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
+              readOnly
+              className="w-full p-2 border rounded bg-gray-100"
             />
           </div>
           <div className="mb-4">
@@ -235,7 +246,7 @@ export default function Invoice() {
                 </p>
                 <input
                   type="number"
-                  placeholder="Diskon"
+                  placeholder="Diskon (%)"
                   value={item.diskon || 0}
                   onChange={(e) =>
                     handlePackageChange(
@@ -258,40 +269,40 @@ export default function Invoice() {
             <button
               type="button"
               onClick={addPackage}
-              className="bg-blue-500 text-white p-2 rounded mt-2"
+              className="bg-blue-500 text-white p-2 rounded"
             >
-              Tambah Paket Invoice
+              Tambah Paket
             </button>
           </div>
           <div className="mb-4">
             <button
               type="button"
               onClick={calculateTotals}
-              className="bg-green-500 text-white p-2 rounded mr-2"
+              className="bg-green-500 text-white p-2 rounded"
             >
               Hitung Total
             </button>
-            <span className="mr-4">
-              Subtotal: Rp {invoiceData.subtotal.toLocaleString()}
-            </span>
-            <span className="mr-4">
-              Total Diskon: Rp {invoiceData.total_diskon.toLocaleString()}
-            </span>
-            <span>Total: Rp {invoiceData.total.toLocaleString()}</span>
           </div>
-          <div>
+          <div className="mb-4">
+            <p>
+              Subtotal: Rp{" "}
+              {parseFloat(invoiceData.subtotal).toLocaleString("id-ID")},00
+            </p>
+            <p>
+              Diskon: Rp{" "}
+              {parseFloat(invoiceData.total_diskon).toLocaleString("id-ID")},00
+            </p>
+            <p>
+              Total: Rp {parseFloat(invoiceData.total).toLocaleString("id-ID")}
+              ,00
+            </p>
+          </div>
+          <div className="flex gap-4">
             <button
               type="submit"
-              className="bg-blue-500 text-white p-2 rounded mr-2"
+              className="bg-blue-500 text-white p-2 rounded"
             >
               Simpan Invoice
-            </button>
-            <button
-              type="button"
-              onClick={handlePrint}
-              className="bg-gray-500 text-white p-2 rounded"
-            >
-              Print Invoice
             </button>
           </div>
         </form>

@@ -85,7 +85,7 @@ export default function Invoice() {
                         Nama Kategori
                       </th>
                       <th scope="col" className="px-12 py-4">
-                        Action
+                        Print Di Sini
                       </th>
                     </tr>
                   </thead>
@@ -109,7 +109,12 @@ export default function Invoice() {
                                 className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white font-semibold rounded-full shadow-sm bg-orange-400 hover:bg-orange-600"
                                 aria-label="edit"
                               >
-                                Detail
+                                <i class="fa-solid fa-info"></i>
+                              </div>
+                            </Link>
+                            <Link href={"#"}>
+                              <div className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white font-semibold rounded-full shadow-sm bg-orange-400 hover:bg-orange-600">
+                                <i class="fa-solid fa-print"></i>
                               </div>
                             </Link>
                           </td>
