@@ -61,7 +61,9 @@ export default function Layanan() {
         </div>
       </div>
 
-      <img src={setting.gambar_setting} alt="" />
+      <div className="flex justify-center my-8">
+        <img className="h-96 w-auto" src={setting.gambar_setting} alt="" />
+      </div>
 
       <div className="grid grid-5 justify-start pt-9">
         <div className="flex ps-8">
