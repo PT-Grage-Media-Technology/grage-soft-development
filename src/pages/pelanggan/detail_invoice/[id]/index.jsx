@@ -12,6 +12,7 @@ export default function Invoice() {
   const [cookies] = useCookies(["token"]); // Ambil cookie
   const [settingData, setSettingData] = useState(null);
   const [customerData, setCustomerData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [cartPaketData, setCartPaketData] = useState([]);
   const [invoiceData, setInvoiceData] = useState({
     refrensi: "",
@@ -56,14 +57,31 @@ export default function Invoice() {
     }
   }, [id]); // Tambahkan id sebagai dependency
 
-  const handlePrint = () => {
-    window.print();
-  };
+  // const handlePrint = () => {
+  //   window.print();
+  // };
 
+  useEffect(() => {
+    const handlePrint = () => {
+      if (!loading && invoiceData) {
+        window.print();
+      }
+    };
+
+    if (window.opener && !window.opener.closed) {
+      if (!loading && invoiceData) {
+        setTimeout(handlePrint, 1000); // Delay print by 1 second
+      }
+    }
+  }, [loading, invoiceData]);
   return (
     <PelangganLayout>
       <Head>
-        <title>Invoice</title>
+        <title>Invoice Detail </title>
+        <style type="text/css" media="print">{`
+    @page { size: auto; margin: 20mm; }
+    body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  `}</style>
       </Head>
       <style jsx global>{`
         @media print {
@@ -186,21 +204,25 @@ export default function Invoice() {
                 <div className="grid md:grid-flow-row lg:flex-row lg:flex lg:mx-auto lg:mt-8">
                   <div className="flex justify-center mx-6 my-auto">
                     <img
-                    className="h-28 w-auto"
-                    src={settingData?.url_foto_cap}
-                    alt=""
-                   />
+                      className="h-28 w-auto"
+                      src={settingData?.url_foto_cap}
+                      alt=""
+                    />
                   </div>
                   <div className="grid flow-row my-auto md:me-0 lg:me-6">
-                    <h3 className="text-sm text-center mb-2">Dengan Hormat, {settingData?.profil_perusahaan}</h3>
+                    <h3 className="text-sm text-center mb-2">
+                      Dengan Hormat, {settingData?.profil_perusahaan}
+                    </h3>
                     <div className="flex justify-center">
-                       <img
+                      <img
                         className="h-28 w-auto"
                         src={settingData?.url_foto_ttd}
                         alt=""
-                     />
-                  </div>
-                  <h3 className="text-sm text-center mt-4">{settingData?.profil_perusahaan}</h3>
+                      />
+                    </div>
+                    <h3 className="text-sm text-center mt-4">
+                      {settingData?.profil_perusahaan}
+                    </h3>
                   </div>
                 </div>
 
@@ -226,14 +248,14 @@ export default function Invoice() {
                 </div>
               </div>
 
-              <div className="flex justify-end mt-6 no-print">
+              {/* <div className="flex justify-end mt-6 no-print">
                 <button
                   onClick={handlePrint}
                   className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none"
                 >
                   Cetak Invoice
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
