@@ -32,7 +32,7 @@ export default function Sidebar() {
           Authorization: `${token}`,
         },
       };
-      await axios.post(`${BASE_URL}/api/auth/logout`, null, config);
+      await axios.post(`${BASE_URL}/api/authpelanggan/logout`, null, config);
       deleteCookie("token");
       router.push("/auth_pelanggan/login");
     } catch (error) {}

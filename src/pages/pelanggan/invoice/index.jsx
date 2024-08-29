@@ -63,6 +63,31 @@ export default function Invoice() {
     );
   }
 
+  const handlePrint = (id) => {
+    const printWindow = window.open(
+      `/pelanggan/detail_invoice/${id}`,
+      "_blank",
+      "width=800,height=600"
+    );
+
+    if (printWindow) {
+      printWindow.onPrintReady = () => {
+        setTimeout(() => {
+          try {
+            printWindow.print();
+          } catch (error) {
+            console.error("Error printing:", error);
+            alert("Terjadi kesalahan saat mencetak. Silakan coba lagi.");
+          }
+        }, 1000); // Delay untuk memastikan rendering selesai
+      };
+    } else {
+      alert(
+        "Tidak dapat membuka jendela cetak. Pastikan popup tidak diblokir."
+      );
+    }
+  };
+
   return (
     <PelangganLayout>
       <Head>
@@ -112,11 +137,11 @@ export default function Invoice() {
                                 <i class="fa-solid fa-info"></i>
                               </div>
                             </Link>
-                            <Link href={"#"}>
+                            <button onClick={() => handlePrint(invoice.id)}>
                               <div className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white font-semibold rounded-full shadow-sm bg-orange-400 hover:bg-orange-600">
                                 <i class="fa-solid fa-print"></i>
                               </div>
-                            </Link>
+                            </button>
                           </td>
                         </tr>
                       ))
