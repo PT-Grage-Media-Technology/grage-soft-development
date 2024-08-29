@@ -202,18 +202,18 @@ export default function Invoice() {
 
               <div className="grid md:grid-flow-row lg:grid-flow-col">
                 <div className="grid md:grid-flow-row lg:flex-row lg:flex lg:mx-auto lg:mt-8">
-                  <div className="flex justify-center mx-6 my-auto">
-                    <img
-                      className="h-28 w-auto"
-                      src={settingData?.url_foto_cap}
-                      alt=""
-                    />
-                  </div>
                   <div className="grid flow-row my-auto md:me-0 lg:me-6">
                     <h3 className="text-sm text-center mb-2">
                       Dengan Hormat, {settingData?.profil_perusahaan}
                     </h3>
                     <div className="flex justify-center">
+                      <div className="flex justify-center mx-6 my-auto">
+                        <img
+                          className="h-28 w-auto"
+                          src={settingData?.url_foto_cap}
+                          alt=""
+                        />
+                      </div>
                       <img
                         className="h-28 w-auto"
                         src={settingData?.url_foto_ttd}
