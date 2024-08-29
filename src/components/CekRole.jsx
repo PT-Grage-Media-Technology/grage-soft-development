@@ -14,7 +14,7 @@ const CekRole = () => {
       const token = cookies.token;
 
       if (!token) {
-        router.push("/auth/login");
+        router.push("/auth_pelanggan/login");
         return;
       }
 
