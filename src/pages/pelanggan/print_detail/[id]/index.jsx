@@ -75,14 +75,14 @@ export default function Invoice() {
     }
   }, [loading, invoiceData]);
   return (
-    <PelangganLayout>
+    <>
       <Head>
         {/* tes */}
         <title>Invoice Detail </title>
         <style type="text/css" media="print">{`
           @page {
-            size: A4; /* Mengatur ukuran halaman cetak menjadi A4 */
-            margin: 10mm;
+            size: A5;
+            margin: 7mm;
           }
           body {
             print-color-adjust: exact;
@@ -312,6 +312,6 @@ export default function Invoice() {
           </div>
         </div>
       </div>
-    </PelangganLayout>
+    </>
   );
 }
