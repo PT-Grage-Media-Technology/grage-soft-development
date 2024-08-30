@@ -118,6 +118,7 @@ export default function Invoice() {
             grid-template-columns: repeat(2, 1fr); /* Membuat dua kolom */
             gap: 20px; /* Menambahkan jarak antar item */
             margin-bottom: 20px; /* Menambahkan margin bawah */
+            margin-left: -20px; /* Menggeser ke kiri dengan margin negatif */
           }
 
           .invoice-total {
@@ -250,7 +251,7 @@ export default function Invoice() {
               </div>
 
               <div className="invoice-items grid md:grid-flow-row lg:grid-flow-col">
-                <div className="grid md:grid-flow-row lg:flex-row lg:flex lg:mx-auto lg:mt-8">
+                <div className="grid md:grid-flow-row lg:flex-row lg:flex lg:mx-12 lg:mt-8">
                   <div className="grid flow-row my-auto md:me-0">
                     <div>
                       <h3 className="text-sm text-center mb-2">
