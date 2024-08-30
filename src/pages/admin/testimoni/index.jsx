@@ -109,13 +109,13 @@ const Testimoni = () => {
           />
           <Link
             href={"/admin/testimoni/add"}
-            className="z-10 flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400 i tems-center text-end hover:bg-orange-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-green-500"
+            className="flex items-center gap-1 px-4 py-2 text-white rounded-md shadow-sm bg-orange-400 hover:bg-orange-600"
           >
             <i className="fa-solid fa-plus"></i>
             Testimoni
           </Link>
         </div>
-        <div className="flex flex-col overflow-x-auto lg:overflow-x-hidden bg-white rounded-xl">
+        <div className="flex flex-col overflow-x-auto  bg-white rounded-xl">
           <div className=" sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
               <div className="overflow-x-auto">
