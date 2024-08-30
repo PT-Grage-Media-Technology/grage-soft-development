@@ -65,7 +65,7 @@ export default function Invoice() {
 
   const handlePrint = (id) => {
     const printWindow = window.open(
-      `/pelanggan/detail_invoice/${id}?print=true`,
+      `/pelanggan/print_detail/${id}?print=true`,
       "_blank",
       "width=800,height=600"
     );
