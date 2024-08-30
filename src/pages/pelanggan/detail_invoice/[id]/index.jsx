@@ -135,7 +135,7 @@ export default function Invoice() {
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
             <div className="invoice-container p-6 bg-white rounded-md shadow-md">
               {/* Konten invoice */}
-              <div className="grid grid-flow-col">
+              <div className="invoice-header grid grid-flow-col">
                 <div className="flex justify-between mb-6">
                   <div className="mx-auto lg:mx-12">
                     <h1 className="text-xl font-bold mb-2">
@@ -166,7 +166,7 @@ export default function Invoice() {
                 </div>
               </div>
 
-              <div className="grid grid-flow-row md:grid-flow-row lg:grid-cols-2  pt-6 pb-12">
+              <div className="invoice-items grid grid-flow-row md:grid-flow-row lg:grid-cols-2  pt-6 pb-12">
                 <div className="mt-6 md:mt-6 lg:mt-0 ">
                   <h3 className="font-bold">Informasi Perusahaan</h3>
                   <hr className="border-black w-3/4 mb-4" />
@@ -192,7 +192,7 @@ export default function Invoice() {
                 </div>
               </div>
 
-              <div className="mb-6">
+              <div className="invoice-item mb-6">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-700 text-white">
                     <tr>
@@ -232,7 +232,7 @@ export default function Invoice() {
                 </table>
               </div>
 
-              <div className="grid md:grid-flow-row lg:grid-flow-col">
+              <div className="invoice-item grid md:grid-flow-row lg:grid-flow-col">
                 <div className="grid md:grid-flow-row lg:flex-row lg:flex lg:mx-auto lg:mt-8">
                   <div className="grid flow-row my-auto md:me-0">
                     <div>
@@ -260,7 +260,7 @@ export default function Invoice() {
                   </div>
                 </div>
 
-                <div className="grid grid-flow-row mt-4">
+                <div className="invoice-total grid grid-flow-row mt-4">
                   <div className="flex justify-between text-sm font-semibold mt-2">
                     <div>Subtotal</div>
                     <div>Rp {invoiceData.subtotal.toLocaleString()},00</div>
