@@ -81,7 +81,7 @@ export default function Invoice() {
         <title>Invoice Detail </title>
         <style type="text/css" media="print">{`
           @page {
-            size: landscape;
+            size: A4; /* Mengatur ukuran halaman cetak menjadi A4 */
             margin: 10mm;
           }
           body {
@@ -90,28 +90,40 @@ export default function Invoice() {
           }
           #printable-content {
             width: 100%;
-            height: 100%;
+            height: auto; /* Mengubah height menjadi auto untuk menghindari overflow */
             display: flex;
             flex-direction: column;
+            font-family: Arial, sans-serif; /* Menambahkan font untuk tampilan lebih baik */
           }
           .invoice-header {
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
+            border-bottom: 2px solid #000; /* Menambahkan garis bawah untuk header */
+            padding-bottom: 10px; /* Menambahkan padding bawah */
+            padding-left: 10px; /* Menambahkan padding kiri */
+            padding-right: 10px; /* Menambahkan padding kanan */
           }
+          .invoice-header h1 {
+            font-size: 1.5em; /* Menyesuaikan ukuran font untuk header */
+            margin: 0; /* Menghilangkan margin untuk menghindari tumpang tindih */
+          }
+          .invoice-header img {
+            max-width: 100px; /* Membatasi lebar gambar agar tidak terlalu besar */
+            height: auto; /* Menjaga proporsi gambar */
+          }
+
           .invoice-items {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
+            display: grid; /* Ubah dari flex ke grid */
+            grid-template-columns: repeat(2, 1fr); /* Membuat dua kolom */
+            gap: 20px; /* Menambahkan jarak antar item */
+            margin-bottom: 20px; /* Menambahkan margin bawah */
           }
-          .invoice-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-          }
+
           .invoice-total {
             align-self: flex-end;
             margin-top: 20px;
+            font-weight: bold; /* Menebalkan total */
           }
         `}</style>
       </Head>
@@ -128,6 +140,11 @@ export default function Invoice() {
             box-shadow: none;
             width: 100%;
           }
+          .invoice-item th,
+          .invoice-item td {
+            padding: 8px; /* Menambahkan padding untuk tabel */
+            text-align: center; /* Menyelaraskan teks ke tengah */
+          }
         }
       `}</style>
       <div className="flex flex-col overflow-hidden bg-white rounded-xl md:-mt-44">
@@ -135,7 +152,7 @@ export default function Invoice() {
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
             <div className="invoice-container p-6 bg-white rounded-md shadow-md">
               {/* Konten invoice */}
-              <div className="invoice-header grid grid-flow-col">
+              <div className="grid grid-flow-col">
                 <div className="flex justify-between mb-6">
                   <div className="mx-auto lg:mx-12">
                     <h1 className="text-xl font-bold mb-2">
@@ -232,7 +249,7 @@ export default function Invoice() {
                 </table>
               </div>
 
-              <div className="invoice-item grid md:grid-flow-row lg:grid-flow-col">
+              <div className="invoice-items grid md:grid-flow-row lg:grid-flow-col">
                 <div className="grid md:grid-flow-row lg:flex-row lg:flex lg:mx-auto lg:mt-8">
                   <div className="grid flow-row my-auto md:me-0">
                     <div>
@@ -260,7 +277,7 @@ export default function Invoice() {
                   </div>
                 </div>
 
-                <div className="invoice-total grid grid-flow-row mt-4">
+                <div className="grid grid-flow-row mt-4 flex-grow">
                   <div className="flex justify-between text-sm font-semibold mt-2">
                     <div>Subtotal</div>
                     <div>Rp {invoiceData.subtotal.toLocaleString()},00</div>
