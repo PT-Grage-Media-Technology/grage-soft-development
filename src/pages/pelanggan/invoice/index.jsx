@@ -65,21 +65,27 @@ export default function Invoice() {
 
   const handlePrint = (id) => {
     const printWindow = window.open(
-      `/pelanggan/detail_invoice/${id}`,
+      `/pelanggan/detail_invoice/${id}?print=true`,
       "_blank",
       "width=800,height=600"
     );
 
     if (printWindow) {
-      printWindow.onPrintReady = () => {
-        setTimeout(() => {
-          try {
+      const checkPrintReady = setInterval(() => {
+        if (printWindow.document.readyState === "complete") {
+          clearInterval(checkPrintReady);
+          printWindow.focus(); // Fokus ke jendela baru
+          setTimeout(() => {
             printWindow.print();
-          } catch (error) {
-            console.error("Error printing:", error);
-            alert("Terjadi kesalahan saat mencetak. Silakan coba lagi.");
-          }
-        }, 1000); // Delay untuk memastikan rendering selesai
+          }, 1000); // Delay untuk memastikan rendering selesai
+        }
+      }, 100);
+
+      printWindow.onerror = (error) => {
+        console.error("Error in print window:", error);
+        alert(
+          "Terjadi kesalahan saat memuat halaman cetak. Silakan coba lagi."
+        );
       };
     } else {
       alert(

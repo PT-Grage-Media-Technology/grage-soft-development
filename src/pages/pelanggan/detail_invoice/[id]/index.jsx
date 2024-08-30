@@ -63,7 +63,7 @@ export default function Invoice() {
 
   useEffect(() => {
     const handlePrint = () => {
-      if (!loading && invoiceData) {
+      if (!loading && invoiceData && print === "true") {
         window.print();
       }
     };
@@ -79,9 +79,40 @@ export default function Invoice() {
       <Head>
         <title>Invoice Detail </title>
         <style type="text/css" media="print">{`
-    @page { size: auto; margin: 20mm; }
-    body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-  `}</style>
+          @page {
+            size: landscape;
+            margin: 10mm;
+          }
+          body {
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
+          }
+          #printable-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+          }
+          .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+          }
+          .invoice-items {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+          }
+          .invoice-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+          }
+          .invoice-total {
+            align-self: flex-end;
+            margin-top: 20px;
+          }
+        `}</style>
       </Head>
       <style jsx global>{`
         @media print {
