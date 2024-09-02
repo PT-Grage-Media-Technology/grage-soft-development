@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { BASE_URL } from '../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../components/layoutsAdmin/apiConfig";
 
 export default function Footer() {
   const [loading, setLoading] = useState(true);
@@ -11,9 +11,7 @@ export default function Footer() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/api/setting`
-        );
+        const response = await axios.get(`${BASE_URL}/api/setting`);
         setSetting(response.data.data[0]);
         console.log(response.data.data[0]);
       } catch (error) {
@@ -27,33 +25,6 @@ export default function Footer() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch("https://192.168.30.40:5000/api/tentang");
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch data");
-  //       }
-  //       const data = await response.json();
-  //       setTentang(data.data.data);
-  //     } catch (error) {
-  //       console.error("Error fetching data Tentang:", error);
-  //       setError(error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>Error: {error.message}</div>;
-  // }
   return (
     <>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -66,19 +37,7 @@ export default function Footer() {
 
       <footer className="bg-blue-500">
         <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
-            {/* {[Tentang[0]].map((item, index) => (
-              <div key={item.id}>
-                <p className="font-bold text-white">TENTANG KAMI</p>
-                <p className="max-w-xs mt-4 text-sm text-white">
-                  {item.attributes.tentang.split(" ").slice(0, 20).join(" ")}
-                  <Link href={"/tentang"} className="text-sm text-black">
-                    Lihat Selengkapnya
-                  </Link>
-                </p>
-              </div>
-            ))} */}
-
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             <div className="grid grid-cols-1 gap-8 lg:col-span-2 md:grid-cols-2 ">
               <div>
                 <p className="font-bold text-white">MENU</p>
@@ -113,10 +72,24 @@ export default function Footer() {
               <div>
                 <p className="font-bold text-white">Contact Us</p>
                 <nav className="flex flex-col mt-4 space-y-2 text-sm text-white">
-                  <p className="hover:opacity-75"> Alamat : { setting.alamat } </p>
-                  <p className="hover:opacity-75"> Email: { setting.email }  </p>
-                  <p className="hover:opacity-75"> Telp : { setting.telp } </p>
+                  <p className="hover:opacity-75">
+                    {" "}
+                    Alamat : {setting.alamat}{" "}
+                  </p>
+                  <p className="hover:opacity-75"> Email: {setting.email} </p>
+                  <p className="hover:opacity-75"> Telp : 0{setting.telp} </p>
                 </nav>
+              </div>
+            </div>
+
+            {/* Menambahkan peta Google Maps menggunakan link embed */}
+            <div>
+              <p className="font-bold text-white">Lokasi Kami</p>
+              <div className="mt-4">
+                <iframe
+                  src={setting.url_gmaps}
+                  className="w-full h-64"
+                ></iframe>
               </div>
             </div>
           </div>

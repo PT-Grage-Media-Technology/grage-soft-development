@@ -27,10 +27,29 @@ export default function Invoice() {
     generateNewReference();
   }, []);
 
+  useEffect(() => {
+    // Ambil nomor referensi terakhir dari localStorage saat komponen dimuat
+    const storedReferenceNumber = localStorage.getItem(
+      "currentReferenceNumber"
+    );
+    if (storedReferenceNumber) {
+      setCurrentReferenceNumber(parseInt(storedReferenceNumber, 10));
+    }
+  }, []);
+
   const generateNewReference = () => {
     const paddedNumber = String(currentReferenceNumber).padStart(3, "0");
-    const newReference = `GMT ENV ${paddedNumber}`;
+    const newReference = `GMT ${paddedNumber}`;
+
+    // Update data invoice
     setInvoiceData((prevData) => ({ ...prevData, refrensi: newReference }));
+
+    // Update nomor referensi berikutnya
+    const newReferenceNumber = currentReferenceNumber + 1;
+    setCurrentReferenceNumber(newReferenceNumber);
+
+    // Simpan nomor referensi ke localStorage
+    localStorage.setItem("currentReferenceNumber", newReferenceNumber);
   };
 
   const fetchSettingData = async () => {

@@ -5,7 +5,7 @@ import Link from "next/link";
 import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 
 const Setting = () => {
   const [allsetting, setAllSetting] = useState([]); // State untuk menyimpan semua data
@@ -26,7 +26,7 @@ const Setting = () => {
     try {
       // Ambil semua data sekali saja
       const response = await axios.get(`${BASE_URL}/api/setting`);
-     // console.log("tes", response.data.data)
+      // console.log("tes", response.data.data)
       setAllSetting(response.data.data);
 
       // Filter data berdasarkan pencarian dan pagination
@@ -55,7 +55,6 @@ const Setting = () => {
   useEffect(() => {
     fetchData(); // Pastikan fetchData dipanggil saat currentPage atau searchTerm berubah
   }, [currentPage, searchTerm]);
-   
 
   const handleSearchInputChange = (e) => {
     setSearchTerm(e.target.value);
@@ -164,6 +163,10 @@ const Setting = () => {
                       </th>
 
                       <th scope="col" className="px-6 py-4">
+                        Url Google Maps
+                      </th>
+
+                      <th scope="col" className="px-6 py-4">
                         Foto
                       </th>
                       <th scope="col" className="px-6 py-4">
@@ -207,6 +210,13 @@ const Setting = () => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           {item.alamat}
                         </td>
+                        <td
+                          className="px-6 py-4 whitespace-nowrap overflow-hidden text-ellipsis max-w-xs"
+                          title={item.url_gmaps} // Menampilkan teks lengkap saat dihover
+                        >
+                          {item.url_gmaps}
+                        </td>
+
                         <td className="py-4 whitespace-nowrap">
                           <img
                             src={item.gambar_setting}

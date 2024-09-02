@@ -16,6 +16,7 @@ export default function Add() {
     profil_perusahaan: "",
     bidang_perusahaan: "",
     alamat: "",
+    url_gmaps: "",
     foto: null,
     foto_cap: null,
     foto_ttd: null,
@@ -113,6 +114,7 @@ export default function Add() {
               "profil_perusahaan",
               "bidang_perusahaan",
               "alamat",
+              "url_gmaps",
             ].map((field) => (
               <div className="mb-5" key={field}>
                 <label
