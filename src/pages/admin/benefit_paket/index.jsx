@@ -179,38 +179,6 @@ const BenefitPaket = ({ isLoggedIn }) => {
                         <td className="px-24 py-4 whitespace-nowrap">
                           {item.paket.nama_paket}
                         </td>
-                        {/* <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.jumlah_pilihan_desain}
-                        </td>     
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.status_website}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {item.attributes.kategori_Website_Id}
-                        </td>
-                        <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
-                          <Link href={"/admin/paket/edit?id=" + item.id}>
-                            <div
-                              className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
-                              aria-label="edit"
-                            >
-                              <i className="fa-solid fa-pen"></i>
-                            </div>
-                          </Link>
-
-                          <button
-                            onClick={() => handleDelete(item.id)}
-                            disabled={isDeleting}
-                            className="items-center w-auto px-5 py-2 mb-2 tracking-wider text-white rounded-full shadow-sm bg-gradient-to-r from-indigo-400 to-gray-600 md:mb-0 hover:bg-gray-800"
-                            aria-label="delete"
-                          >
-                            {isDeleting ? (
-                              "Menghapus..."
-                            ) : (
-                              <i className="fa-solid fa-trash"></i>
-                            )}
-                          </button>
-                        </td> */}
                         <td className="flex items-center gap-1 px-6 py-4 mt-8 whitespace-nowrap">
                           <Link
                             href={"/admin/benefit_paket/edit?id=" + item.id}

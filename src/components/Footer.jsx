@@ -40,7 +40,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             <div className="grid grid-cols-1 gap-8 lg:col-span-2 md:grid-cols-2 ">
               <div>
-                <p className="font-bold text-white">MENU</p>
+                <p className="font-bold text-white text-lg">MENU</p>
                 <nav className="flex flex-col mt-4 space-y-2 text-sm text-white">
                   <Link href={"/"} className="hover:opacity-75">
                     {" "}
@@ -78,6 +78,9 @@ export default function Footer() {
                   </p>
                   <p className="hover:opacity-75"> Email: {setting.email} </p>
                   <p className="hover:opacity-75"> Telp : 0{setting.telp} </p>
+                  <Link href={"/syarat_ketentuan"}>
+                    <p className="mt-4 ">Syarat & Ketentuan</p>
+                  </Link>
                 </nav>
               </div>
             </div>
