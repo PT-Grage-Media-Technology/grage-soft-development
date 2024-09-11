@@ -72,7 +72,7 @@ const Pembayaran = ({ isLoggedIn }) => {
     }
   };
 
-  // Tambahkan fungsi ini
+  // Fungsi untuk notif mesage
   const showToastMessage = (message) => {
     toast.success(message, {
       position: "top-right",

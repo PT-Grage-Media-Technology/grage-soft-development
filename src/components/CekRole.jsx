@@ -35,10 +35,10 @@ const CekRole = () => {
         const response = await axios.get(endpoint, config);
 
            // Log seluruh respons untuk melihat data yang dikembalikan
-           console.log("Full Response:", response);
+          //  console.log("Full Response:", response);
 
         if (response.status === 200) {
-          console.log("cekRole", response.data.id);
+         // console.log("cekRole", response.data.id);
           setRole(response.data.id);
         } else {
           console.error("Unexpected response status:", response.status);

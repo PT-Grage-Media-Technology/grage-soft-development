@@ -77,12 +77,11 @@ export default function Invoice() {
   return (
     <>
       <Head>
-        {/* tes */}
-        <title>Invoice Detail </title>
+        <title>Invoice Detail</title>
         <style type="text/css" media="print">{`
           @page {
-            size: A5;
-            margin: 7mm;
+            size: A4 landscape;
+            margin: 10mm;
           }
           body {
             print-color-adjust: exact;
@@ -90,41 +89,39 @@ export default function Invoice() {
           }
           #printable-content {
             width: 100%;
-            height: auto; /* Mengubah height menjadi auto untuk menghindari overflow */
+            height: auto;
             display: flex;
             flex-direction: column;
-            font-family: Arial, sans-serif; /* Menambahkan font untuk tampilan lebih baik */
+            font-family: Arial, sans-serif;
           }
           .invoice-header {
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
-            border-bottom: 2px solid #000; /* Menambahkan garis bawah untuk header */
-            padding-bottom: 10px; /* Menambahkan padding bawah */
-            padding-left: 10px; /* Menambahkan padding kiri */
-            padding-right: 10px; /* Menambahkan padding kanan */
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
           }
           .invoice-header h1 {
-            font-size: 1.5em; /* Menyesuaikan ukuran font untuk header */
-            margin: 0; /* Menghilangkan margin untuk menghindari tumpang tindih */
+            font-size: 1.5em;
+            margin: 0;
           }
           .invoice-header img {
-            max-width: 100px; /* Membatasi lebar gambar agar tidak terlalu besar */
-            height: auto; /* Menjaga proporsi gambar */
+            max-width: 100px;
+            height: auto;
           }
-
           .invoice-items {
-            display: grid; /* Ubah dari flex ke grid */
-            grid-template-columns: repeat(2, 1fr); /* Membuat dua kolom */
-            gap: 20px; /* Menambahkan jarak antar item */
-            margin-bottom: 20px; /* Menambahkan margin bawah */
-            margin-left: -20px; /* Menggeser ke kiri dengan margin negatif */
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
           }
-
+          .invoice-item {
+            width: 100%;
+            margin-bottom: 20px;
+          }
           .invoice-total {
             align-self: flex-end;
             margin-top: 20px;
-            font-weight: bold; /* Menebalkan total */
+            font-weight: bold;
           }
         `}</style>
       </Head>
@@ -143,8 +140,8 @@ export default function Invoice() {
           }
           .invoice-item th,
           .invoice-item td {
-            padding: 8px; /* Menambahkan padding untuk tabel */
-            text-align: center; /* Menyelaraskan teks ke tengah */
+            padding: 8px;
+            text-align: center;
           }
         }
       `}</style>
@@ -152,78 +149,56 @@ export default function Invoice() {
         <div className="sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
             <div className="invoice-container p-6 bg-white rounded-md shadow-md">
-              {/* Konten invoice */}
-              <div className="grid grid-flow-col">
-                <div className="flex justify-between mb-6">
-                  <div className="mx-auto lg:mx-12">
-                    <h1 className="text-xl font-bold mb-2">
+              <div className="invoice-header">
+                <div className="flex items-center">
+                  <img
+                    className="w-20 h-20 mr-4"
+                    src={settingData?.gambar_setting}
+                    alt=""
+                  />
+                  <div>
+                    <h1 className="text-xl font-bold">
                       {settingData?.profil_perusahaan}
                     </h1>
-                    <img
-                      className="w-20 h-20 mx-auto mt-4"
-                      src={settingData?.gambar_setting}
-                      alt=""
-                    />
+                    <p>{settingData?.alamat}</p>
+                    <p>
+                      Tel: {settingData?.telp} | Email: {settingData?.email}
+                    </p>
                   </div>
-
-                  <div className="mx-auto lg:mx-44">
-                    <h1 className="text-xl font-bold pb-2">Invoice</h1>
-                    <div className="text-gray-600 grid grid-cols-2">
-                      <div>Referensi</div>
-                      <div className="">{invoiceData?.refrensi}</div>
-                    </div>
-                    <div className="text-gray-600 grid grid-cols-2">
-                      <div>Tanggal</div>
-                      <div className="">{invoiceData?.tanggal}</div>
-                    </div>
-                    <div className="text-gray-600 grid grid-cols-2">
-                      <div>Jatuh Tempo </div>
-                      <div className="">{invoiceData?.tgl_jatuh_tempo}</div>
-                    </div>
-                  </div>
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold">Invoice</h1>
+                  <p>Referensi: {invoiceData?.refrensi}</p>
+                  <p>Tanggal: {invoiceData?.tanggal}</p>
+                  <p>Jatuh Tempo: {invoiceData?.tgl_jatuh_tempo}</p>
                 </div>
               </div>
 
-              <div className="invoice-items grid grid-flow-row md:grid-flow-row lg:grid-cols-2  pt-6 pb-12">
-                <div className="mt-6 md:mt-6 lg:mt-0 ">
-                  <h3 className="font-bold">Informasi Perusahaan</h3>
-                  <hr className="border-black w-3/4 mb-4" />
-                  <div className="text-gray-600">
-                    <div>
-                      Nama Perusahaan : {settingData?.profil_perusahaan}
-                    </div>
-                    <div>Alamat Perusahaan: {settingData?.alamat}</div>
-                    <div>Telepon Perusahaan : {settingData?.telp}</div>
-                    <div>Email Perusahaan : {settingData?.email}</div>
-                  </div>
-                </div>
-
-                <div className="mt-6 md:mt-6 lg:mt-0">
+              <div className="invoice-items">
+                <div className="w-1/2 pr-4">
                   <h3 className="font-bold">Tagihan Kepada</h3>
-                  <hr className="border-black w-3/4 mb-4" />
-                  <div className="text-gray-600">
-                    <div>Nama Pelanggan : {customerData?.nama}</div>
-                    <div>Alamat Pelanggan : {customerData?.alamat}</div>
-                    <div>Telepon Pelanggan : {customerData?.telp}</div>
-                    <div>Email Pelanggan : {customerData?.email}</div>
-                  </div>
+                  <hr className="border-black w-full mb-2" />
+                  <p>Nama: {customerData?.nama}</p>
+                  <p>Alamat: {customerData?.alamat}</p>
+                  <p>Telepon: {customerData?.telp}</p>
+                  <p>Email: {customerData?.email}</p>
                 </div>
               </div>
 
-              <div className="invoice-item mb-6">
+              <div className="invoice-item">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-700 text-white">
                     <tr>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                         Paket
                       </th>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                         Nama Kategori
                       </th>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                         Harga
                       </th>
-                      <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                         Diskon
                       </th>
                     </tr>
@@ -231,16 +206,16 @@ export default function Invoice() {
                   <tbody className="bg-gray-300 divide-y divide-gray-200">
                     {cartPaketData.map((item, index) => (
                       <tr key={index}>
-                        <td className="mx-auto text-sm py-4 text-center">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
                           {item.pakets.nama_paket}
                         </td>
-                        <td className="mx-auto text-sm py-4 text-center">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
                           {item.pakets.kategoriWebsite.nama_kategori}
                         </td>
-                        <td className="mx-auto text-sm py-4 text-center">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
                           Rp {parseFloat(item.harga).toLocaleString("id-ID")},00
                         </td>
-                        <td className="mx-auto text-sm py-4 text-center">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
                           Rp {parseFloat(item.diskon).toLocaleString("id-ID")}
                           ,00
                         </td>
@@ -250,35 +225,28 @@ export default function Invoice() {
                 </table>
               </div>
 
-              <div className="invoice-items grid md:grid-flow-row lg:grid-flow-col">
-                <div className="grid md:grid-flow-row lg:flex-row lg:flex lg:mx-12 lg:mt-8">
-                  <div className="grid flow-row my-auto md:me-0">
-                    <div>
-                      <h3 className="text-sm text-center mb-2">
-                        Dengan Hormat, {settingData?.profil_perusahaan}
-                      </h3>
-                      <div className="flex lg:justify-center md:justify-center justify-center">
-                        <img
-                          className="h-28 w-auto absolute"
-                          src={settingData?.url_foto_cap}
-                          alt=""
-                        />
-                        <img
-                          className="h-28 w-auto"
-                          src={settingData?.url_foto_ttd}
-                          alt=""
-                        />
-                      </div>
-                      <div>
-                        <h3 className="text-sm text-center mt-4">
-                          {settingData?.profil_perusahaan}
-                        </h3>
-                      </div>
-                    </div>
+              <div className="flex justify-between mt-4">
+                <div className="w-1/3">
+                  <h3 className="text-sm text-center mb-2">
+                    Dengan Hormat, {settingData?.profil_perusahaan}
+                  </h3>
+                  <div className="flex justify-center">
+                    <img
+                      className="h-28 w-auto absolute"
+                      src={settingData?.url_foto_cap}
+                      alt=""
+                    />
+                    <img
+                      className="h-28 w-auto"
+                      src={settingData?.url_foto_ttd}
+                      alt=""
+                    />
                   </div>
+                  <h3 className="text-sm text-center mt-4">
+                    {settingData?.profil_perusahaan}
+                  </h3>
                 </div>
-
-                <div className="grid grid-flow-row mt-4 flex-grow">
+                <div className="w-1/3">
                   <div className="flex justify-between text-sm font-semibold mt-2">
                     <div>Subtotal</div>
                     <div>Rp {invoiceData.subtotal.toLocaleString()},00</div>
@@ -299,15 +267,6 @@ export default function Invoice() {
                   </div>
                 </div>
               </div>
-
-              {/* <div className="flex justify-end mt-6 no-print">
-                <button
-                  onClick={handlePrint}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none"
-                >
-                  Cetak Invoice
-                </button>
-              </div> */}
             </div>
           </div>
         </div>
