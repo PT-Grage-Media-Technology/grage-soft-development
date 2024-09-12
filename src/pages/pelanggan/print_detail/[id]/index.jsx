@@ -57,10 +57,6 @@ export default function Invoice() {
     }
   }, [id]); // Tambahkan id sebagai dependency
 
-  // const handlePrint = () => {
-  //   window.print();
-  // };
-
   useEffect(() => {
     const handlePrint = () => {
       if (!loading && invoiceData && print === "true") {

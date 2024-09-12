@@ -69,14 +69,13 @@ const Syaratketentuan = ({ isLoggedIn }) => {
 
   const deleteData = async (id) => {
     try {
-      const response = await fetch(`${BASE_URL}/api/syaratketentuan/${id}`, {
-        method: "DELETE",
+      const response = await axios.delete(`${BASE_URL}/api/syaratketentuan/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      if (!response.ok) {
+      if (response == 200) {
         throw new Error("Gagal menghapus data");
       }
 

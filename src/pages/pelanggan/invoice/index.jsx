@@ -30,7 +30,7 @@ export default function Invoice() {
       const response = await axios.get(
         `${BASE_URL}/api/invoice/user/${roleId}`
       );
-      console.log("invoice", response.data);
+      //console.log("invoice", response.data);
 
       // Jika respons mengandung pesan bahwa tidak ada invoice
       if (response.data.message === "No invoices found for this user") {
