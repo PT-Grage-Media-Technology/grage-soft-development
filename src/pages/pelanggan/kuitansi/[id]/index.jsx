@@ -91,44 +91,46 @@ export default function Kuitansi() {
           }
         `}</style>
       </Head>
-      <div className="max-w-2xl mx-auto my-10 p-6 border border-gray-300 shadow-lg">
-        <h1 className="text-3xl font-bold text-center mb-6">KUITANSI</h1>
-        <div className="mb-4">
-          <p>
+      <div className="max-w-2xl mx-auto my-10 p-6 border border-gray-300 shadow-lg rounded-lg bg-white">
+        <h1 className="text-4xl font-bold text-center mb-8 text-blue-500">
+          KUITANSI
+        </h1>
+        <div className="mb-6">
+          <p className="text-lg">
             <strong>No. Kuitansi:</strong> {invoiceData.refrensi}
           </p>
-          <p>
+          <p className="text-lg">
             <strong>Tanggal:</strong> {invoiceData.tanggal}
           </p>
         </div>
-        <div className="mb-4">
-          <p>
+        <div className="mb-6">
+          <p className="text-lg">
             <strong>Telah diterima dari:</strong> {customerData?.nama}
           </p>
-          <p>
+          <p className="text-lg">
             <strong>Uang Sejumlah:</strong> {formatCurrency(invoiceData.total)}
           </p>
-          <p className="mt-2">
+          <p className="mt-2 text-lg">
             <strong>Terbilang:</strong>{" "}
             {/* You may want to add a function to convert number to words */}
           </p>
         </div>
-        <div className="mb-4">
-          <p>
+        <div className="mb-6">
+          <p className="text-lg">
             <strong>Untuk Pembayaran:</strong> Pembelian Paket Website
           </p>
         </div>
         <div className="mt-10 text-center">
-          <p>
+          <p className="text-lg">
             <strong>{settingData?.profil_perusahaan}</strong>
           </p>
           <div className="mt-16">
             <img
               src={settingData?.url_foto_ttd}
               alt="Tanda Tangan"
-              className="mx-auto h-20"
+              className="mx-auto h-24"
             />
-            <p>Penerima</p>
+            <p className="text-lg">Penerima</p>
           </div>
         </div>
       </div>
