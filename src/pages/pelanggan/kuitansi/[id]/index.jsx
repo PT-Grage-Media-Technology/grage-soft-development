@@ -12,6 +12,7 @@ export default function Kuitansi() {
   const [cookies] = useCookies(["token"]);
   const [settingData, setSettingData] = useState(null);
   const [customerData, setCustomerData] = useState(null);
+  const [cartPaketData, setCartPaketData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [invoiceData, setInvoiceData] = useState({
     refrensi: "",
@@ -27,6 +28,7 @@ export default function Kuitansi() {
     try {
       const response = await axios.get(`${BASE_URL}/api/setting/`);
       setSettingData(response.data.data[0]);
+      console.log("respon setting", response.data.data[0]);
     } catch (error) {
       console.error("Error fetching setting data:", error);
     }
@@ -35,13 +37,69 @@ export default function Kuitansi() {
   const fetchCustomerData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/api/invoice/${id}`);
+      console.log("respon", response.data);
       setInvoiceData(response.data);
       setCustomerData(response.data.pelanggas);
+      setCartPaketData(response.data.cartPaket || []);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching customer data:", error);
       setLoading(false);
     }
+  };
+  
+
+  const angkaTerbilang = (angka) => {
+    const bilangan = [
+      "",
+      "Satu",
+      "Dua",
+      "Tiga",
+      "Empat",
+      "Lima",
+      "Enam",
+      "Tujuh",
+      "Delapan",
+      "Sembilan",
+      "Sepuluh",
+      "Sebelas",
+    ];
+
+    const konversiBilangan = (n) => {
+      if (n < 12) return bilangan[n];
+      if (n < 20) return `${bilangan[n - 10]} Belas`;
+      if (n < 100)
+        return `${bilangan[Math.floor(n / 10)]} Puluh ${
+          n % 10 !== 0 ? bilangan[n % 10] : ""
+        }`;
+      if (n < 200) return `Seratus ${konversiBilangan(n - 100)}`;
+      if (n < 1000)
+        return `${bilangan[Math.floor(n / 100)]} Ratus ${konversiBilangan(
+          n % 100
+        )}`;
+      if (n < 2000) return `Seribu ${konversiBilangan(n - 1000)}`;
+      if (n < 1000000)
+        return `${konversiBilangan(
+          Math.floor(n / 1000)
+        )} Ribu ${konversiBilangan(n % 1000)}`;
+      if (n < 1000000000)
+        return `${konversiBilangan(
+          Math.floor(n / 1000000)
+        )} Juta ${konversiBilangan(n % 1000000)}`;
+      return `${konversiBilangan(
+        Math.floor(n / 1000000000)
+      )} Milyar ${konversiBilangan(n % 1000000000)}`;
+    };
+
+    const rupiah = Math.floor(angka);
+    const sen = Math.round((angka - rupiah) * 100);
+    let hasil = konversiBilangan(rupiah);
+
+    if (sen > 0) {
+      hasil += ` Koma ${konversiBilangan(sen)}`;
+    }
+
+    return `${hasil} Rupiah`;
   };
 
   useEffect(() => {
@@ -75,6 +133,22 @@ export default function Kuitansi() {
   if (loading) {
     return <div>Loading...</div>;
   }
+
+  const getPaketInfo = () => {
+    if (cartPaketData && cartPaketData.length > 0) {
+      const paket = cartPaketData[0].pakets;
+      return {
+        kategori:
+          paket && paket.kategoriWebsite
+            ? paket.kategoriWebsite.nama_kategori
+            : "Paket Website",
+        nama: paket ? paket.nama_paket : "Tidak tersedia",
+      };
+    }
+    return { kategori: "Paket Website", nama: "Tidak tersedia" };
+  };
+
+  const paketInfo = getPaketInfo();
 
   return (
     <PelangganLayout>
@@ -111,13 +185,15 @@ export default function Kuitansi() {
             <strong>Uang Sejumlah:</strong> {formatCurrency(invoiceData.total)}
           </p>
           <p className="mt-2 text-lg">
-            <strong>Terbilang:</strong>{" "}
-            {/* You may want to add a function to convert number to words */}
+            <strong>Terbilang:</strong> {angkaTerbilang(invoiceData.total)}
           </p>
         </div>
         <div className="mb-6">
           <p className="text-lg">
-            <strong>Untuk Pembayaran:</strong> Pembelian Paket Website
+            <strong>Untuk Pembayaran:</strong> {paketInfo.kategori}
+          </p>
+          <p className="text-lg">
+            <strong>Paket:</strong> {paketInfo.nama}
           </p>
         </div>
         <div className="mt-10 text-center">
