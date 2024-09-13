@@ -299,15 +299,6 @@ export default function Invoice() {
                   </div>
                 </div>
               </div>
-
-              {/* <div className="flex justify-end mt-6 no-print">
-                <button
-                  onClick={handlePrint}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none"
-                >
-                  Cetak Invoice
-                </button>
-              </div> */}
             </div>
           </div>
         </div>

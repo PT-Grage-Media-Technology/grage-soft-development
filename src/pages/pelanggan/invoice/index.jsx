@@ -148,6 +148,13 @@ export default function Invoice() {
                                 <i class="fa-solid fa-print"></i>
                               </div>
                             </button>
+                            <Link href={`/pelanggan/kuitansi/${invoice.id}`}>
+                              <button>
+                                <div className="item-center w-auto px-5 py-2 mb-2 tracking-wider text-white font-semibold rounded-full shadow-sm bg-orange-400 hover:bg-orange-600">
+                                  <i class="fa-regular fa-pen-to-square"></i>
+                                </div>
+                              </button>
+                            </Link>
                           </td>
                         </tr>
                       ))
