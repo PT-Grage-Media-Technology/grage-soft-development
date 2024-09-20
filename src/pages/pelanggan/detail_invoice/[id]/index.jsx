@@ -189,12 +189,22 @@ export default function Invoice() {
                   <h3 className="font-bold">Informasi Perusahaan</h3>
                   <hr className="border-black w-3/4 mb-4" />
                   <div className="text-gray-600">
-                    <div>
-                      Nama Perusahaan : {settingData?.profil_perusahaan}
+                    <div className="flex justify-between">
+                      <span>Nama Perusahaan</span>
+                      <span>: {settingData?.profil_perusahaan}</span>
                     </div>
-                    <div>Alamat Perusahaan: {settingData?.alamat}</div>
-                    <div>Telepon Perusahaan : {settingData?.telp}</div>
-                    <div>Email Perusahaan : {settingData?.email}</div>
+                    <div className="flex justify-between">
+                      <span>Alamat Perusahaan</span>
+                      <span>: {settingData?.alamat}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Telepon Perusahaan</span>
+                      <span>: {settingData?.telp}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Email Perusahaan</span>
+                      <span>: {settingData?.email}</span>
+                    </div>
                   </div>
                 </div>
 
@@ -202,10 +212,22 @@ export default function Invoice() {
                   <h3 className="font-bold">Tagihan Kepada</h3>
                   <hr className="border-black w-3/4 mb-4" />
                   <div className="text-gray-600">
-                    <div>Nama Pelanggan : {customerData?.nama}</div>
-                    <div>Alamat Pelanggan : {customerData?.alamat}</div>
-                    <div>Telepon Pelanggan : {customerData?.telp}</div>
-                    <div>Email Pelanggan : {customerData?.email}</div>
+                    <div className="flex justify-between">
+                      <span>Nama Pelanggan</span>
+                      <span>: {customerData?.nama}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Alamat Pelanggan</span>
+                      <span>: {customerData?.alamat}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Telepon Pelanggan</span>
+                      <span>: {customerData?.telp}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Email Pelanggan</span>
+                      <span>: {customerData?.email}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -238,11 +260,10 @@ export default function Invoice() {
                           {item.pakets.kategoriWebsite.nama_kategori}
                         </td>
                         <td className="mx-auto text-sm py-4 text-center">
-                          Rp {parseFloat(item.harga).toLocaleString("id-ID")},00
+                          Rp {parseFloat(item.harga).toLocaleString("id-ID")}
                         </td>
                         <td className="mx-auto text-sm py-4 text-center">
-                          Rp {parseFloat(item.diskon).toLocaleString("id-ID")}
-                          ,00
+                          {parseFloat(item.diskon).toLocaleString("id-ID")}%
                         </td>
                       </tr>
                     ))}
