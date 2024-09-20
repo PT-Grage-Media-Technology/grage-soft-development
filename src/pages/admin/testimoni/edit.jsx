@@ -4,7 +4,7 @@ import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
 import Head from "next/head";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 
 export default function Edit() {
   const router = useRouter();
@@ -26,9 +26,7 @@ export default function Edit() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/api/testimoni/${id}`
-        );
+        const response = await axios.get(`${BASE_URL}/api/testimoni/${id}`);
         // console.log("API response:", response); // Log the entire API response
         if (!response.data) {
           throw new Error("Data tidak lengkap.");
@@ -36,16 +34,11 @@ export default function Edit() {
         const data = response.data;
         // Log the data object
         // Access attributes directly
-        const {
-          jenis_testimoni,
-          gambar_testimoni,
-          judul_testimoni,
-          deskripsi_testimoni,
-        } = data;
+        const { gambar_testimoni, judul_testimoni, deskripsi_testimoni } = data;
         // Update formData state with data from the API response
         setFormData((prevData) => ({
           ...prevData,
-          jenis_testimoni: jenis_testimoni || "",
+          jenis_testimoni: data.jenis_testimoni ? "Wa" : "Email",
           gambar_testimoni: gambar_testimoni || "",
           judul_testimoni: judul_testimoni || "",
           deskripsi_testimoni: deskripsi_testimoni || "",
@@ -80,12 +73,12 @@ export default function Edit() {
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("jenis_testimoni", formData.jenis_testimoni);
       formDataToSend.append("judul_testimoni", formData.judul_testimoni);
       formDataToSend.append(
         "deskripsi_testimoni",
         formData.deskripsi_testimoni
       );
+      formDataToSend.append("jenis_testimoni", formData.jenis_testimoni);
       formDataToSend.append("is_publish", formData.is_publish);
 
       // Jika ada gambar baru, tambahkan ke formDataToSend
@@ -121,10 +114,7 @@ export default function Edit() {
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[700px] bg-white rounded-lg lg:-mt-40">
           <div className="flex justify-end pt-4 px-4">
-            <Link
-              href={"/admin/testimoni"}
-              className="relative"
-            >
+            <Link href={"/admin/testimoni"} className="relative">
               <div className="flex items-center gap-2 px-8 py-2 font-semibold text-white rounded-lg cursor-pointer text-end bg-orange-400">
                 <i className="fas fa-arrow-left"></i>
                 <span>Kembali</span>
@@ -140,14 +130,18 @@ export default function Edit() {
               >
                 Jenis Testimoni
               </label>
-              <input
-                type="text"
+              <select
                 name="jenis_testimoni"
                 id="jenis_testimoni"
                 className="w-full rounded-md border-2 border-indigo-300 bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.jenis_testimoni} // Gunakan nilai awal jika value kosong
+                value={formData.jenis_testimoni}
                 onChange={handleInputChange}
-              />
+                required
+              >
+                <option value="">Pilih Jenis Testimoni</option>
+                <option value="Wa">Wa</option>
+                <option value="Email">Email</option>
+              </select>
             </div>
 
             <div className="mb-6 ">

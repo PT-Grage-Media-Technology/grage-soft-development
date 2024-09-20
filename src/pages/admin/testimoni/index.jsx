@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import Head from "next/head";
 import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
+import Image from "next/image";
 
 const Testimoni = () => {
   const [alltestimoni, setAllTestimoni] = useState([]); // State untuk menyimpan semua data

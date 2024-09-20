@@ -4,7 +4,7 @@ import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
 import Head from "next/head";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 
 export default function Edit() {
   const router = useRouter();
@@ -27,9 +27,7 @@ export default function Edit() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/api/klien/${id}`
-        );
+        const response = await axios.get(`${BASE_URL}/api/klien/${id}`);
 
         const data = response.data.data;
         // console.log('coba', data);
@@ -57,10 +55,8 @@ export default function Edit() {
 
   const fetchDataKategori = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/api/kategoriKlien`
-      );
-      console.log("kategori klien", response.data);
+      const response = await axios.get(`${BASE_URL}/api/kategoriKlien`);
+      console.log("kategori klien", response.data.data);
       setKategoriKlien(response.data.data);
       // setTotalPages(response.data.totalPages);
       // setPageSize(response.data.pageSize);
@@ -167,6 +163,7 @@ export default function Edit() {
               >
                 {paket.map((item) => (
                   <option
+                    key={item.id}
                     value={item.id}
                     selected={formData.id_paket == item.id ? true : false}
                   >
@@ -193,6 +190,7 @@ export default function Edit() {
               >
                 {kategoriKlien.map((item) => (
                   <option
+                    key={item.id}
                     value={item.id}
                     selected={
                       formData.id_kategori_klien == item.id ? true : false
