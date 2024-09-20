@@ -33,23 +33,7 @@ export default function Invoice() {
       console.error("Error fetching setting data:", error);
     }
   };
-
-  // const fetchCustomerData = async () => {
-  //   try {
-  //     console.log(id);
-
-  //     // Ganti endpoint sesuai kebutuhan atau tambahkan ID pelanggan di parameter query
-  //     const response = await axios.get(`${BASE_URL}/api/invoice/${id}`);
-  //     console.log("tes", response.data);
-  //     setInvoiceData(response.data);
-  //     setCustomerData(response.data.pelanggas);
-  //     setCartPaketData(response.data.cartPaket);
-  //     console.log("coba123", response.data.pelanggas);
-  //   } catch (error) {
-  //     console.error("Error fetching customer data:", error);
-  //   }
-  // };
-
+  
   const fetchCustomerData = async () => {
     try {
       console.log(id);
