@@ -22,6 +22,7 @@ export default function Invoice() {
     subtotal: 0,
     total_diskon: 0,
     total: 0,
+    total_pajak: 0,
   });
 
   const fetchSettingData = async () => {
@@ -33,14 +34,38 @@ export default function Invoice() {
     }
   };
 
+  // const fetchCustomerData = async () => {
+  //   try {
+  //     console.log(id);
+
+  //     // Ganti endpoint sesuai kebutuhan atau tambahkan ID pelanggan di parameter query
+  //     const response = await axios.get(`${BASE_URL}/api/invoice/${id}`);
+  //     console.log("tes", response.data);
+  //     setInvoiceData(response.data);
+  //     setCustomerData(response.data.pelanggas);
+  //     setCartPaketData(response.data.cartPaket);
+  //     console.log("coba123", response.data.pelanggas);
+  //   } catch (error) {
+  //     console.error("Error fetching customer data:", error);
+  //   }
+  // };
+
   const fetchCustomerData = async () => {
     try {
       console.log(id);
-
-      // Ganti endpoint sesuai kebutuhan atau tambahkan ID pelanggan di parameter query
       const response = await axios.get(`${BASE_URL}/api/invoice/${id}`);
       console.log("tes", response.data);
-      setInvoiceData(response.data);
+
+      // Calculate PPN (11% of subtotal)
+      const subtotal = response.data.subtotal;
+      const ppn = subtotal * 0.11;
+      const total = subtotal - response.data.total_diskon + ppn;
+
+      setInvoiceData({
+        ...response.data,
+        total_pajak: ppn,
+        total: total,
+      });
       setCustomerData(response.data.pelanggas);
       setCartPaketData(response.data.cartPaket);
       console.log("coba123", response.data.pelanggas);
@@ -311,8 +336,8 @@ export default function Invoice() {
                     </div>
                   </div>
                   <div className="flex justify-between text-sm font-semibold mt-2">
-                    <div>PPN</div>
-                    <div>Rp {invoiceData.total_pajak},00</div>
+                    <div>PPN (11%)</div>
+                    <div>Rp {invoiceData.total_pajak.toLocaleString()},00</div>
                   </div>
                   <div className="flex justify-between text-lg font-bold mt-2 underline">
                     <div>Total</div>
