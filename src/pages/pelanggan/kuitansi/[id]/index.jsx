@@ -22,13 +22,13 @@ export default function Kuitansi() {
     subtotal: 0,
     total_diskon: 0,
     total: 0,
+    ppn: 0,
   });
 
   const fetchSettingData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/api/setting/`);
       setSettingData(response.data.data[0]);
-      console.log("respon setting", response.data.data[0]);
     } catch (error) {
       console.error("Error fetching setting data:", error);
     }
@@ -37,8 +37,16 @@ export default function Kuitansi() {
   const fetchCustomerData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/api/invoice/${id}`);
-      console.log("respon", response.data);
-      setInvoiceData(response.data);
+
+      const subtotal = response.data.subtotal;
+      const ppn = subtotal * 0.11;
+      const totalWithPPN = subtotal - response.data.total_diskon + ppn;
+
+      setInvoiceData({
+        ...response.data,
+        ppn: ppn,
+        total: totalWithPPN,
+      });
       setCustomerData(response.data.pelanggas);
       setCartPaketData(response.data.cartPaket || []);
       setLoading(false);
@@ -47,7 +55,6 @@ export default function Kuitansi() {
       setLoading(false);
     }
   };
-  
 
   const angkaTerbilang = (angka) => {
     const bilangan = [
@@ -63,32 +70,39 @@ export default function Kuitansi() {
       "Sembilan",
       "Sepuluh",
       "Sebelas",
+      "Dua Belas",
+      "Tiga Belas",
+      "Empat Belas",
+      "Lima Belas",
+      "Enam Belas",
+      "Tujuh Belas",
+      "Delapan Belas",
+      "Sembilan Belas",
     ];
 
     const konversiBilangan = (n) => {
-      if (n < 12) return bilangan[n];
-      if (n < 20) return `${bilangan[n - 10]} Belas`;
+      if (n < 20) return bilangan[n];
       if (n < 100)
         return `${bilangan[Math.floor(n / 10)]} Puluh ${
-          n % 10 !== 0 ? bilangan[n % 10] : ""
-        }`;
-      if (n < 200) return `Seratus ${konversiBilangan(n - 100)}`;
+          bilangan[n % 10]
+        }`.trim();
+      if (n < 200) return `Seratus ${konversiBilangan(n - 100)}`.trim();
       if (n < 1000)
         return `${bilangan[Math.floor(n / 100)]} Ratus ${konversiBilangan(
           n % 100
-        )}`;
-      if (n < 2000) return `Seribu ${konversiBilangan(n - 1000)}`;
+        )}`.trim();
+      if (n < 2000) return `Seribu ${konversiBilangan(n - 1000)}`.trim();
       if (n < 1000000)
         return `${konversiBilangan(
           Math.floor(n / 1000)
-        )} Ribu ${konversiBilangan(n % 1000)}`;
+        )} Ribu ${konversiBilangan(n % 1000)}`.trim();
       if (n < 1000000000)
         return `${konversiBilangan(
           Math.floor(n / 1000000)
-        )} Juta ${konversiBilangan(n % 1000000)}`;
+        )} Juta ${konversiBilangan(n % 1000000)}`.trim();
       return `${konversiBilangan(
         Math.floor(n / 1000000000)
-      )} Milyar ${konversiBilangan(n % 1000000000)}`;
+      )} Milyar ${konversiBilangan(n % 1000000000)}`.trim();
     };
 
     const rupiah = Math.floor(angka);
@@ -194,6 +208,20 @@ export default function Kuitansi() {
           </p>
           <p className="text-lg">
             <strong>Paket:</strong> {paketInfo.nama}
+          </p>
+        </div>
+        <div className="mb-6">
+          <p className="text-lg">
+            <strong>Subtotal:</strong> {formatCurrency(invoiceData.subtotal)}
+          </p>
+          <p className="text-lg">
+            <strong>Diskon:</strong> {formatCurrency(invoiceData.total_diskon)}
+          </p>
+          <p className="text-lg">
+            <strong>PPN (11%):</strong> {formatCurrency(invoiceData.ppn)}
+          </p>
+          <p className="text-lg font-bold">
+            <strong>Total:</strong> {formatCurrency(invoiceData.total)}
           </p>
         </div>
         <div className="mt-10 text-center">
