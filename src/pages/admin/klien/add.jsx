@@ -131,7 +131,7 @@ export default function Add() {
               >
                 <option value="">Pilih Paket</option>
                 {paket.map((item) => (
-                  <option value={item.id}>{item.nama_paket}</option>
+                  <option key={item.id}>{item.nama_paket}</option>
                 ))}
               </select>
             </div>
@@ -153,7 +153,7 @@ export default function Add() {
               >
                 <option value="">Pilih Kategori Klien</option>
                 {kategoriKlien.map((item) => (
-                  <option value={item.id}>{item.nama_kategori_klien}</option>
+                  <option key={item.id}>{item.nama_kategori_klien}</option>
                 ))}
               </select>
             </div>
