@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
 import axios from "axios";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+//import { BASE_URL } from './../../components/layoutsAdmin/apiConfig';
 
 const Carousel = () => {
   const [slides, setSlides] = useState([]);
