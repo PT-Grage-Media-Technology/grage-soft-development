@@ -32,14 +32,18 @@ export default function Navbar() {
       <div className="w-full text-slate-200 bg-blue-500 dark-mode:text-gray-200 dark-mode:bg-gray-800">
         <div className="flex flex-col max-w-screen-xl px-4 mx-auto md:justify-between lg:flex-row lg:px-auto lg:px-auto">
           <div className="flex flex-row items-center justify-between p-4">
-            <Link href={"/"}>
+            <Link href={"/"} aria-label="Kembali ke Beranda">
               <img
                 className="h-14 w-auto mx-auto"
                 src={setting.gambar_setting}
-                alt=""
+                alt="Logo Perusahaan"
               />
             </Link>
-            <button onClick={toggleNavbar} className="rounded-lg lg:hidden ">
+            <button
+              onClick={toggleNavbar}
+              className="rounded-lg lg:hidden "
+              aria-label={isOpen ? "Tutup menu" : "Buka menu"}
+            >
               <svg fill="currentColor" viewBox="0 0 20 20" className="w-6 h-6">
                 {isOpen ? (
                   <path

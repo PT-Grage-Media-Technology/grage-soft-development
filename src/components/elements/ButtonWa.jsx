@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { BASE_URL } from '../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../components/layoutsAdmin/apiConfig";
 
 function ButtonWa() {
   const [setting, setSetting] = useState(""); // State untuk menyimpan nomor WA
@@ -9,22 +9,20 @@ function ButtonWa() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/api/setting`
-        );
+        const response = await axios.get(`${BASE_URL}/api/setting`);
         setSetting(response.data.data[0]);
         console.log(response.data.data[0]);
       } catch (error) {
         console.error("Error fetching data layanan:", error);
         setError(error);
-      } 
+      }
     };
 
     fetchData();
   }, []);
 
   const handleSubmit = () => {
-    window.location.href = `https://wa.me/62${ setting.wa }`;
+    window.location.href = `https://wa.me/62${setting.wa}`;
   };
 
   return (
@@ -32,6 +30,7 @@ function ButtonWa() {
       <button
         onClick={handleSubmit}
         id="my-button"
+        aria-label="Hubungi melalui WhatsApp" // {{ edit_1 }}
         className="fixed bottom-5 right-5 w-12 h-12 rounded-full bg-[#f97316] text-white flex items-center justify-center sm:bottom-10 sm:right-20 sm:w-16 sm:h-16"
       >
         <svg
