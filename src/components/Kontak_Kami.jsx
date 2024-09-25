@@ -23,6 +23,12 @@ function Kontak_Kami() {
     };
 
     fetchData();
+
+    // Menentukan apakah tampilan adalah laptop
+    const isLaptop = window.innerWidth >= 1024; // Misalnya, 1024px adalah lebar minimum untuk laptop
+    if (isLaptop) {
+      setIsOpenWcu(true); // Membuka dropdown untuk laptop
+    }
   }, []);
 
   if (error) {
