@@ -33,14 +33,11 @@ export default function Invoice() {
       console.error("Error fetching setting data:", error);
     }
   };
-  
+
   const fetchCustomerData = async () => {
     try {
       console.log(id);
       const response = await axios.get(`${BASE_URL}/api/invoice/${id}`);
-      console.log("tes", response.data);
-
-      // Calculate PPN (11% of subtotal)
       const subtotal = response.data.subtotal;
       const ppn = subtotal * 0.11;
       const total = subtotal - response.data.total_diskon + ppn;
@@ -52,7 +49,6 @@ export default function Invoice() {
       });
       setCustomerData(response.data.pelanggas);
       setCartPaketData(response.data.cartPaket);
-      console.log("coba123", response.data.pelanggas);
     } catch (error) {
       console.error("Error fetching customer data:", error);
     }
@@ -66,9 +62,6 @@ export default function Invoice() {
     }
   }, [id]); // Tambahkan id sebagai dependency
 
-  // const handlePrint = () => {
-  //   window.print();
-  // };
 
   useEffect(() => {
     const handlePrint = () => {

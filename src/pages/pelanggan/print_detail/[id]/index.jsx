@@ -52,7 +52,6 @@ export default function Invoice() {
       });
       setCustomerData(response.data.pelanggas);
       setCartPaketData(response.data.cartPaket);
-      console.log("coba123", response.data.pelanggas);
     } catch (error) {
       console.error("Error fetching customer data:", error);
     }
