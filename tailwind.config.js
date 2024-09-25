@@ -58,7 +58,8 @@ module.exports = {
                 sm: "calc(var(--radius) - 4px)",
             },
             spacing: {
-                '75': '75px', // Menambahkan ukuran custom -ml-85px
+                '75': '75px',
+                '65': '65px',
             },
             keyframes: {
                 "accordion-down": {

@@ -168,19 +168,19 @@ export default function Invoice() {
                     />
                   </div>
 
-                  <div className="mx-auto lg:mx-44">
+                  <div className="mx-auto">
                     <h1 className="text-xl font-bold pb-2">Invoice</h1>
-                    <div className="text-gray-600 max-sm:text-lg grid grid-cols-2">
+                    <div className="text-gray-600 max-sm:text-sm grid grid-cols-2">
                       <div>Referensi</div>
-                      <div className="-ml-8">: {invoiceData?.refrensi}</div>
+                      <div className="-ml-4">: {invoiceData?.refrensi}</div>
                     </div>
-                    <div className="text-gray-600 max-sm:text-lg grid grid-cols-2">
+                    <div className="text-gray-600 max-sm:text-sm grid grid-cols-2">
                       <div>Tanggal</div>
-                      <div className="-ml-8">: {invoiceData?.tanggal}</div>
+                      <div className="-ml-4">: {invoiceData?.tanggal}</div>
                     </div>
-                    <div className="text-gray-600 max-sm:text-lg grid grid-cols-2">
+                    <div className="text-gray-600 max-sm:text-sm grid grid-cols-2">
                       <div>Jatuh Tempo </div>
-                      <div className="-ml-8">: {invoiceData?.tgl_jatuh_tempo}</div>
+                      <div className="-ml-4">: {invoiceData?.tgl_jatuh_tempo}</div>
                     </div>
                   </div>
                 </div>
@@ -193,19 +193,19 @@ export default function Invoice() {
                   <div className="text-gray-600">
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Nama Perusahaan</span>
-                      <span className="-ml-75">: {settingData?.profil_perusahaan}</span>
+                      <span className="-ml-65 md:-ml-75">: {settingData?.profil_perusahaan}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Alamat Perusahaan</span>
-                      <span className="-ml-75">: {settingData?.alamat}</span>
+                      <span className="-ml-65 md:-ml-75">: {settingData?.alamat}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Telepon Perusahaan</span>
-                      <span className="-ml-75">: {settingData?.telp}</span>
+                      <span className="-ml-65 md:-ml-75">: {settingData?.telp}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Email Perusahaan</span>
-                      <span className="-ml-75">: {settingData?.email}</span>
+                      <span className="-ml-65 md:-ml-75">: {settingData?.email}</span>
                     </div>
                   </div>
                 </div>
@@ -216,19 +216,19 @@ export default function Invoice() {
                   <div className="text-gray-600">
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Nama Pelanggan</span>
-                      <span className="-ml-75">: {customerData?.nama}</span>
+                      <span className="-ml-65 md:-ml-75">: {customerData?.nama}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Alamat Pelanggan</span>
-                      <span className="-ml-75">: {customerData?.alamat}</span>
+                      <span className="-ml-65 md:-ml-75">: {customerData?.alamat}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Telepon Pelanggan</span>
-                      <span className="-ml-75">: {customerData?.telp}</span>
+                      <span className="-ml-65 md:-ml-75">: {customerData?.telp}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Email Pelanggan</span>
-                      <span className="-ml-75">: {customerData?.email}</span>
+                      <span className="-ml-65 md:-ml-75">: {customerData?.email}</span>
                     </div>
                   </div>
                 </div>
