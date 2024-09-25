@@ -60,7 +60,9 @@ module.exports = {
             spacing: {
                 '30': '30px',
                 '75': '75px',
+                '72': '72px',
                 '55': '55px',
+                '62': '62px',
             },
             keyframes: {
                 "accordion-down": {
