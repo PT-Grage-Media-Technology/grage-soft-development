@@ -48,14 +48,14 @@ function Kontak_Kami() {
   return (
     <div className="grid text-start px-auto mt-12">
       <div className="grid grid-flow-row px-5 py-4 text-start lg:px-10">
-        <h3
+        <h2
           className="text-lg font-semibold flex items-center"
           onClick={toggleWcu}
           style={{ justifyContent: "space-between" }}
         >
           MENGAPA KAMI?
           <span>{isOpenWcu ? <FaChevronUp /> : <FaChevronDown />}</span>
-        </h3>
+        </h2>
         <div
           ref={wcuContentRef}
           style={getDropdownStyle(isOpenWcu, wcuContentRef)}
