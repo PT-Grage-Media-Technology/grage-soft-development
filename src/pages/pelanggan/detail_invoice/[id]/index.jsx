@@ -62,6 +62,7 @@ export default function Invoice() {
     }
   }, [id]); // Tambahkan id sebagai dependency
 
+
   useEffect(() => {
     const handlePrint = () => {
       if (!loading && invoiceData && print === "true") {
@@ -155,9 +156,7 @@ export default function Invoice() {
             <div className="invoice-container p-6 bg-white rounded-md shadow-md">
               {/* Konten invoice */}
               <div className="grid grid-flow-col">
-                <div className="grid grid-cols-1 md:grid-cols-2 mb-6">
-                  {" "}
-                  {/* Ubah grid-cols-2 menjadi grid-cols-1 untuk tampilan mobile */}
+                <div className="grid grid-cols-2 mb-6">
                   <div className="mx-auto md:mx-12 text-center items-center">
                     <h1 className="text-lg md:text-xl font-bold mb-2">
                       {settingData?.profil_perusahaan}
@@ -168,6 +167,7 @@ export default function Invoice() {
                       alt=""
                     />
                   </div>
+
                   <div className="mx-auto">
                     <h1 className="text-xl font-bold pb-2">Invoice</h1>
                     <div className="text-gray-600 max-sm:text-sm grid grid-cols-2">
@@ -180,9 +180,7 @@ export default function Invoice() {
                     </div>
                     <div className="text-gray-600 max-sm:text-sm grid grid-cols-2">
                       <div>Jatuh Tempo </div>
-                      <div className="-ml-8">
-                        : {invoiceData?.tgl_jatuh_tempo}
-                      </div>
+                      <div className="-ml-8">: {invoiceData?.tgl_jatuh_tempo}</div>
                     </div>
                   </div>
                 </div>
@@ -195,27 +193,19 @@ export default function Invoice() {
                   <div className="text-gray-600">
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Nama Perusahaan</span>
-                      <span className="-ml-64 md:-ml-75">
-                        : {settingData?.profil_perusahaan}
-                      </span>
+                      <span className="-ml-55 md:-ml-75">: {settingData?.profil_perusahaan}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Alamat Perusahaan</span>
-                      <span className="-ml-64 md:-ml-75">
-                        : {settingData?.alamat}
-                      </span>
+                      <span className="-ml-55 md:-ml-75">: {settingData?.alamat}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Telepon Perusahaan</span>
-                      <span className="-ml-64 md:-ml-75">
-                        : 0{settingData?.telp}
-                      </span>
+                      <span className="-ml-55 md:-ml-75">: {settingData?.telp}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Email Perusahaan</span>
-                      <span className="-ml-64 md:-ml-75">
-                        : {settingData?.email}
-                      </span>
+                      <span className="-ml-55 md:-ml-75">: {settingData?.email}</span>
                     </div>
                   </div>
                 </div>
@@ -226,27 +216,19 @@ export default function Invoice() {
                   <div className="text-gray-600">
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Nama Pelanggan</span>
-                      <span className="-ml-55 md:-ml-72">
-                        : {customerData?.nama}
-                      </span>
+                      <span className="-ml-55 md:-ml-75">: {customerData?.nama}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Alamat Pelanggan</span>
-                      <span className="-ml-55 md:-ml-72">
-                        : {customerData?.alamat}
-                      </span>
+                      <span className="-ml-55 md:-ml-75">: {customerData?.alamat}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Telepon Pelanggan</span>
-                      <span className="-ml-55 md:-ml-72">
-                        : {customerData?.telp}
-                      </span>
+                      <span className="-ml-55 md:-ml-75">: {customerData?.telp}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Email Pelanggan</span>
-                      <span className="-ml-55 md:-ml-72">
-                        : {customerData?.email}
-                      </span>
+                      <span className="-ml-55 md:-ml-75">: {customerData?.email}</span>
                     </div>
                   </div>
                 </div>
@@ -254,7 +236,7 @@ export default function Invoice() {
 
               <div className="invoice-item mb-6">
                 <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-700 text-white max-sm:text-sm">
+                  <thead className="bg-gray-700 text-white">
                     <tr>
                       <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
                         Paket
@@ -270,7 +252,7 @@ export default function Invoice() {
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-gray-300 divide-y divide-gray-200 max-sm:text-sm">
+                  <tbody className="bg-gray-300 divide-y divide-gray-200">
                     {cartPaketData.map((item, index) => (
                       <tr key={index}>
                         <td className="mx-auto text-sm py-4 text-center">
