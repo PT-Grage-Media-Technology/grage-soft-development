@@ -238,6 +238,7 @@ export default function Kuitansi() {
         <div className="mt-10 text-center">
           <p className="text-lg">
             <strong>{settingData?.profil_perusahaan}</strong>
+            <span>Advice Acounting Henika</span>
           </p>
           <div className="mt-16">
             <img
