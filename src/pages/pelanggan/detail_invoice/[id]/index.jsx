@@ -235,7 +235,7 @@ export default function Invoice() {
               </div>
 
               <div className="invoice-item mb-6">
-                <table className="min-w-full divide-y divide-gray-200">
+                <table className="min-w-full divide-y divide-gray-200 max-sm:text-sm">
                   <thead className="bg-gray-700 text-white">
                     <tr>
                       <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
