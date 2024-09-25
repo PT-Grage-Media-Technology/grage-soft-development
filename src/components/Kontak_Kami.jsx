@@ -28,6 +28,7 @@ function Kontak_Kami() {
     const isLaptop = window.innerWidth >= 1024; // Misalnya, 1024px adalah lebar minimum untuk laptop
     if (isLaptop) {
       setIsOpenWcu(true); // Membuka dropdown untuk laptop
+      setIsOpenProfil(true); // Membuka dropdown profil untuk laptop
     }
   }, []);
 
