@@ -58,8 +58,9 @@ module.exports = {
                 sm: "calc(var(--radius) - 4px)",
             },
             spacing: {
+                '30': '30px',
                 '75': '75px',
-                '65': '65px',
+                '55': '55px',
             },
             keyframes: {
                 "accordion-down": {
