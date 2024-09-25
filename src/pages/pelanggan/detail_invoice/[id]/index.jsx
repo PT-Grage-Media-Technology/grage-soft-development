@@ -172,15 +172,15 @@ export default function Invoice() {
                     <h1 className="text-xl font-bold pb-2">Invoice</h1>
                     <div className="text-gray-600 grid grid-cols-2">
                       <div>Referensi</div>
-                      <div className="">{invoiceData?.refrensi}</div>
+                      <div className="-ml-8">: {invoiceData?.refrensi}</div>
                     </div>
                     <div className="text-gray-600 grid grid-cols-2">
                       <div>Tanggal</div>
-                      <div className="">{invoiceData?.tanggal}</div>
+                      <div className="-ml-8">: {invoiceData?.tanggal}</div>
                     </div>
                     <div className="text-gray-600 grid grid-cols-2">
                       <div>Jatuh Tempo </div>
-                      <div className="">{invoiceData?.tgl_jatuh_tempo}</div>
+                      <div className="-ml-8">: {invoiceData?.tgl_jatuh_tempo}</div>
                     </div>
                   </div>
                 </div>
@@ -193,19 +193,19 @@ export default function Invoice() {
                   <div className="text-gray-600">
                     <div className="grid grid-cols-2">
                       <span>Nama Perusahaan</span>
-                      <span className="-ml-32">: {settingData?.profil_perusahaan}</span>
+                      <span className="-ml-20">: {settingData?.profil_perusahaan}</span>
                     </div>
                     <div className="grid grid-cols-2">
                       <span>Alamat Perusahaan</span>
-                      <span className="-ml-32">: {settingData?.alamat}</span>
+                      <span className="-ml-20">: {settingData?.alamat}</span>
                     </div>
                     <div className="grid grid-cols-2">
                       <span>Telepon Perusahaan</span>
-                      <span className="-ml-32">: {settingData?.telp}</span>
+                      <span className="-ml-20">: {settingData?.telp}</span>
                     </div>
                     <div className="grid grid-cols-2">
                       <span>Email Perusahaan</span>
-                      <span className="-ml-32">: {settingData?.email}</span>
+                      <span className="-ml-20">: {settingData?.email}</span>
                     </div>
                   </div>
                 </div>
@@ -216,19 +216,19 @@ export default function Invoice() {
                   <div className="text-gray-600">
                     <div className="grid grid-cols-2">
                       <span>Nama Pelanggan</span>
-                      <span className="-ml-32">: {customerData?.nama}</span>
+                      <span className="-ml-20">: {customerData?.nama}</span>
                     </div>
                     <div className="grid grid-cols-2">
                       <span>Alamat Pelanggan</span>
-                      <span className="-ml-32">: {customerData?.alamat}</span>
+                      <span className="-ml-20">: {customerData?.alamat}</span>
                     </div>
                     <div className="grid grid-cols-2">
                       <span>Telepon Pelanggan</span>
-                      <span className="-ml-32">: {customerData?.telp}</span>
+                      <span className="-ml-20">: {customerData?.telp}</span>
                     </div>
                     <div className="grid grid-cols-2">
                       <span>Email Pelanggan</span>
-                      <span className="-ml-32">: {customerData?.email}</span>
+                      <span className="-ml-20">: {customerData?.email}</span>
                     </div>
                   </div>
                 </div>
