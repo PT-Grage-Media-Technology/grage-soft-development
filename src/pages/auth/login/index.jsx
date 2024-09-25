@@ -20,7 +20,10 @@ export default function Login() {
     e.preventDefault();
     setSubmitted(true); // Menandai bahwa formulir sudah dikirimkan
 
-    if (!email || email.includes('%') || email.includes('$')) return; // Jika email tidak diisi atau mengandung % atau $, jangan melanjutkan pengiriman formulir
+    if (!email || email.includes('%') || email.includes('$')) {
+        setError("Email tidak boleh mengandung karakter % atau $.");
+        return; // Jika email tidak diisi atau mengandung % atau $, jangan melanjutkan pengiriman formulir
+    }
     if (!password) return; // Jika password tidak diisi, jangan melanjutkan pengiriman formulir
     
     try {

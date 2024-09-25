@@ -21,8 +21,16 @@ export default function Login() {
     e.preventDefault();
     setSubmitted(true);
 
+    // Validasi email untuk tidak mengandung karakter $ dan %
     if (!email || !password) {
       setError("Email dan password harus diisi.");
+      setSubmitted(false);
+      return;
+    }
+
+    const invalidChars = /[$%]/;
+    if (invalidChars.test(email)) {
+      setError("Email tidak boleh mengandung karakter $ dan %.");
       setSubmitted(false);
       return;
     }
