@@ -157,7 +157,7 @@ export default function Invoice() {
               {/* Konten invoice */}
               <div className="grid grid-flow-col">
                 <div className="grid grid-cols-2 mb-6">
-                  <div className="mx-auto md:mx-12 text-center items-center">
+                  <div className="mx-auto md:mx-4 text-center items-center">
                     <h1 className="text-lg md:text-xl font-bold mb-2">
                       {settingData?.profil_perusahaan}
                     </h1>
@@ -168,7 +168,7 @@ export default function Invoice() {
                     />
                   </div>
 
-                  <div className="mx-auto">
+                  <div className="mx-auto md:mx-12">
                     <h1 className="text-xl font-bold pb-2">Invoice</h1>
                     <div className="text-gray-600 max-sm:text-sm grid grid-cols-2">
                       <div>Referensi</div>
@@ -201,7 +201,7 @@ export default function Invoice() {
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Telepon Perusahaan</span>
-                      <span className="-ml-55 md:-ml-75">: {settingData?.telp}</span>
+                      <span className="-ml-55 md:-ml-75">: 0{settingData?.telp}</span>
                     </div>
                     <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Email Perusahaan</span>
