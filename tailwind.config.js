@@ -62,7 +62,7 @@ module.exports = {
                 '75': '75px',
                 '70': '70px',
                 '55': '55px',
-                '50': '50px',
+                '45': '45px',
             },
             keyframes: {
                 "accordion-down": {
