@@ -186,53 +186,53 @@ export default function Kuitansi() {
         <div className="mb-6">
           <div className="text-md md:text-lg grid grid-cols-2">
             <strong>No. Kuitansi</strong> 
-            <span className="-ml-12 md:-ml-24"><strong>: </strong>{invoiceData.refrensi}</span>
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{invoiceData.refrensi}</span>
           </div>
           <div className="text-md md:text-lg grid grid-cols-2">
             <strong>Tanggal</strong> 
-            <span className="-ml-12 md:-ml-24"><strong>: </strong>{invoiceData.tanggal}</span>
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{invoiceData.tanggal}</span>
           </div>
         </div>
         <div className="mb-6">
           <div className="text-md md:text-lg grid grid-cols-2">
             <strong>Telah Diterima Dari</strong> 
-            <span className="-ml-12 md:-ml-24"><strong>: </strong>{customerData?.nama}</span>
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{customerData?.nama}</span>
           </div>
           <div className="text-md md:text-lg grid grid-cols-2">
             <strong>Uang Sejumlah</strong> 
-            <span className="-ml-12 md:-ml-24"><strong>: </strong>{formatCurrency(invoiceData.total)}</span>
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{formatCurrency(invoiceData.total)}</span>
           </div>
           <div className="mt-2 text-md md:text-lg grid grid-cols-2">
             <strong>Terbilang</strong> 
-            <span className="-ml-12 md:-ml-24"><strong>: </strong>{angkaTerbilang(invoiceData.total)}</span>
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{angkaTerbilang(invoiceData.total)}</span>
           </div>
         </div>
         <div className="mb-6">
           <div className="tetx-md md:text-lg grid grid-cols-2">
             <strong>Untuk Pembayaran</strong> 
-            <span className="-ml-12 md:-ml-24"><strong>: </strong>{paketInfo.kategori}</span>
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{paketInfo.kategori}</span>
           </div>
           <div className="text-md md:text-lg grid grid-cols-2">
             <strong>Paket</strong> 
-            <span className="-ml-12 md:-ml-24"><strong>: </strong>{paketInfo.nama}</span>
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{paketInfo.nama}</span>
           </div>
         </div>
         <div className="mb-6">
           <div className="text-md md:text-lg grid grid-cols-2">
             <strong>Subtotal</strong> 
-            <span className="-ml-12 md:-ml-24"><strong>: </strong>{formatCurrency(invoiceData.subtotal)}</span>
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{formatCurrency(invoiceData.subtotal)}</span>
           </div>
           <div className="text-md md:text-lg grid grid-cols-2">
             <strong>Diskon</strong> 
-            <span className="-ml-12 md:-ml-24"><strong>: </strong>{formatCurrency(invoiceData.total_diskon)}</span>
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{formatCurrency(invoiceData.total_diskon)}</span>
           </div>
           <div className="text-md md:text-lg grid grid-cols-2">
             <strong>PPN (11%):</strong> 
-            <span className="-ml-12 md:-ml-24"><strong>: </strong>{formatCurrency(invoiceData.ppn)}</span>
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{formatCurrency(invoiceData.ppn)}</span>
           </div>
           <div className="text-md md:text-lg grid grid-cols-2">
             <strong>Total</strong> 
-            <span className="-ml-12 md:-ml-24"><strong>: </strong>{formatCurrency(invoiceData.total)}</span>
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{formatCurrency(invoiceData.total)}</span>
           </div>
         </div>
         <div className="mt-10 text-center">
