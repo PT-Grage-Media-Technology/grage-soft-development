@@ -54,6 +54,7 @@ export default function Login() {
     toast.error("Email atau password salah !", {
       position: "top-right",
     });
+    setError("Email atau password salah !"); // Menambahkan peringatan ke state error
   };
 
   return (
@@ -71,7 +72,7 @@ export default function Login() {
               </div>
               <div className="divide-y divide-gray-200">
                 <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                  {error && <div className="text-red-500 text-sm">{error}</div>}
+                  {error && <div className="text-red-500 text-sm">{error}</div>} // Menampilkan peringatan di dalam web
                   <form onSubmit={handleSubmit}>
                     <div className="relative">
                       <input

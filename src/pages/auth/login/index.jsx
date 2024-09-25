@@ -22,9 +22,19 @@ export default function Login() {
 
     if (!email || email.includes('%') || email.includes('$')) {
         setError("Email tidak boleh mengandung karakter % atau $.");
+        // Menampilkan pesan kesalahan di dalam web
+        toast.error("Email tidak boleh mengandung karakter % atau $.", {
+            position: "top-right",
+        });
         return; // Jika email tidak diisi atau mengandung % atau $, jangan melanjutkan pengiriman formulir
     }
-    if (!password) return; // Jika password tidak diisi, jangan melanjutkan pengiriman formulir
+    if (!password) {
+        // Menampilkan pesan kesalahan di dalam web
+        toast.error("Password wajib diisi!", {
+            position: "top-right",
+        });
+        return; // Jika password tidak diisi, jangan melanjutkan pengiriman formulir
+    }
     
     try {
       const response = await axios.post(`${BASE_URL}/api/auth/login`, {
