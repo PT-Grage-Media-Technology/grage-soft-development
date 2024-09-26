@@ -92,6 +92,7 @@ export default function Footer() {
                 <iframe
                   src={setting.url_gmaps}
                   className="w-full h-64"
+                  title="Peta Lokasi Kami" // Menambahkan judul bingkai
                 ></iframe>
               </div>
             </div>

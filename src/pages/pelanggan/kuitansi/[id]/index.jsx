@@ -184,50 +184,62 @@ export default function Kuitansi() {
           KUITANSI
         </h1>
         <div className="mb-6">
-          <p className="text-lg">
-            <strong>No. Kuitansi:</strong> {invoiceData.refrensi}
-          </p>
-          <p className="text-lg">
-            <strong>Tanggal:</strong> {invoiceData.tanggal}
-          </p>
+          <div className="text-md md:text-lg grid grid-cols-2">
+            <strong>No. Kuitansi</strong> 
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{invoiceData.refrensi}</span>
+          </div>
+          <div className="text-md md:text-lg grid grid-cols-2">
+            <strong>Tanggal</strong> 
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{invoiceData.tanggal}</span>
+          </div>
         </div>
         <div className="mb-6">
-          <p className="text-lg">
-            <strong>Telah diterima dari:</strong> {customerData?.nama}
-          </p>
-          <p className="text-lg">
-            <strong>Uang Sejumlah:</strong> {formatCurrency(invoiceData.total)}
-          </p>
-          <p className="mt-2 text-lg">
-            <strong>Terbilang:</strong> {angkaTerbilang(invoiceData.total)}
-          </p>
+          <div className="text-md md:text-lg grid grid-cols-2">
+            <strong>Telah Diterima Dari</strong> 
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{customerData?.nama}</span>
+          </div>
+          <div className="text-md md:text-lg grid grid-cols-2">
+            <strong>Uang Sejumlah</strong> 
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{formatCurrency(invoiceData.total)}</span>
+          </div>
+          <div className="mt-2 text-md md:text-lg grid grid-cols-2">
+            <strong>Terbilang</strong> 
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{angkaTerbilang(invoiceData.total)}</span>
+          </div>
         </div>
         <div className="mb-6">
-          <p className="text-lg">
-            <strong>Untuk Pembayaran:</strong> {paketInfo.kategori}
-          </p>
-          <p className="text-lg">
-            <strong>Paket:</strong> {paketInfo.nama}
-          </p>
+          <div className="tetx-md md:text-lg grid grid-cols-2">
+            <strong>Untuk Pembayaran</strong> 
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{paketInfo.kategori}</span>
+          </div>
+          <div className="text-md md:text-lg grid grid-cols-2">
+            <strong>Paket</strong> 
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{paketInfo.nama}</span>
+          </div>
         </div>
         <div className="mb-6">
-          <p className="text-lg">
-            <strong>Subtotal:</strong> {formatCurrency(invoiceData.subtotal)}
-          </p>
-          <p className="text-lg">
-            <strong>Diskon:</strong> {formatCurrency(invoiceData.total_diskon)}
-          </p>
-          <p className="text-lg">
-            <strong>PPN (11%):</strong> {formatCurrency(invoiceData.ppn)}
-          </p>
-          <p className="text-lg font-bold">
-            <strong>Total:</strong> {formatCurrency(invoiceData.total)}
-          </p>
+          <div className="text-md md:text-lg grid grid-cols-2">
+            <strong>Subtotal</strong> 
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{formatCurrency(invoiceData.subtotal)}</span>
+          </div>
+          <div className="text-md md:text-lg grid grid-cols-2">
+            <strong>Diskon</strong> 
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{formatCurrency(invoiceData.total_diskon)}</span>
+          </div>
+          <div className="text-md md:text-lg grid grid-cols-2">
+            <strong>PPN (11%):</strong> 
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{formatCurrency(invoiceData.ppn)}</span>
+          </div>
+          <div className="text-md md:text-lg grid grid-cols-2">
+            <strong>Total</strong> 
+            <span className="-ml-9 md:-ml-32"><strong>: </strong>{formatCurrency(invoiceData.total)}</span>
+          </div>
         </div>
         <div className="mt-10 text-center">
           <p className="text-lg">
             <strong>{settingData?.profil_perusahaan}</strong>
           </p>
+            <span>Advice Acounting Henika</span>
           <div className="mt-16">
             <img
               src={settingData?.url_foto_ttd}

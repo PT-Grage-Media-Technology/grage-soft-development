@@ -156,9 +156,9 @@ export default function Invoice() {
             <div className="invoice-container p-6 bg-white rounded-md shadow-md">
               {/* Konten invoice */}
               <div className="grid grid-flow-col">
-                <div className="flex justify-between mb-6">
-                  <div className="mx-auto lg:mx-12">
-                    <h1 className="text-xl font-bold mb-2">
+                <div className="grid grid-cols-2 mb-6">
+                  <div className="md:mx-4 text-center items-center">
+                    <h1 className="text-lg md:text-xl font-bold mb-2">
                       {settingData?.profil_perusahaan}
                     </h1>
                     <img
@@ -168,19 +168,19 @@ export default function Invoice() {
                     />
                   </div>
 
-                  <div className="mx-auto lg:mx-44">
+                  <div className="mx-auto md:mx-12">
                     <h1 className="text-xl font-bold pb-2">Invoice</h1>
-                    <div className="text-gray-600 grid grid-cols-2">
+                    <div className="text-gray-600 max-sm:text-sm grid grid-cols-2">
                       <div>Referensi</div>
-                      <div className="">{invoiceData?.refrensi}</div>
+                      <div className="md:-ml-16">: {invoiceData?.refrensi}</div>
                     </div>
-                    <div className="text-gray-600 grid grid-cols-2">
+                    <div className="text-gray-600 max-sm:text-sm grid grid-cols-2">
                       <div>Tanggal</div>
-                      <div className="">{invoiceData?.tanggal}</div>
+                      <div className="md:-ml-16">: {invoiceData?.tanggal}</div>
                     </div>
-                    <div className="text-gray-600 grid grid-cols-2">
+                    <div className="text-gray-600 max-sm:text-sm grid grid-cols-2">
                       <div>Jatuh Tempo </div>
-                      <div className="">{invoiceData?.tgl_jatuh_tempo}</div>
+                      <div className="md:-ml-16">: {invoiceData?.tgl_jatuh_tempo}</div>
                     </div>
                   </div>
                 </div>
@@ -191,21 +191,21 @@ export default function Invoice() {
                   <h3 className="font-bold">Informasi Perusahaan</h3>
                   <hr className="border-black w-3/4 mb-4" />
                   <div className="text-gray-600">
-                    <div className="flex justify-between">
+                    <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Nama Perusahaan</span>
-                      <span>: {settingData?.profil_perusahaan}</span>
+                      <span className="-ml-45 md:-ml-75">: {settingData?.profil_perusahaan}</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Alamat Perusahaan</span>
-                      <span>: {settingData?.alamat}</span>
+                      <span className="-ml-45 md:-ml-75">: {settingData?.alamat}</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Telepon Perusahaan</span>
-                      <span>: {settingData?.telp}</span>
+                      <span className="-ml-45 md:-ml-75">: 0{settingData?.telp}</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Email Perusahaan</span>
-                      <span>: {settingData?.email}</span>
+                      <span className="-ml-45 md:-ml-75">: {settingData?.email}</span>
                     </div>
                   </div>
                 </div>
@@ -214,28 +214,28 @@ export default function Invoice() {
                   <h3 className="font-bold">Tagihan Kepada</h3>
                   <hr className="border-black w-3/4 mb-4" />
                   <div className="text-gray-600">
-                    <div className="flex justify-between">
+                    <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Nama Pelanggan</span>
-                      <span>: {customerData?.nama}</span>
+                      <span className="-ml-55 md:-ml-75">: {customerData?.nama}</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Alamat Pelanggan</span>
-                      <span>: {customerData?.alamat}</span>
+                      <span className="-ml-55 md:-ml-75">: {customerData?.alamat}</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Telepon Pelanggan</span>
-                      <span>: {customerData?.telp}</span>
+                      <span className="-ml-55 md:-ml-75">: {customerData?.telp}</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="grid grid-cols-2 max-sm:text-sm">
                       <span>Email Pelanggan</span>
-                      <span>: {customerData?.email}</span>
+                      <span className="-ml-55 md:-ml-75">: {customerData?.email}</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="invoice-item mb-6">
-                <table className="min-w-full divide-y divide-gray-200">
+                <table className="min-w-full divide-y divide-gray-200 max-sm:text-sm">
                   <thead className="bg-gray-700 text-white">
                     <tr>
                       <th className="mx-auto py-3 text-center text-xs font-medium uppercase tracking-wider">
@@ -287,7 +287,7 @@ export default function Invoice() {
                           alt=""
                         />
                         <img
-                          className="h-28 w-auto"
+                          className="h-28 w-auto ml-12"
                           src={settingData?.url_foto_ttd}
                           alt=""
                         />
@@ -302,21 +302,21 @@ export default function Invoice() {
                 </div>
 
                 <div className="grid grid-flow-row mt-4 flex-grow">
-                  <div className="flex justify-between text-sm font-semibold mt-2">
+                  <div className="grid grid-cols-2 text-sm font-semibold mt-2">
                     <div>Subtotal</div>
                     <div>Rp {invoiceData.subtotal.toLocaleString()},00</div>
                   </div>
-                  <div className="flex justify-between text-sm font-semibold mt-2">
+                  <div className="grid grid-cols-2 text-sm font-semibold mt-2">
                     <div>Total Diskon</div>
                     <div>
                       (Rp {invoiceData.total_diskon.toLocaleString()},00)
                     </div>
                   </div>
-                  <div className="flex justify-between text-sm font-semibold mt-2">
+                  <div className="grid grid-cols-2 text-sm font-semibold mt-2">
                     <div>PPN (11%)</div>
                     <div>Rp {invoiceData.total_pajak.toLocaleString()},00</div>
                   </div>
-                  <div className="flex justify-between text-lg font-bold mt-2 underline">
+                  <div className="grid grid-cols-2 text-lg font-bold mt-2 underline">
                     <div>Total</div>
                     <div>Rp {invoiceData.total.toLocaleString()},00</div>
                   </div>
