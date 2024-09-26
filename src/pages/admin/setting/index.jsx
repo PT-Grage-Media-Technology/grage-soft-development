@@ -74,7 +74,7 @@ const Setting = () => {
     setIsDeleting(true);
     try {
       const response = await axios.delete(
-        `http://192.168.30.40:5000/api/setting/${itemToDelete}`,
+        `${BASE_URL}/api/setting/${itemToDelete}`,
         {
           headers: {
             "Content-Type": "application/json",

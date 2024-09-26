@@ -68,15 +68,6 @@ export default function Edit() {
     }
   };
 
-  // const handleInputChange = ({ target: { name, value, files } }) => {
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     [name]: name === "gambar_link_contoh_desain" ? files[0] : value,
-  //     ...(name === "gambar_link_contoh_desain" && {
-  //       gambarUrl: URL.createObjectURL(files[0]),
-  //     }),
-  //   }));
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

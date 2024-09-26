@@ -36,7 +36,7 @@ export default function Add() {
       formDataToSend.append("deskripsi", formData.deskripsi);
 
       const response = await axios.post(
-        "${BASE_URL}/api/contohdesain",
+        `${BASE_URL}/api/contohdesain`,
         formDataToSend,
         {
           headers: {
@@ -58,13 +58,6 @@ export default function Add() {
     }
   };
 
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  // };
 
   const handleInputChange = ({ target: { name, value, files } }) => {
     setFormData((prevData) => ({

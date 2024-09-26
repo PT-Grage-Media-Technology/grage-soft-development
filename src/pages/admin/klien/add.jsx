@@ -67,7 +67,7 @@ export default function Add() {
       formDataToSend.append("logo_klien", formData.logo_klien);
 
       const response = await axios.post(
-        "${BASE_URL}/api/klien/",
+        `${BASE_URL}/api/klien/`,
         formDataToSend,
         {
           headers: {
@@ -77,7 +77,6 @@ export default function Add() {
       );
 
       if (response.status == 201) {
-        // console.log("Data berhasil di tambahkan!");
         // tambahkan logika lainnya sesuai kebutuhan, seperti mereset form atau menampilkan pesan sukses
         router.push("/admin/klien");
       } else {

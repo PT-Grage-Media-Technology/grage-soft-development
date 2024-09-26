@@ -32,7 +32,6 @@ export default function Edit() {
         // Log the data object
         // Access attributes directly
         const { isi } = data.attributes;
-        console.log("Isi:", isi); // Tambahkan ini untuk melihat data
         // Update formData state with data from the API response
         setFormData((prevData) => ({
           ...prevData,

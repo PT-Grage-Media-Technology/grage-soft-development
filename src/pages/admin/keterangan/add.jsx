@@ -26,7 +26,6 @@ export default function Add() {
       });
 
       if (response.status == 201) {
-        // console.log("Data berhasil di tambahkan!");
         // tambahkan logika lainnya sesuai kebutuhan, seperti mereset form atau menampilkan pesan sukses
         router.push("/admin/keterangan");
       } else {
@@ -72,61 +71,6 @@ export default function Add() {
                 required
               />
             </div>
-
-            {/* <div className="mb-6 ">
-              {" "}
-              <label className="mb-5 block text-base font-semibold text-[#07074D]">
-                Gambar
-              </label>
-              <div className="mb-8">
-                <input
-                  type="file"
-                  name="gambar"
-                  id="gambar"
-                  htmlFor="gambar"
-                  className="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="mb-5">
-              <label
-                htmlFor="jabatan"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Jabatan
-              </label>
-              <input
-                type="text"
-                name="jabatan"
-                id="jabatan"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.jabatan}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-
-            <div className="mb-5">
-              <label
-                htmlFor="testimoni"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Testimoni
-              </label>
-              <textarea
-                type="text"
-                name="testimoni"
-                id="testimoni"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                value={formData.testimoni}
-                onChange={handleInputChange}
-                required
-              ></textarea>
-            </div> */}
-
             <div>
               <button className="w-full px-8 py-3 text-base font-semibold text-center text-white rounded-md outline-none hover:shadow-form bg-gradient-to-r from-indigo-400 to-gray-600 hover:bg-indigo-400 focus:bg-indigo-400">
                 Simpan

@@ -30,7 +30,6 @@ export default function Edit() {
         const response = await axios.get(`${BASE_URL}/api/klien/${id}`);
 
         const data = response.data.data;
-        // console.log('coba', data);
         setFormData((prevData) => ({
           ...prevData,
           id_kategori_klien: data.kategori_klien_id || "",
@@ -58,9 +57,6 @@ export default function Edit() {
       const response = await axios.get(`${BASE_URL}/api/kategoriKlien`);
       console.log("kategori klien", response.data.data);
       setKategoriKlien(response.data.data);
-      // setTotalPages(response.data.totalPages);
-      // setPageSize(response.data.pageSize);
-      // setTotalCount(response.data.totalCount);
     } catch (error) {
       console.error("Error fetching data kategori klien:", error);
     }
@@ -71,9 +67,6 @@ export default function Edit() {
       const response = await axios.get(`${BASE_URL}/api/paket`);
       console.log("tes", response.data.data);
       setPaket(response.data.data);
-      // setTotalPages(response.data.totalPages);
-      // setPageSize(response.data.pageSize);
-      // setTotalCount(response.data.totalCount);
     } catch (error) {
       console.error("Error fetching data kategori klien:", error);
     }

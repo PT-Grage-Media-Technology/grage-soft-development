@@ -159,7 +159,7 @@ const Administrators = ({ isLoggedIn }) => {
       };
 
       const response = await fetch(
-        "${BASE_URL}/api/administrators",
+        `${BASE_URL}/api/administrators`,
         {
           method: "POST",
           headers: {
@@ -209,7 +209,7 @@ const Administrators = ({ isLoggedIn }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
+      const response = await axios.put(
         `${BASE_URL}/api/administrators/${updateData.id}`,
         {
           method: "PUT",
@@ -220,7 +220,7 @@ const Administrators = ({ isLoggedIn }) => {
         }
       );
 
-      if (response.ok) {
+      if (response.status == 200) {
         showToastMessage("Data berhasil diupdate!");
         a;
         setShowUpdateModal(false);

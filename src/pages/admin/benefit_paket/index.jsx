@@ -153,18 +153,6 @@ const BenefitPaket = ({ isLoggedIn }) => {
                       <th scope="col" className="px-14 py-4">
                         Action
                       </th>
-                      {/* <th scope="col" className="px-6 py-4">
-                        Jumlah Pilihan Desain
-                      </th>
-                      <th scope="col" className="px-6 py-4">
-                        Status Website
-                      </th>
-                      <th scope="col" className="px-6 py-4">
-                        Id Kategori Website 
-                      </th>
-                      <th scope="col" className="px-6 py-4">
-                        Action
-                      </th> */}
                     </tr>
                   </thead>
                   <tbody>

@@ -28,7 +28,6 @@ const Pembayaran = ({ isLoggedIn }) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        //`https://api.ngurusizin.online/api/tentang?page=${currentPage}&search=${searchTerm}`
         `${BASE_URL}/api/bank/`
       );
       //console.log(response.data)
