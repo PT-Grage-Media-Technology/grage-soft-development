@@ -16,7 +16,6 @@ const Testimoni = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/api/testimoni`);
-        console.log("tes", response.data.data);
         setTestimoni(response.data.data);
       } catch (error) {
         console.error("Error fetching data testimoni:", error);

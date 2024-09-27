@@ -15,8 +15,7 @@ export default function Navbar() {
 
   const fecthDataSetting = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/setting`);
-      console.log("res", response.data.data);
+      const response = await axios.get(`${BASE_URL}/api/setting`); 
       setSetting(response.data.data[0]);
     } catch (error) {
       console.error("Error fetching data setting", error);

@@ -15,11 +15,9 @@ export default function Rating() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        // `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
         `${BASE_URL}/api/klien/`
       );
       setKlien(response.data.data);
-      // console.log("respon", response.data.data);
     } catch (error) {
       console.error("Error fetching data layanan:", error);
       setError(error);
