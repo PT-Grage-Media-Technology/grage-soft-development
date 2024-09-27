@@ -28,7 +28,7 @@ export default function Layanan() {
     };
 
     fetchData();
-  });
+  }, []);
 
   if (error) {
     return (

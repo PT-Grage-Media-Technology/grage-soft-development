@@ -36,7 +36,6 @@ export default function Pembayaran() {
 
     fetchData();
   }, [currentPage]);
-  console.log(pembayaran);
 
   if (error) {
     return (
