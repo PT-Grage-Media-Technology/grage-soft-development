@@ -28,8 +28,6 @@ export default function Layanan() {
     fetchData();
   }, []);
 
-  console.log("klien", klien);
-
   if (error) {
     return (
       <div className="text-center text-red-500">Error: {error.message}</div>

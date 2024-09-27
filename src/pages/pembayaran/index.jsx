@@ -18,10 +18,8 @@ export default function Pembayaran() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          // `https://api.ngurusizin.online/api/layanan?page=${currentPage}&pageSize=${pageSize}`
           `${BASE_URL}/api/bank/`
         );
-        //console.log("Response data:", response.data); // Tambahkan log ini
         if (response.data && Array.isArray(response.data.data)) {
           setPembayaran(response.data.data);
         } else {
