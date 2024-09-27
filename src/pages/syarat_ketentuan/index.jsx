@@ -18,7 +18,6 @@ export default function Layanan() {
       try {
         const response = await axios.get(`${BASE_URL}/api/syaratketentuan`);
         setSyarat(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching data kontak:", error);
         setError(error);
