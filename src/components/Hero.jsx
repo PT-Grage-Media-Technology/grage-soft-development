@@ -14,13 +14,13 @@ export default function Hero() {
             diseluruh dunia. Berdiri sejak 2018
           </h1>
           <div className="flex justify-center mt-4 lg:mx-auto">
-            <button
+            <Link
               type="button"
               href={'/paket'}
               class="flex justify-center text-white bg-orange-400 hover:bg-orange-500 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
             >
               HARGA WEB
-            </button>
+            </Link>
           </div>
         </div>
       </div>
