@@ -20,7 +20,6 @@ export default function Layanan() {
           axios.get(`${BASE_URL}/api/paket/${id}`),
         ]);
 
-        console.log("contoh desain", desainResponse.data);
         setContohDesain(desainResponse.data);
         setPaket(paketResponse.data);
       } catch (error) {
