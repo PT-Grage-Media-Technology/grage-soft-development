@@ -11,7 +11,6 @@ function ButtonWa() {
       try {
         const response = await axios.get(`${BASE_URL}/api/setting`);
         setSetting(response.data.data[0]);
-        console.log(response.data.data[0]);
       } catch (error) {
         console.error("Error fetching data layanan:", error);
         setError(error);
