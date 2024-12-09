@@ -11,7 +11,8 @@ export default function App({ Component, pageProps, router }) {
     const isLoginPage = router.pathname === "/auth/login"; // Tambahkan kondisi untuk halaman login
     const isLoginPelanggan = router.pathname === "/auth_pelanggan/login"; // Tambahkan kondisi untuk halaman login
 
-    if (isInsideAdmin || isInsidePelanggan || isLoginPage || isLoginPelanggan) { // Perbarui kondisi untuk mengembalikan hanya komponen
+    if (isInsideAdmin || isInsidePelanggan || isLoginPage || isLoginPelanggan) {
+        // Perbarui kondisi untuk mengembalikan hanya komponen
         return <Component {...pageProps }
         />;
     }
@@ -22,15 +23,17 @@ export default function App({ Component, pageProps, router }) {
         <
         Head >
         <
-        title > GMT SOFT DEVELOPMENT < /title> < /
-        Head > <
+        title > GMT SOFT DEVELOPMENT < /title>{" "} <
+        meta name = "description"
+        content = "Jasa Pembuatan Website" / >
+        <
+        /Head>{" "} <
         NextTopLoader color = "#A8CF45" / >
         <
         Navbar / >
         <
         Component {...pageProps }
-        /> <
-        ButtonWa / >
+        /> <ButtonWa / >
         <
         Footer / >
         <
