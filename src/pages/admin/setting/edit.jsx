@@ -205,8 +205,8 @@ export default function Edit() {
               "email",
               "profil_perusahaan",
               "bidang_perusahaan",
-              "url_gmaps",
               "alamat",
+              "url_gmaps",
             ].map((field) => (
               <div className="mb-5" key={field}>
                 <label
