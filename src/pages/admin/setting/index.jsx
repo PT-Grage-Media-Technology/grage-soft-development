@@ -26,7 +26,7 @@ const Setting = () => {
     try {
       // Ambil semua data sekali saja
       const response = await axios.get(`${BASE_URL}/api/setting`);
-      console.log("response", response.data.data)
+      // console.log("response", response.data.data)
       setAllSetting(response.data.data);
 
       // Filter data berdasarkan pencarian dan pagination
@@ -151,7 +151,7 @@ const Setting = () => {
                       </th>
 
                       <th scope="col" className="px-6 py-4">
-                        EmailLLL
+                        Email
                       </th>
 
                       <th scope="col" className="px-6 py-4">
