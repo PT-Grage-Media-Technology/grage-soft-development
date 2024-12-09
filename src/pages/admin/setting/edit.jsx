@@ -30,7 +30,7 @@ export default function Edit() {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/api/setting/${id}`);
-        console.log("respons", response.data);
+          console.log("respons", response.data);
 
         const data = response.data;
         const {
