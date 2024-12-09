@@ -30,6 +30,7 @@ export default function Edit() {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/api/setting/${id}`);
+        console.log(response);
 
         const data = response.data;
         const {
@@ -39,8 +40,8 @@ export default function Edit() {
           email,
           profil_perusahaan,
           bidang_perusahaan,
-          url_gmaps,
           alamat,
+          url_gmaps,
           foto,
           foto_cap,
           foto_ttd,
@@ -53,8 +54,8 @@ export default function Edit() {
           email: email || "",
           profil_perusahaan: profil_perusahaan || "",
           bidang_perusahaan: bidang_perusahaan || "",
-          url_gmaps: url_gmaps || "",
           alamat: alamat || "",
+          url_gmaps: url_gmaps || "",
           gambar: foto || null,
           gambar_cap: foto_cap || null,
           gambar_ttd: foto_ttd || null,
