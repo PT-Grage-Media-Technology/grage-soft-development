@@ -4,7 +4,7 @@ import Link from "next/link";
 import AdminLayout from "../layouts";
 import axios from "axios";
 import Head from "next/head";
-import { BASE_URL } from '../../../components/layoutsAdmin/apiConfig';
+import { BASE_URL } from "../../../components/layoutsAdmin/apiConfig";
 
 export default function Edit() {
   const router = useRouter();
@@ -19,6 +19,7 @@ export default function Edit() {
     email: "",
     profil_perusahaan: "",
     bidang_perusahaan: "",
+    url_gmaps: "",
     alamat: "",
     gambar: null,
     gambar_cap: null,
@@ -28,9 +29,7 @@ export default function Edit() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/api/setting/${id}`
-        );
+        const response = await axios.get(`${BASE_URL}/api/setting/${id}`);
 
         const data = response.data;
         const {
@@ -40,6 +39,7 @@ export default function Edit() {
           email,
           profil_perusahaan,
           bidang_perusahaan,
+          url_gmaps,
           alamat,
           foto,
           foto_cap,
@@ -53,6 +53,7 @@ export default function Edit() {
           email: email || "",
           profil_perusahaan: profil_perusahaan || "",
           bidang_perusahaan: bidang_perusahaan || "",
+          url_gmaps: url_gmaps || "",
           alamat: alamat || "",
           gambar: foto || null,
           gambar_cap: foto_cap || null,
@@ -98,6 +99,7 @@ export default function Edit() {
       formDataToSend.append("profil_perusahaan", formData.profil_perusahaan);
       formDataToSend.append("bidang_perusahaan", formData.bidang_perusahaan);
       formDataToSend.append("alamat", formData.alamat);
+      formDataToSend.append("url_gmaps", formData.url_gmaps);
 
       // Hanya tambahkan gambar baru jika ada
       if (formData.gambar) {
@@ -203,6 +205,7 @@ export default function Edit() {
               "email",
               "profil_perusahaan",
               "bidang_perusahaan",
+              "url_gmaps",
               "alamat",
             ].map((field) => (
               <div className="mb-5" key={field}>
