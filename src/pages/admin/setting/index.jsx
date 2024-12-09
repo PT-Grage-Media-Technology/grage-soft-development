@@ -151,7 +151,7 @@ const Setting = () => {
                       </th>
 
                       <th scope="col" className="px-6 py-4">
-                        Email
+                        EmailLLL
                       </th>
 
                       <th scope="col" className="px-6 py-4">
