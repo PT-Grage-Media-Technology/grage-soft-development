@@ -26,7 +26,7 @@ const Setting = () => {
     try {
       // Ambil semua data sekali saja
       const response = await axios.get(`${BASE_URL}/api/setting`);
-      // console.log("tes", response.data.data)
+      console.log("response", response.data.data)
       setAllSetting(response.data.data);
 
       // Filter data berdasarkan pencarian dan pagination
