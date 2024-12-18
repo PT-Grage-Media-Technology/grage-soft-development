@@ -152,7 +152,7 @@ const Pelanggan = ({ isLoggedIn }) => {
         password: formData.password,
       };
 
-      const response = await fetch("${BASE_URL}/api/pelanggan", {
+      const response = await fetch(`${BASE_URL}/api/pelanggan`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
